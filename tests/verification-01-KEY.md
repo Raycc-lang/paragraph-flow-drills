@@ -15,9 +15,14 @@ Contrastive progression. Sentence 2 opens with entirely new information — the
 reversal is the point, and `held up better` / `collapsed` makes the contrast
 structural without a connective. Sentence 3 then uses split progression on `Both`.
 
-Calling this defective is a boundary error and scores −1. It is the same shape as
-G5 in the starter corpus; if you missed it here after getting G5 right, you were
-pattern-matching the item rather than the structure.
+Calling this defective is a boundary error and scores −1.
+
+**Design note:** this item shares its structure with G5 in the starter corpus. So
+do V4 (with G11/T4), V5 (with G8/T5), and V7 (with G3). That makes this test a
+measure of **near transfer** — the same distinction applied to new content —
+which is worth knowing but is not evidence of generalization. Getting V2 right
+after G5 may mean you learned the structure, or may mean you recognized the
+template. This test cannot tell the two apart. `verification-02.md` can.
 
 ### V3 — DEFECTIVE: D7, and arguably D3
 `Moreover` marks addition. The real relation is concession — record rainfall *and

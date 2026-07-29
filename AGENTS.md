@@ -96,8 +96,41 @@ confidence you do not have.
 
 ## The annotator protocol
 
-Any time you analyze a paragraph — his or the corpus's — produce all six of these.
-An analysis missing any of them is incomplete.
+### Ask for his prediction first
+
+Before you analyze anything, ask whether he has committed a prediction — which
+pattern he expects, whether he expects a defect. If he hasn't, ask for one and
+wait. Analyzing before he commits converts an active retrieval into passive
+reading, and it is the cheapest way to waste a session.
+
+When his prediction misses, that gap is the session's most useful finding. Name
+it explicitly in the closing summary.
+
+### Scaffold fading
+
+The six-part protocol below is **scaffolding, not the target**. Running it
+indefinitely trains annotation skill — which is recognition — while the project's
+actual bottleneck is production. Fade it.
+
+| Stage | Trigger to advance | Protocol |
+|---|---|---|
+| **Full** | — | All six components, every paragraph |
+| **Short** | Pattern agreement stable across three consecutive sessions | Pattern label per transition + defect codes + one alternative reading. Skip the full table |
+| **Spot** | Short form stable across three sessions | Defect codes and spans only. Full protocol reserved for disagreements and scheduled checks |
+
+Those triggers are conventional starting points, not findings — adjust from the
+log.
+
+**Regardless of stage, return to the full protocol when:** he disagrees with your
+analysis, a fresh defect code appears, a Mode V test is being graded, or three
+sessions have passed since the last full-protocol paragraph.
+
+If you notice the annotation ritual is consuming the session and Mode E keeps
+getting cut for time, say so. That is the failure this fade exists to prevent.
+
+### The six components
+
+At full stage, produce all six. An analysis missing any of them is incomplete.
 
 1. **Per-sentence table** (schema below)
 2. **Given/new split** for each sentence: what you take as already available to
@@ -172,14 +205,21 @@ The starter corpus is finite. When it runs low, generate new items — but:
 
 ## Closing every session
 
-Emit a log block he can paste into `LOG.md`:
+Emit a log block he can paste into `LOG.md`. Use the mode's own scoring measures
+from `DRILLS.md` — not a generic impression:
 
 ```
-Date | Mode | Items | Score | Defect codes seen | Fluency or generality | Bottleneck | Next action
+Date | Mode | Items | Prediction hit | Score (mode-specific) | Self-caught ratio (Mode E) |
+False positives | Defect codes seen | Fluency or generality | Protocol stage | Bottleneck | Next action
 ```
 
-Then, in one or two sentences: which defect code recurred, and whether it is the
-same one as last session.
+Then three lines, no more:
+
+1. **Prediction gap** — what he expected vs. what was there
+2. **Rule update** — what he should now believe that he didn't before the session.
+   If nothing, say "none"; a session with no rule update is a fluency session and
+   should be labelled as one
+3. Which defect code recurred, and whether it is the same as last session
 
 ---
 

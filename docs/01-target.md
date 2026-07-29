@@ -11,15 +11,11 @@ recognizable ESL-professional tell there is.
 
 ## The mapping
 
-> **Input:** a communicative purpose, a reader's current context, and a set of
-> propositions.
+> **Input:** a communicative purpose, a reader's current context, and a set of propositions.
 >
-> **Output:** those propositions ordered and expressed so the reader can identify
-> the topic, connect each sentence to the developing discourse, and follow the
-> intended relation between ideas.
+> **Output:** those propositions ordered and expressed so the reader can identify the topic, connect each sentence to the developing discourse, and follow the intended relation between ideas.
 
-The output space has six components. All six are in scope; none of them is the
-whole target.
+The output space has six components. All six are in scope; none of them is the whole target.
 
 | # | Component | What it decides |
 |---|---|---|

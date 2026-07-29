@@ -1,8 +1,16 @@
-# Verification Test 01
+# Verification Test 01 — Retention / Near Transfer
 
-Run after roughly 15–20 drill sessions, or whenever you want to know whether
-anything has actually changed. **Every item is novel** — none appears in the
-starter corpus.
+Run after roughly 15–20 drill sessions. No item appears in the starter corpus, but
+several **reuse structures from it** with new content: V2 shares G5's shape, V4
+shares G11 and T4's, V5 shares G8 and T5's, V7 shares G3's.
+
+That makes this a **near-transfer test**. It answers "can I apply these
+distinctions to new content in a familiar shape," which is a real and necessary
+question. It does not answer "have I generalized," because a good score here is
+also consistent with having learned the templates.
+
+Run `verification-02.md` for that. Use both: this one for retention, that one for
+transfer. A large gap between the two scores is itself the finding.
 
 ## Rules
 
