@@ -8,14 +8,10 @@ do I. This file will, in a few weeks.
 
 ## Diagnostic verdict (§0)
 
-> Date: 7/28/2026
-> Verdict: target confirmed, with production-load constraint
-> Evidence: 0b reconstructed G7 as 2→4→3→1, exact match, with correct structural 
->   reasoning on 2 of 3 placements. 0a compressed to 2–4 simple sentences under 
->   lexical retrieval load. Ordering knowledge is accessible in recognition and 
->   suppressed during simultaneous English production. Mode E therefore runs under 
->   the E-Expand floor with brackets, and vocabulary is measured separately.
-> Time on brief 1: ___ 未记录  Time on brief 2: ___ 未记录
+> Date:
+> Verdict:
+> Evidence:
+> Time on brief 1: ___  Time on brief 2: ___
 
 ---
 

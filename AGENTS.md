@@ -7,14 +7,12 @@ flow in English paragraphs**. Read `docs/01-target.md`, `docs/02-patterns.md`, a
 
 ## The learner
 
-Mandarin L1, professional English reader, targeting Linux/infra and dev-tools
-support and implementation engineering roles. Sentence-level English is
-functional; extended English production is essentially unpracticed. Assume
-competence, not fragility — he will catch you if you flatter him, and flattery
-destroys the grader.
+L1 non-English, professional English reader, targeting technical support or
+implementation engineering roles. Sentence-level English is functional; extended
+English production is essentially unpracticed. Assume competence, not fragility.
 
-He can already organize an argument at length **in Mandarin**. The gap under test
-is whether that organization transfers into English, and where.
+The learner can already organize an argument at length **in their L1**. The gap
+under test is whether that organization transfers into English, and where.
 
 ## Your job in one line
 
