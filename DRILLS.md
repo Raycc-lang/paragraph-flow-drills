@@ -81,7 +81,20 @@ with fresh briefs, and compare.
 **Builds:** recognition. **Type:** fluency on re-used items, generality on fresh.
 
 1. Take a paragraph from the corpus or from real published prose (`corpus/sources.md`).
-2. **Predict first.** Commit three specific claims in writing before analyzing:
+   **Tier 2 (`starter-technical.md`) is the starting tier** — see its header for
+   why.
+2. **Flag unknown terms.** Read the item once, then list any term you are not sure
+   of. The AI glosses those and only those, **each term standalone** — it must
+   never tell you that two terms share a referent, which would hand you a D5.
+
+   Do this before the prediction, not after. A defect you could not see because
+   you could not read the words was never a flow measurement, and the flag is
+   what separates the two. Carry `terms flagged` to `LOG.md`; see
+   `docs/vocabulary-interface.md` for how the count is read.
+
+   Flagging nothing is a legitimate answer. Flagging nothing *and* missing a
+   defect that turned on a term is a link-1 miss, not a flow miss.
+3. **Predict.** Commit three specific claims in writing before analyzing:
    1. **One named transition** — which sentence pair you expect to carry the
       paragraph's main move, and which pattern it uses
    2. **Verdict** — clean / defective / uncertain, plus confidence
@@ -93,12 +106,35 @@ with fresh briefs, and compare.
    cannot be scored as hit or miss.
 
    Three claims, under a minute. This is the highest-value step in the drill.
-3. Fill the annotator table yourself — role, departure point, link, new
-   contribution, relation, pattern. **Before** the AI sees it.
-4. Have the AI produce its own annotation.
-5. Compare. Disagreements are the lesson, and the AI is not automatically right —
-   make it defend any difference against the text.
-6. Where two patterns are defensible, say what would distinguish them.
+4. Annotate it yourself, **before** the AI sees it, using
+   `docs/04-annotation-format.md`. The AI hands you a pre-parsed sheet — subjects
+   bracketed, clauses split, assertions numbered — and fills nothing else. You
+   fill `Ties back by` and `Pattern`, plus `Antecedent` where a pronoun points
+   back, plus the two closing lines. If you are composing prose to fill a field,
+   stop: the field is wrong, and it gets cut and logged.
+
+   **Predictions are locked once written.** If your verdict changes during
+   analysis, that change *is* the finding — record it as a revision underneath
+   the original, never over it. A prediction edited after the fact cannot be
+   scored as a hit or a miss, and the prediction hit rate is the only measure in
+   Mode A that familiarity with the corpus cannot inflate.
+5. Have the AI produce its own annotation — **and hand it over without the key.**
+   The AI must stop here and wait. If the annotation, the key and the score all
+   arrive in one message, disagreement is not merely unlikely, it is impossible:
+   the answer is already on the page.
+6. Contest it. The AI is not automatically right. **The move always available to
+   you, on session one and after, is to make it point at the span** — ask which
+   words carry the defect. A judgment that cannot be attached to specific words is
+   one you should not accept, and applying that test requires no expertise.
+7. *Then* open the key. Compare all three readings: yours, the AI's, and the
+   reference.
+8. Where two patterns are defensible, say what would distinguish them.
+
+**On the `Defended disagreements` score.** Do not expect it to be above zero in
+early sessions — with no independent model yet, a manufactured disagreement is
+noise. It becomes meaningful once you have a reading of your own to defend. What
+must exist from session one is the *opportunity*: step 6 is a stop, not a
+formality.
 
 **Do not** try to prove every paragraph follows one chain. Comparing *different*
 patterns is the point of this drill.
@@ -155,11 +191,15 @@ Starting volume: one item, ~10 minutes.
 **Builds:** the bridge from recognition to production.
 
 1. Take a defective item. **Do not look at which defects it contains.**
-2. Diagnose: mark each problem with a code from `docs/03-defects.md`, and quote
+2. **Flag unknown terms first**, exactly as in §1 step 2. The AI glosses them
+   standalone and never states that two terms share a referent. Repair drills are
+   more exposed to this than analysis drills: you cannot restore a lexical chain
+   you cannot see, and you may "repair" a term you simply misread.
+3. Diagnose: mark each problem with a code from `docs/03-defects.md`, and quote
    the span.
-3. Repair, preserving the meaning. You write the repair. The AI does not.
-4. Explain each change: what the reader could not do before, and can now.
-5. Compare against the key — both the defect codes and the reference repair.
+4. Repair, preserving the meaning. You write the repair. The AI does not.
+5. Explain each change: what the reader could not do before, and can now.
+6. Compare against the key — both the defect codes and the reference repair.
 
 **Rules for this drill:**
 
@@ -257,7 +297,7 @@ This is not a workaround. It does two jobs:
 | "I knew it, wasn't sure it fit here" | **3** collocation | Check two or three real collocations; note the boundary in one line |
 
 Tally the three counts in `LOG.md`. The **ratio** is the point — see
-`docs/05-vocabulary-interface.md` for what each ratio implies. Ten sessions gives
+`docs/vocabulary-interface.md` for what each ratio implies. Ten sessions gives
 you a number that no amount of introspection will.
 
 ### Grading order — four steps, not two passes
@@ -283,8 +323,9 @@ produced four-sentence paragraphs in §0. So sequence rather than separate:
 
 Then route the brackets by type as above. Bracket routing is a separate activity
 from grading and happens after all four steps.
-3. Annotate your own information flow before showing anyone. Fill the table for
-   your own paragraph.
+3. Annotate your own information flow before showing anyone, using
+   `docs/04-annotation-format.md`. Same stage as your Mode A work — do not run a
+   heavier format on your own prose than on the corpus.
 4. Revise, based on your own annotation.
 5. *Then* get AI feedback — pointing and naming only, no rewriting (R1).
 6. Revise again yourself.

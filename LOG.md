@@ -58,7 +58,7 @@ a project starts serving its own apparatus.
 |  |  |  |  |  |
 
 The **ratio**, not the total, is the finding. See
-`docs/05-vocabulary-interface.md`. Read it at session 10; do not draw conclusions
+`docs/vocabulary-interface.md`. Read it at session 10; do not draw conclusions
 before then.
 
 ### Per-session notes

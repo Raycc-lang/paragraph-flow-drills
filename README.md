@@ -17,7 +17,7 @@ targets everything measures nothing.
    decides whether the project is aimed at the right thing.
 3. Record the verdict in `LOG.md`.
 4. If confirmed, read `docs/02-patterns.md`, `docs/03-defects.md`, and
-   `docs/04-worked-session.md`, then begin.
+   `docs/05-worked-session.md`, then begin.
 
 The order matters. Reading the defect taxonomy before the diagnostic contaminates
 the sample — you would be testing whether you can apply rules you just read, not
@@ -86,16 +86,23 @@ from the exclusion list in `docs/01-target.md`.
 
 ---
 
-## The vocabulary track runs beside this, not inside it
+## Vocabulary
 
-`vocab/lexical-landscape-prompt.md` is a separate instrument on a separate goal.
-Run it on real scenarios, roughly weekly. Do **not** wire its output into this
-project's drills or into presentation prep — different goal types, different
-verification.
+Not this project's target, but it is the constraint that truncated the §0
+paragraphs and it cost a defect in session 1. `docs/vocabulary-interface.md`
+defines the boundary and carries two instruments:
 
-The only thing crossing the boundary is the bracket tally in `LOG.md`. On your
-first landscape session, count how many of its 5–8 items you already knew. That
-number decides whether targeting is worth any coordination at all.
+- **Term flags** (Modes A and C) — you list terms you can't read *before*
+  predicting, and the AI glosses those only. Separates a flow miss from a reading
+  miss, which are different problems with different fixes
+- **Brackets** (Mode E) — sort what you couldn't retrieve into 2a / 2b / 3. Read
+  the ratio only past 30 brackets, and read it against the bias documented there:
+  you cannot stall on a word you don't know exists, so acquisition gaps go
+  systematically undercounted
+
+**Acquisition does not come from this project.** Production gaps are a trickle. If
+the acquisition gap turns out to be large, it needs its own input stream on its own
+schedule, and this project supplies targeting for that — not volume.
 
 ---
 
@@ -107,11 +114,12 @@ number decides whether targeting is worth any coordination at all.
 | `docs/01-target.md` | The ability, its typing, its boundaries, what it excludes |
 | `docs/02-patterns.md` | Six valid progression patterns, with examples |
 | `docs/03-defects.md` | Nine defect codes, D1–D9 |
-| `docs/04-worked-session.md` | One Mode A and one Mode E item, worked end to end. Read before your first real session |
-| `docs/05-vocabulary-interface.md` | Where this project stops and vocabulary work starts. The five links, and how to measure which one is failing |
+| `docs/05-worked-session.md` | One Mode A and one Mode E item, worked end to end. Read before your first real session |
+| `docs/vocabulary-interface.md` | Where this project stops and vocabulary work starts. The five links, and how to measure which one is failing |
+| `docs/04-annotation-format.md` | How you record an analysis. Quote-or-pick fields, four at Stage 1. Read before your first Mode A |
 | `DRILLS.md` | The diagnostic plus four drill protocols |
-| `corpus/starter-general.md` | Tier 1 items — general expository prose |
-| `corpus/starter-technical.md` | Tier 2 items — support and infra writing |
+| `corpus/starter-technical.md` | **Start here.** Support and infra writing — your own domain, so flow is the only unknown |
+| `corpus/starter-general.md` | General expository prose. Worked after codes stabilise; four items carry off-page knowledge requirements and are marked |
 | `corpus/KEYS.md` | Answers. Do not read early |
 | `corpus/sources.md` | Real reading material and the two books that matter |
 | `corpus/found/PROTOCOL.md` | How to build your own corpus of authentic paragraphs |

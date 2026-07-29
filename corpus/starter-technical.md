@@ -1,8 +1,29 @@
 # Starter Corpus — Tier 2: Support and Infrastructure Writing
 
-**Tier 2. Do not start here.** Work Tier 1 (`starter-general.md`) until your
-defect codes stabilise. This tier adds domain vocabulary and genre convention on
-top of the flow problem, which confounds the diagnosis early on.
+**Start here.** This tier was originally marked "do not start here," on the
+reasoning that domain vocabulary and genre convention stack on top of the flow
+problem and confound the diagnosis. That reasoning is generically sound and
+specifically backwards for this learner.
+
+Tier 2 is connection pools, replication lag, rollback artifacts and runbooks —
+vocabulary he **has**, in the genre he is actually targeting. Tier 1 is British
+civic, charity-property and clinical-trial register — vocabulary he does not have
+and has no reason to acquire. The confound the old note warned about is sitting in
+Tier 1.
+
+A diagnostic needs flow to be the only unknown. That condition holds here and not
+there.
+
+**Evidence:** session 1, item G3. The D5 turned on `council` / `local authority` /
+`the borough` naming one body. The defect was missed for a reception reason and
+scored as a flow miss. See `docs/vocabulary-interface.md`.
+
+**Tier 1 is not retired.** Work it once defect codes are stable, using the
+flag-unknowns step in `DRILLS.md` §1. Prose outside your domain is where transfer
+gets tested — that is a later concern, not a first-session one.
+
+Note the size difference: 6 items here, 12 in Tier 1. Generate fresh items per
+`AGENTS.md` when this runs low.
 
 Same rules: keys are in `KEYS.md`, the defective count is undisclosed, and some
 items are clean.

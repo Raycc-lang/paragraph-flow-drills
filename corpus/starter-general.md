@@ -15,6 +15,34 @@ communicative context is partly hidden.
 
 ---
 
+## Work Tier 2 first
+
+`starter-technical.md` is now the starting tier for this learner. Tier 1 assumes
+British civic, charity, and clinical register — vocabulary he does not hold, which
+turns some items into world-knowledge tests rather than flow tests. Tier 2 is his
+own domain, so flow is the only unknown there. See the header of
+`starter-technical.md` for the reasoning and the evidence.
+
+Tier 1 is not retired. It is where transfer gets tested, once defect codes are
+stable.
+
+## Items carrying off-page knowledge requirements
+
+**Always run the flag-unknowns step (`DRILLS.md` §1 step 2) on these.** Marked, not
+removed — they are sound items once the terms are glossed.
+
+| Item | Register assumed | Severity |
+|---|---|---|
+| **G3** | UK local government — `council` / `local authority` / `borough` can name one body | **High.** The defect is undetectable without it |
+| **G9** | UK charity and property law — legacy donations, sitting tenant, covenant restricting sale | **High** |
+| **G6** | Clinical-trial reporting — adherence, community settings, steering committee | Moderate |
+| **G12** | Whitehall procurement register — review, annex, former ministers | Moderate |
+
+**G3 is burned** — worked in session 1 and reproduced as a worked example in
+`docs/04-annotation-format.md`. Do not reuse it as a fresh measurement.
+
+---
+
 ### G1
 
 > A public library's fine policy does more work than it appears to. It nudges
