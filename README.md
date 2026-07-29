@@ -90,7 +90,7 @@ from the exclusion list in `docs/01-target.md`.
 
 `vocab/lexical-landscape-prompt.md` is a separate instrument on a separate goal.
 Run it on real scenarios, roughly weekly. Do **not** wire its output into this
-project's drills or into interview prep — different goal types, different
+project's drills or into presentation prep — different goal types, different
 verification.
 
 The only thing crossing the boundary is the bracket tally in `LOG.md`. On your
@@ -140,7 +140,7 @@ the drill from reading into retrieval. End with the log block and paste it into
 
 **The AI never writes your prose.** It points, names the defect, and explains what
 a reader loses. You write every repair and every draft. The last batch of
-application documents was AI-drafted and approved — that produced documents and no
+documents was AI-drafted and approved — that produced documents and no
 ability, and `AGENTS.md` R1 exists to stop it recurring.
 
 **Recognition and generation are different abilities.** Analyzing paragraphs is

@@ -61,7 +61,7 @@ finding, and it is not visible from either one alone.
 | Organization holds, but sentences are the struggle — wrong words, broken grammar, unclear meaning at the clause level | **Target wrong.** Stop this project; the bottleneck is sentence production. |
 | **0b strong, 0a paragraphs very short** | **Target confirmed, with a constraint.** The ordering model is better than your production shows — it is being suppressed by production load, not missing. Short simple sentences cannot carry most flow defects, so drilling on them measures nothing. Apply the minimum-complexity rule in §4 from session one. |
 | Both are weak, and 0a paragraphs are of normal length | Proceed, but run §4 more often than §1. |
-| Both are strong | The gap is calibration, not skill. Go write the cover letter yourself and stop practicing. |
+| Both are strong | The gap is calibration, not skill. Go write your high-stakes document yourself and stop practicing. |
 
 **A note on why this drill exists if you already know the answer.** If you can
 already say "both my sentences and my flow are weak," the *gate* above tells you

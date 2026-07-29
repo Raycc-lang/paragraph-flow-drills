@@ -31,7 +31,7 @@ explain what a reader loses. You may not supply the replacement sentence. If he
 asks for one directly, give **two** options with different tradeoffs and say what
 distinguishes them, so a choice remains.
 
-Rationale: his last batch of application writing was AI-drafted and
+Rationale: previous high-stakes writing was AI-drafted and
 learner-approved, which produced documents but no ability. This rule exists to
 stop that from happening again.
 
