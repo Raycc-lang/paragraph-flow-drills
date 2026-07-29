@@ -224,7 +224,7 @@ will be most tempted to skip.**
 > onto bare juxtaposition, which is the parataxis habit this project exists to
 > correct.
 >
-> **On the translate app:** checking a single word you have already chosen is
+> **On translation tools:** checking a single word you have already chosen is
 > fine. Composing a sentence in your L1 and translating it is not — that trains a
 > translation model, which is a different mapping and the one that produces
 > L1-shaped English. If you reach for it mid-sentence, use the bracket protocol
@@ -233,7 +233,7 @@ will be most tempted to skip.**
 ### The bracket protocol
 
 **While writing, when you stall on a word:** write `[ENG: what you mean, in any
-form — Chinese, a paraphrase, a guess]` and keep going. Do not stop. Do not open
+form — your L1, a paraphrase, a guess]` and keep going. Do not stop. Do not open
 anything.
 
 > We confirmed the cause on Tuesday and the fix ships tomorrow. The report was
