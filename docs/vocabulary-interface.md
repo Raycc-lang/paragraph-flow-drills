@@ -47,13 +47,30 @@ Two things this produces:
    read the words was never a flow measurement.
 2. **Link-1 data**, logged per item, on real material rather than a deck.
 
-**Scoring splits cleanly on the flag:**
+**Scoring does not split on the flag alone.**
 
-| You flagged the term | You missed the defect | Diagnosis |
+An earlier version of this file said: not flagged and missed → link-1 miss. That
+inference is invalid. **Not flagging a term shows you believed you understood it.
+It does not show that you did not.** The two are different claims, and only the
+first is observable from the flag.
+
+So when a term-dependent defect is missed, **check the term afterwards** and sort
+into three outcomes:
+
+| Flag | Post-hoc check | Outcome |
 |---|---|---|
-| Yes | Yes | **Flow miss.** You had the meaning and did not see the structure |
-| No | Yes | **Link-1 miss.** You did not know the word was doing anything |
-| Yes | No | Clean — the gloss did its job |
+| Flagged and glossed | — | **Probable flow miss.** You had the meaning and did not see the structure |
+| Not flagged | You did not in fact know the definition | **Confirmed reception miss.** Link 1. Counts toward the vocabulary signal |
+| Not flagged | You knew each definition, but not that the terms could be coreferential — or some other relation between them | **Off-page knowledge confound. Excluded from scoring entirely** |
+
+**The third row is not a vocabulary failure and not a flow failure.** It is an
+item defect. G3 is the case: `council`, `local authority` and `borough` are each
+individually readable, and the D5 turns on knowing they can name one body. That is
+relational and cultural knowledge, not word-to-concept knowledge. Scoring it as
+either miss would corrupt both measures.
+
+An item that produces row three should not have been offered — see `AGENTS.md`
+R13. When one does, discard the score and mark the item.
 
 Carry `terms flagged` to `LOG.md`. A count that stays high across sessions on
 Tier 2 material — your own domain — would be a strong signal that the target is
@@ -62,9 +79,14 @@ wrong and reading is the bottleneck.
 ### Session 1 example
 
 G3 renames one body three times: `The council`, `The local authority`, `the
-borough`. The D5 is undetectable without knowing those can be the same referent.
-No term was flagged, the defect was missed, and the sheet recorded "no explicit
-word" — a reception failure that presented as a flow judgment.
+borough`. No term was flagged, the D5 was missed, and the sheet recorded "no
+explicit word."
+
+**This is row three, not row two.** Each of the three expressions is individually
+readable; what was missing was the fact that they can share a referent. That is
+off-page knowledge, so the miss is excluded from scoring rather than counted as a
+vocabulary failure. The score it would otherwise have produced — a link-1 miss —
+would have pointed the whole project at the wrong remedy.
 
 ---
 

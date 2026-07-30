@@ -68,10 +68,39 @@ first is the normal shape of this, not a sign the method is failing.
 Deliberately out of scope for this project. Do not let drills drift into them:
 
 - Vocabulary range and word choice
-- Grammatical accuracy
+- Grammatical **accuracy** — whether a sentence is correct
 - Naturalness, idiom, register, "sounding native"
 - Argument quality and evidence (that is coherence, and it is a separate target)
 - Document-level structure above the paragraph (a later target, once this holds)
+
+### But clause management is in scope, and the distinction is not a technicality
+
+Grammatical *accuracy* is excluded. **Clause management — when to join, when to split,
+what to subordinate — is not excluded, because it is one of this target's levers rather
+than a neighbouring subject.**
+
+Three of the six components above cannot be exercised without it:
+
+- **Component 3** is literally "sentence topics and grammatical subjects." Which
+  proposition gets the subject slot is a clause decision.
+- **Component 4**, reference, depends on how many candidate antecedents a sentence
+  leaves behind — which is its count of independent clauses.
+- **Component 6**, emphasis placement, needs more than one position of prominence to
+  place anything *in*. A short simple sentence has essentially one.
+
+And the override list below already names "grammatical constraints on what can occupy
+the subject slot" as something that legitimately overrides ordering guidance — so the
+file has always treated syntax as bearing on flow.
+
+**The practical form of the distinction:** *"this sentence is ungrammatical"* is out of
+scope. *"these two propositions are in one sentence when they should be in two, and the
+relation between them has nowhere to sit"* is the target itself.
+
+**What this must not become.** Not a syntax quota. `DRILLS.md` §4 records why an
+earlier "two subordinate clauses per paragraph" rule was wrong: it is satisfiable by
+one bad convoluted sentence and it teaches that longer is better. Clause structure is
+recorded as a **diagnostic** — it says which defects were available to be made — never
+prescribed as a target shape.
 
 ## Boundaries: when the ordering guidance does not apply
 

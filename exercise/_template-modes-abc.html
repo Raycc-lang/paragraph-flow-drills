@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mode A / B / C sheet</title>
+<style>
+  :root {
+    --bg: #fbfaf8; --fg: #1c1a18; --muted: #6b6560; --line: #ddd8d2;
+    --card: #fff; --accent: #7a4f2c; --accent-bg: #f3ebe3;
+    --warn: #8a5a00; --warn-bg: #fdf3e0; --ok: #2f6b4a; --ok-bg: #eaf3ed;
+    --dim: #f7f5f2;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0 auto; padding: 2rem 1.25rem 6rem; background: var(--bg); color: var(--fg);
+    font: 16px/1.55 ui-serif, Georgia, "Times New Roman", serif; max-width: 60rem;
+  }
+  h1 { font-size: 1.5rem; margin: 0 0 .25rem; }
+  h2 {
+    font-size: 1.05rem; letter-spacing: .04em; text-transform: uppercase;
+    color: var(--muted); margin: 2.5rem 0 .75rem;
+    border-bottom: 1px solid var(--line); padding-bottom: .35rem;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+  }
+  h2 .step { color: var(--accent); font-weight: 700; margin-right: .4rem; }
+  .sub { color: var(--muted); font-size: .9rem; margin: 0 0 1.5rem; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 1rem 1.15rem; margin: 1rem 0; }
+  .item { background: var(--accent-bg); border-left: 3px solid var(--accent); }
+  .note { color: var(--muted); font-size: .88rem; font-family: ui-sans-serif, system-ui, sans-serif; }
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn); padding: .6rem .8rem; border-radius: 4px; margin: .6rem 0; font-size: .9rem; font-family: ui-sans-serif, system-ui, sans-serif; }
+  .ok { background: var(--ok-bg); border-left: 3px solid var(--ok); padding: .6rem .8rem; border-radius: 4px; margin: .6rem 0; font-size: .9rem; font-family: ui-sans-serif, system-ui, sans-serif; }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; margin: .5rem 0; }
+  th, td { border: 1px solid var(--line); padding: .4rem .55rem; text-align: left; vertical-align: top; }
+  th { background: #f4f1ed; font-family: ui-sans-serif, system-ui, sans-serif; font-weight: 600; }
+  textarea, input[type=text] {
+    width: 100%; font: 15px/1.6 ui-monospace, Menlo, Consolas, monospace;
+    padding: .6rem .7rem; border: 1px solid var(--line); border-radius: 4px;
+    background: #fff; color: var(--fg); resize: vertical;
+  }
+  textarea[readonly], input[readonly] { background: var(--dim); color: #55504b; }
+  button {
+    font: 500 .85rem ui-sans-serif, system-ui, sans-serif; cursor: pointer;
+    background: #fff; color: var(--fg); border: 1px solid var(--line);
+    border-radius: 4px; padding: .4rem .7rem; margin: .15rem .2rem .15rem 0;
+  }
+  button:hover:not(:disabled) { background: #f4f1ed; }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  button.pick.sel { background: var(--accent); color: #fff; border-color: var(--accent); }
+  button.danger { border-color: #a3563f; color: #a3563f; }
+  .row { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+  .field { margin: .7rem 0; }
+  .field > label { display: block; font: 600 .82rem ui-sans-serif, system-ui, sans-serif; letter-spacing: .03em; margin-bottom: .25rem; }
+  .field .hint { font: .8rem ui-sans-serif, system-ui, sans-serif; color: var(--muted); margin-bottom: .3rem; }
+  .quotebox {
+    min-height: 2.1rem; border: 1px dashed var(--line); border-radius: 4px;
+    padding: .35rem .5rem; font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: .88rem; background: #fdfcfb;
+  }
+  .quotebox:empty::before { content: "nothing selected yet"; color: #b5aea6; }
+  .sent { border: 1px solid var(--line); border-radius: 6px; padding: .9rem 1rem; margin: 1rem 0; background: #fff; }
+  .sent-head { font: 600 .82rem ui-sans-serif, system-ui, sans-serif; color: var(--muted); letter-spacing: .04em; margin-bottom: .5rem; }
+  .tokens { line-height: 2.5; }
+  .tok { padding: .12rem .1rem; border-radius: 3px; cursor: pointer; }
+  .tok:hover { background: #f0ece7; }
+  .tok.sel { background: #ffe08a; }
+  .tok.flag { box-shadow: inset 0 -2px 0 #c0873f; }
+  .tok.nopick { cursor: default; }
+  .tok.nopick:hover { background: transparent; }
+  .skipbar { display: flex; gap: .4rem; align-items: center; flex-wrap: wrap; margin: -.2rem 0 .6rem; }
+  .skipbar .lbl { font: .78rem ui-sans-serif, system-ui, sans-serif; color: var(--muted); }
+  .picker { border: 1px solid var(--accent); background: #fffdf8; border-radius: 5px;
+            padding: .5rem .6rem; margin: .4rem 0 .2rem; line-height: 2.1; font-size: .92rem; }
+  .picker .plabel { font: 600 .72rem ui-sans-serif, system-ui, sans-serif; color: var(--accent);
+                    letter-spacing: .05em; display: block; margin-bottom: .2rem; }
+  .picker .snum { font: 700 .78rem ui-monospace, Menlo, monospace; color: var(--muted); margin-right: .2rem; }
+  .clauses { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .85rem; background: #faf8f5; border-radius: 4px; padding: .5rem .6rem; margin: .5rem 0; white-space: pre-wrap; }
+  .gated { opacity: .5; pointer-events: none; }
+  .gatemsg { font: .82rem ui-sans-serif, system-ui, sans-serif; color: var(--warn); margin: .3rem 0 .6rem; }
+  .locked-banner { font: 600 .8rem ui-sans-serif, system-ui, sans-serif; color: var(--accent); }
+  #checks:empty { display: none; }
+  .exportbar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--line); padding: .6rem 1rem; display: flex; gap: .5rem; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .saved { font: .78rem ui-sans-serif, system-ui, sans-serif; color: var(--muted); }
+  code { background: #f2efeb; padding: .1em .3em; border-radius: 3px; font-size: .9em; }
+  .ord { display: flex; align-items: flex-start; gap: .6rem; border: 1px solid var(--line); border-radius: 6px; padding: .7rem .8rem; margin: .6rem 0; background: #fff; }
+  .ord .n { font: 700 1rem ui-monospace, Menlo, monospace; color: var(--accent); min-width: 1.4rem; }
+  .ord .body { flex: 1; }
+  .ord .btns { display: flex; flex-direction: column; gap: .2rem; }
+  .defect { border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 6px; padding: .8rem .9rem; margin: .7rem 0; background: #fff; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     SESSION CONFIG — the only block that changes between sessions.
+     AGENTS.md R14: the AI copies this template, edits this block, nothing else.
+
+     mode "A" and "C" use `item`.  mode "B" uses `scrambled`.
+     `key` is optional — read the R7 note in AGENTS.md before embedding one.
+     ═══════════════════════════════════════════════════════════════════════════ -->
+<script>
+const SESSION = {
+  mode: "A",                       // "A" | "B" | "C"
+  number: 0,
+  date: "throwaway",
+  tier: "mechanics only — not scored",
+  lens: "R",                       // "R" | "S" | "J"
+
+  // ── Modes A and C. The AI's pre-parse. `text` is the sentence VERBATIM — it is
+  //    what he reads and clicks. `subject` is QUOTED and never resolved. `clauses`
+  //    are QUOTED VERBATIM and never paraphrased. See docs/04-annotation-format.md.
+  item: {
+    id: "throwaway",
+    provenance: "throwaway example — not a corpus item, nothing here is scored",
+    sentences: [
+      { text: "The bakery on Mill Street closes for three weeks every January.",
+        subject: "The bakery on Mill Street", precedes: "none",
+        clauses: ["The bakery on Mill Street closes for three weeks every January"] },
+      { text: "The owner uses the time to service the ovens, which run continuously for the rest of the year.",
+        subject: "The owner", precedes: "none",
+        clauses: ["The owner uses the time to service the ovens",
+                  "which run continuously for the rest of the year"] },
+      { text: "Regulars grumble, but the alternative is a breakdown in the middle of a Saturday morning.",
+        subject: "Regulars", precedes: "none",
+        clauses: ["Regulars grumble",
+                  "but the alternative is a breakdown in the middle of a Saturday morning"] }
+    ]
+  },
+
+  // ── Mode B only. Presented in this (scrambled) order.
+  scrambled: [
+    "Reservoir levels remain below the seasonal average.",
+    "Rainfall in the catchment was the highest on record for March.",
+    "The restrictions announced in February therefore stay in force."
+  ],
+  scrambledKeyOrder: null,         // e.g. [2, 1, 3] — 1-based, in the order shown above
+
+  key: null                        // string, or null to paste it in at the reveal step
+};
+</script>
+
+<h1>Mode <span id="h-mode"></span> &mdash; <span id="h-modename"></span></h1>
+<p class="sub">
+  Session <span id="h-num"></span> &middot; <span id="h-date"></span> &middot;
+  <span id="h-tier"></span> &middot; item <span id="h-item"></span> &middot;
+  Lens <span id="h-lens"></span>
+</p>
+<div class="note" id="h-prov"></div>
+
+<div class="warn">
+  <strong>This page cannot write to itself.</strong> A browser has no way to save back
+  into a local file, so there is no save button that edits this document. Your work is
+  held in this browser as you type, and <strong>Save to file</strong> at the bottom
+  writes it out as markdown &mdash; and that markdown is the record the project keeps.
+  Closing the tab loses nothing, but nothing reaches <code>exercise/</code> until you
+  save it out.
+</div>
+
+<div id="stages"></div>
+
+<h2>Consistency check</h2>
+<p class="note">
+  Completeness and internal consistency only. <strong>This page does not know whether
+  your answers are right.</strong> Correctness comes from the key, and the key is
+  gated behind your commitment on purpose.
+</p>
+<div class="row"><button id="run-checks" class="primary">Run checks</button></div>
+<div id="checks"></div>
+
+<div class="exportbar">
+  <button id="export" class="primary">Save to file (.md)</button>
+  <button id="copy">Copy all to clipboard</button>
+  <span class="saved" id="saved">not yet saved to a file</span>
+</div>
+
+<script>
+"use strict";
+
+const $ = function (id) { return document.getElementById(id); };
+const MODE = SESSION.mode;
+const MODE_NAMES = { A: "Analyze supplied prose", B: "Reorder scrambled propositions", C: "Repair diagnosed disruptions" };
+const LENS_NAMES = {
+  R: "R — relation · catches D3, D7",
+  S: "S — stress · catches D4",
+  J: "J — job · catches structure and D8"
+};
+const TIES_OPTS = [
+  ["quote", "quote the linking word", "present and works"],
+  ["infer", "no explicit word, reader infers it", "legitimate, common"],
+  ["fails", "there is a word but it fails", "D1 ambiguous / D5 renamed"],
+  ["none", "nothing connects it", "D2 / D6"],
+  ["opening", "nothing — this is the opening", ""]
+];
+const QUOTE_PICKS = ["quote", "fails"];
+
+/* Which modes carry the annotation sheet and the rotating lens.
+   docs/04-annotation-format.md scopes itself to DRILLS.md §1 (Mode A) and §4
+   (Mode E) — never §3. Mode C's protocol is flag → diagnose → repair → key; it has no sheet and no lens, so it must not have empty ones in its state,
+   its checks or its export either. */
+const HAS_SHEET = (MODE === "A");
+const HAS_LENS = (MODE === "A");
+const PATTERNS = [
+  "opening", "1 constant topic", "2 linear", "3 derived topics",
+  "4 split", "5 contrastive", "6 question-answer", "will not resolve"
+];
+const CODES = [
+  ["D1", "unresolvable reference"], ["D2", "unmotivated topic shift"],
+  ["D3", "buried relation"], ["D4", "misplaced emphasis"],
+  ["D5", "broken lexical chain"], ["D6", "missing point of departure"],
+  ["D7", "inaccurate connective"], ["D8", "coherence, not cohesion"],
+  ["D9", "over-correction"]
+];
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+  });
+}
+
+/* ── header ─────────────────────────────────────────────────────────── */
+$("h-mode").textContent = MODE;
+$("h-modename").textContent = MODE_NAMES[MODE] || "";
+$("h-num").textContent = SESSION.number;
+$("h-date").textContent = SESSION.date;
+$("h-tier").textContent = SESSION.tier;
+$("h-item").textContent = MODE === "B" ? "scrambled" : (SESSION.item ? SESSION.item.id : "—");
+$("h-lens").textContent = HAS_LENS ? SESSION.lens : "n/a";
+$("h-prov").textContent = MODE === "B" ? "" : "Provenance: " + ((SESSION.item && SESSION.item.provenance) || "unmarked");
+
+/* ── tokens: one flat index space "si:ti" so a span may cross sentences ─ */
+/* `text` is the verbatim sentence and is what he reads and clicks. `clauses` are
+   the AI's quoted spans and are display-only. They are two representations on
+   purpose: joining clause quotes would silently drop conjunctions and final
+   punctuation, and the item he analyses has to be the item as written. */
+const SENTS = (MODE === "B") ? [] : (SESSION.item.sentences || []).map(function (s) {
+  const text = s.text || s.clauses.join(" ");
+  return { subject: s.subject, precedes: s.precedes, clauses: s.clauses, text: text, tokens: text.split(/\s+/).filter(Boolean) };
+});
+function tokenAt(k) {
+  const p = k.split(":");
+  return SENTS[Number(p[0])].tokens[Number(p[1])];
+}
+function quoteFromKeys(keys) {
+  return (keys || []).slice().sort(function (a, b) {
+    const A = a.split(":").map(Number), B = b.split(":").map(Number);
+    return A[0] - B[0] || A[1] - B[1];
+  }).map(tokenAt).join(" ");
+}
+
+/* ── state ──────────────────────────────────────────────────────────── */
+const KEY = "cohesion-" + MODE + "-" + SESSION.date + "-" + (MODE === "B" ? "scrambled" : SESSION.item.id);
+
+let state = {
+  stage: 1,
+  terms: [], glosses: "",
+  pred: { transition: "", pattern: "", verdict: "", confidence: "", assumption: "" },
+  predLocked: false, predRevision: "",
+  sheet: [],              // per sentence: { tiesPick, tiesKeys, anteMode, anteKeys, pattern, p5guard }
+  lens: {}, lensKeys: [], alt: "", unc: "",
+  verdict: "",            // Mode C: defective / clean / d8
+  defects: [],            // Mode C: { code, keys, note }
+  repair: "", repairWhy: "",
+  order: [], reasons: [], // Mode B
+  steps: { sheet: "attempt", lens: "attempt" },
+  aiReceived: false, contest: "",
+  keyOpen: false, keyText: "",
+  score: {}
+};
+if (HAS_SHEET) {
+  state.sheet = SENTS.map(function () {
+    return { tiesPick: "", tiesKeys: [], anteMode: "", anteKeys: [], pattern: "", p5guard: "" };
+  });
+} else if (MODE === "B") {
+  state.order = SESSION.scrambled.map(function (_, i) { return i; });
+  state.reasons = SESSION.scrambled.map(function () { return ""; });
+}
+
+let activePick = null;   // {type:"terms"} | {type:"ties",si} | {type:"ante",si} | {type:"defect",di}
+
+/* ── stage definitions ──────────────────────────────────────────────── */
+const STAGES = {
+  A: [
+    { n: 1, title: "Flag unknown terms", build: buildFlag, done: function () { return true; },
+      gate: "" },
+    { n: 2, title: "Predict — three claims, then lock", build: buildPredict,
+      done: function () { return state.predLocked; },
+      gate: "Lock the prediction before annotating. DRILLS.md §1: a prediction edited after the fact cannot be scored, and prediction hit is the only Mode A measure corpus familiarity cannot inflate." },
+    { n: 3, title: "Annotate — your reading, before the AI's", build: buildSheet,
+      done: sheetComplete,
+      gate: "Finish Ties back by and Pattern on every sentence." },
+    { n: 4, title: "The AI's filled sheet, and the key", build: buildKey,
+      done: function () { return true; }, gate: "",
+      openEarly: function () { return state.steps.sheet === "reference"; } }
+  ],
+  B: [
+    { n: 1, title: "Reconstruct the paragraph", build: buildReorder,
+      done: function () { return state.reasons.every(function (r) { return r.trim(); }); },
+      gate: "Write your reason for every placement before the key opens. DRILLS.md §2: reasoning hits, not order match, is the score that matters." },
+    { n: 2, title: "The key", build: buildKey, done: function () { return true; }, gate: "" }
+  ],
+  C: [
+    { n: 1, title: "Flag unknown terms", build: buildFlag, done: function () { return true; }, gate: "" },
+    { n: 2, title: "Diagnose", build: buildDiagnose, done: diagnoseComplete,
+      gate: "Commit a verdict. If defective, every defect needs a code and a quoted span." },
+    { n: 3, title: "Repair — yours, not the AI's", build: buildRepair, done: repairComplete,
+      gate: "Write the repair and say what the reader could not do before and can now." },
+    { n: 4, title: "The AI's reading, and the key", build: buildKey,
+      done: function () { return true; }, gate: "" }
+  ]
+};
+
+/* F1: a skipped step must satisfy its own gate, or the skip R16 promises is
+   unreachable. F4: the gate must cover every field R14 calls learner-filled —
+   checking only Ties back by and Pattern let the key open while the lens and both
+   closing lines were still blank, and a warning after the fact cannot un-see a key. */
+function sheetComplete() {
+  if (stepSkipped("sheet")) return true;
+  if (!state.sheet.length) return false;
+  const perSentence = state.sheet.every(function (s) {
+    if (!s.tiesPick || !s.pattern) return false;
+    if (QUOTE_PICKS.indexOf(s.tiesPick) >= 0 && !s.anteMode) return false;   // conditional Antecedent
+    if (s.pattern === "5 contrastive" && !s.p5guard) return false;
+    return true;
+  });
+  if (!perSentence) return false;
+  if (HAS_LENS && !stepSkipped("lens") && !Object.keys(state.lens).some(function (k) { return state.lens[k]; })
+      && !(state.lensKeys || []).some(function (ks) { return ks && ks.length; })) return false;
+  if (!state.alt.trim() || !state.unc.trim()) return false;                   // both closing lines
+  return true;
+}
+function diagnoseComplete() {
+  if (!state.verdict) return false;
+  if (state.verdict !== "defective") return true;
+  return state.defects.length > 0 && state.defects.every(function (d) { return d.code && d.keys.length; });
+}
+function repairComplete() {
+  if (state.verdict === "clean") return true;
+  if (state.verdict === "d8") return state.repairWhy.trim().length > 0;
+  return state.repair.trim().length > 0 && state.repairWhy.trim().length > 0;
+}
+
+function stageList() { return STAGES[MODE] || []; }
+
+function maxReachable() {
+  const list = stageList();
+  let i = 0;
+  while (i < list.length && list[i].done()) i++;
+  let reach = Math.min(i + 1, list.length);
+  /* R16 reference-first: the AI's sheet has to be readable BEFORE his own is filled,
+     because studying it first is the whole point of that order. The KEY stays gated
+     behind his commitment — see the guard on the reveal button in buildKey. */
+  list.forEach(function (st) {
+    if (st.openEarly && st.openEarly() && st.n > reach) reach = st.n;
+  });
+  return reach;
+}
+
+/* ── render ─────────────────────────────────────────────────────────── */
+function render() {
+  const host = $("stages");
+  host.innerHTML = "";
+  const reach = maxReachable();
+
+  if (MODE !== "B") host.appendChild(itemPanel());
+
+  stageList().forEach(function (st, idx) {
+    const h = document.createElement("h2");
+    h.innerHTML = '<span class="step">' + st.n + "</span>" + esc(st.title);
+    host.appendChild(h);
+
+    const open = st.n <= reach;
+    if (!open && st.n > 1) {
+      const prev = stageList()[idx - 1];
+      const g = document.createElement("div");
+      g.className = "gatemsg";
+      g.textContent = "Locked. " + (prev.gate || "Finish the previous step.");
+      host.appendChild(g);
+    }
+    const wrap = document.createElement("div");
+    if (!open) wrap.className = "gated";
+    st.build(wrap);
+    host.appendChild(wrap);
+  });
+}
+
+function itemPanel() {
+  const d = document.createElement("div");
+  d.className = "card item";
+  const t = document.createElement("div");
+  t.className = "note";
+  t.textContent = "The item. Click words to select spans when a field asks for one.";
+  d.appendChild(t);
+  SENTS.forEach(function (s, si) {
+    const line = document.createElement("div");
+    line.className = "tokens";
+    const label = document.createElement("span");
+    label.className = "sent-head";
+    label.style.marginRight = ".4rem";
+    label.textContent = "[" + (si + 1) + "]";
+    line.appendChild(label);
+    s.tokens.forEach(function (w, ti) {
+      const k = si + ":" + ti;
+      const sp = document.createElement("span");
+      sp.className = "tok";
+      if (state.terms.indexOf(k) >= 0) sp.classList.add("flag");
+      if (activePick && currentKeys().indexOf(k) >= 0) sp.classList.add("sel");
+      sp.textContent = w;
+      sp.classList.add("nopick");
+      line.appendChild(sp);
+      line.appendChild(document.createTextNode(" "));
+    });
+    d.appendChild(line);
+  });
+  return d;
+}
+
+/* The words to click are brought TO the field rather than the field sending you up
+   the page to find them. Nothing is clickable until a field asks; then a copy of the
+   item appears under that field. */
+/* Which sentences a field may point into.
+   Ties back by / Lens S : the words are IN that sentence.
+   Antecedent            : EARLIER text only — D1 includes "too far back", so all
+                           preceding sentences stay reachable, not just the previous.
+   Term flags / defects  : anywhere; an unknown word or a defect span is not tied
+                           to one sentence. */
+/* AGENTS.md R16: reference-first is the efficient order while a field is being learned,
+   attempt-first once it is. Recorded, never judged. */
+const STEP_MODES = [
+  ["attempt", "attempt first", "then compare with the reference sheet"],
+  ["reference", "reference first", "ask for the filled sheet, study it, then fill this"],
+  ["skip", "skip this step", "straight to the reference sheet and the score"]
+];
+function stepBar(key, label) {
+  const wrap = document.createElement("div");
+  wrap.className = "skipbar";
+  const l = document.createElement("span");
+  l.className = "lbl";
+  l.textContent = label + " \u2014";
+  wrap.appendChild(l);
+  wrap.appendChild(picks(STEP_MODES, state.steps[key] || "attempt", function (v) {
+    state.steps[key] = v || "attempt"; render(); save();
+  }));
+  return wrap;
+}
+function stepSkipped(key) { return state.steps[key] === "skip"; }
+
+function pickerRange() {
+  if (!activePick) return [0, SENTS.length - 1];
+  if (activePick.type === "ante") return [0, activePick.si - 1];
+  if (activePick.type === "ties" || activePick.type === "lens") return [activePick.si, activePick.si];
+  return [0, SENTS.length - 1];
+}
+
+function inlinePicker() {
+  const r = pickerRange();
+  const box = document.createElement("div");
+  box.className = "picker";
+  const l = document.createElement("span");
+  l.className = "plabel";
+  if (r[1] < r[0]) {
+    l.textContent = "NOTHING TO POINT AT — this is the first sentence, so there is no earlier text";
+    box.appendChild(l);
+    return box;
+  }
+  l.textContent = activePick && activePick.type === "ante"
+    ? (r[1] === r[0] ? "CLICK THE WORDS — sentence " + (r[1] + 1) + ", the only earlier one"
+                     : "CLICK THE WORDS — sentences " + (r[0] + 1) + "\u2013" + (r[1] + 1) + ", the earlier text")
+    : (activePick && (activePick.type === "ties" || activePick.type === "lens")
+        ? "CLICK THE WORDS — this sentence only"
+        : "CLICK THE WORDS — anywhere in the item");
+  box.appendChild(l);
+  SENTS.slice(r[0], r[1] + 1).forEach(function (s, off) {
+    const si = r[0] + off;
+    const num = document.createElement("span");
+    num.className = "snum";
+    num.textContent = "[" + (si + 1) + "]";
+    box.appendChild(num);
+    s.tokens.forEach(function (w, ti) {
+      const k = si + ":" + ti;
+      const sp = document.createElement("span");
+      sp.className = "tok" + (currentKeys().indexOf(k) >= 0 ? " sel" : "");
+      if (state.terms.indexOf(k) >= 0) sp.classList.add("flag");
+      sp.textContent = w;
+      sp.onclick = function () { toggleKey(k); };
+      box.appendChild(sp);
+      box.appendChild(document.createTextNode(" "));
+    });
+  });
+  return box;
+}
+
+function pickLabel() {
+  if (!activePick) return "";
+  if (activePick.type === "terms") return "unknown terms";
+  if (activePick.type === "ties") return "Ties back by, sentence " + (activePick.si + 1);
+  if (activePick.type === "ante") return "Antecedent, sentence " + (activePick.si + 1);
+  if (activePick.type === "defect") return "span for defect " + (activePick.di + 1);
+  if (activePick.type === "lens") return "final constituent, sentence " + (activePick.si + 1);
+  return "";
+}
+function currentKeys() {
+  if (!activePick) return [];
+  if (activePick.type === "terms") return state.terms;
+  if (activePick.type === "ties") return state.sheet[activePick.si].tiesKeys;
+  if (activePick.type === "ante") return state.sheet[activePick.si].anteKeys;
+  if (activePick.type === "defect") return state.defects[activePick.di].keys;
+  if (activePick.type === "lens") {
+    if (!state.lensKeys[activePick.si]) state.lensKeys[activePick.si] = [];
+    return state.lensKeys[activePick.si];
+  }
+  return [];
+}
+function toggleKey(k) {
+  if (!activePick) return;
+  const r = pickerRange(), si = Number(k.split(":")[0]);
+  if (si < r[0] || si > r[1]) return;
+  const arr = currentKeys();
+  const at = arr.indexOf(k);
+  if (at >= 0) arr.splice(at, 1); else arr.push(k);
+  render(); save();
+}
+function pickButton(type, ix) {
+  const on = activePick && activePick.type === type &&
+    (activePick.si === ix || activePick.di === ix || (ix === undefined));
+  const b = document.createElement("button");
+  b.className = "pick" + (on ? " sel" : "");
+  b.textContent = on ? "clicking words — press again when done" : "select by clicking words";
+  b.textContent = on ? "done selecting" : "select by clicking words";
+  b.onclick = function () {
+    if (on) { activePick = null; }
+    else {
+      activePick = { type: type };
+      if (type === "ties" || type === "ante") activePick.si = ix;
+      if (type === "defect") activePick.di = ix;
+    }
+    render();
+  };
+  const wrap = document.createElement("div");
+  wrap.appendChild(b);
+  if (on) wrap.appendChild(inlinePicker());
+  return wrap;
+}
+
+/* ── generic widgets ────────────────────────────────────────────────── */
+function field(label, hint) {
+  const d = document.createElement("div");
+  d.className = "field";
+  const l = document.createElement("label");
+  l.textContent = label;
+  d.appendChild(l);
+  if (hint) {
+    const h = document.createElement("div");
+    h.className = "hint";
+    h.textContent = hint;
+    d.appendChild(h);
+  }
+  for (let i = 2; i < arguments.length; i++) if (arguments[i]) d.appendChild(arguments[i]);
+  return d;
+}
+function picks(opts, current, onPick) {
+  const wrap = document.createElement("div");
+  opts.forEach(function (o) {
+    const b = document.createElement("button");
+    b.className = "pick" + (current === o[0] ? " sel" : "");
+    b.textContent = o[1] + (o[2] ? "  ·  " + o[2] : "");
+    b.onclick = function () { onPick(current === o[0] ? "" : o[0]); };
+    wrap.appendChild(b);
+  });
+  return wrap;
+}
+function ta(get, set, rows, ph, ro) {
+  const t = document.createElement("textarea");
+  t.rows = rows || 2;
+  t.placeholder = ph || "";
+  t.value = get() || "";
+  if (ro) t.readOnly = true;
+  t.oninput = function (e) { set(e.target.value); save(); };
+  return t;
+}
+function inp(get, set, ph, ro) {
+  const i = document.createElement("input");
+  i.type = "text";
+  i.placeholder = ph || "";
+  i.value = get() || "";
+  if (ro) i.readOnly = true;
+  i.oninput = function (e) { set(e.target.value); save(); };
+  return i;
+}
+function quoteView(text) {
+  const q = document.createElement("div");
+  q.className = "quotebox";
+  q.textContent = text || "";
+  return q;
+}
+
+/* ── stage 1: flag unknown terms (A, C) ─────────────────────────────── */
+function buildFlag(host) {
+  const c = document.createElement("div");
+  c.className = "card";
+  const n = document.createElement("div");
+  n.className = "note";
+  n.innerHTML = "Read the item once, then click any term you are not sure of. " +
+    "<strong>Do this before predicting.</strong> A defect you could not see because you " +
+    "could not read the words was never a flow measurement.<br>" +
+    "Flagging nothing is a legitimate answer — but if you flag nothing and then miss a " +
+    "defect that turned on a term, check the term afterwards.";
+  c.appendChild(n);
+  c.appendChild(field("Terms flagged", "", pickButton("terms"), quoteView(
+    state.terms.length ? state.terms.slice().sort().map(tokenAt).join("  ·  ") : "")));
+  const cnt = document.createElement("div");
+  cnt.className = "note";
+  cnt.textContent = "Count: " + state.terms.length + " — carried to LOG.md.";
+  c.appendChild(cnt);
+
+  const copyBtn = document.createElement("button");
+  copyBtn.textContent = "copy the list to ask for glosses";
+  copyBtn.onclick = function () {
+    const list = state.terms.slice().sort().map(tokenAt).join(", ");
+    navigator.clipboard.writeText("Gloss these terms standalone, and only these: " + list);
+    copyBtn.textContent = "copied";
+    setTimeout(function () { copyBtn.textContent = "copy the list to ask for glosses"; }, 1500);
+  };
+  c.appendChild(copyBtn);
+
+  const w = document.createElement("div");
+  w.className = "warn";
+  w.innerHTML = "The AI glosses <strong>each term standalone</strong> and never states that " +
+    "two terms share a referent — that would hand you a D5 and destroy the item. If a gloss " +
+    "tells you two words mean the same thing, say so: the item is spoiled, not solved.";
+  c.appendChild(w);
+  c.appendChild(field("Glosses received", "Paste what the AI sent back.",
+    ta(function () { return state.glosses; }, function (v) { state.glosses = v; }, 3)));
+  host.appendChild(c);
+}
+
+/* ── stage 2: predict (A) ───────────────────────────────────────────── */
+function buildPredict(host) {
+  const c = document.createElement("div");
+  c.className = "card";
+  const ro = state.predLocked;
+
+  if (ro) {
+    const b = document.createElement("div");
+    b.className = "locked-banner";
+    b.textContent = "LOCKED — revisions go underneath, never over.";
+    c.appendChild(b);
+  } else {
+    const n = document.createElement("div");
+    n.className = "note";
+    n.textContent = "Three claims, under a minute. Not \"which pattern dominates\" — " +
+      "patterns are named per transition, so a dominant-pattern answer cannot be scored hit or miss.";
+    c.appendChild(n);
+  }
+
+  c.appendChild(field("1 · Main move — which sentence pair", "",
+    inp(function () { return state.pred.transition; }, function (v) { state.pred.transition = v; },
+      "e.g. 1 → 2", ro)));
+  c.appendChild(field("1 · and which pattern it uses", "",
+    ro ? quoteView(state.pred.pattern)
+       : picks(PATTERNS.map(function (p) { return [p, p, ""]; }), state.pred.pattern,
+           function (v) { state.pred.pattern = v; render(); save(); })));
+  c.appendChild(field("2 · Verdict", "",
+    ro ? quoteView(state.pred.verdict)
+       : picks([["clean", "clean", ""], ["defective", "defective", ""], ["uncertain", "uncertain", ""]],
+           state.pred.verdict, function (v) { state.pred.verdict = v; render(); save(); })));
+  c.appendChild(field("2 · Confidence", "",
+    ro ? quoteView(state.pred.confidence)
+       : picks([["low", "low", ""], ["medium", "medium", ""], ["high", "high", ""]],
+           state.pred.confidence, function (v) { state.pred.confidence = v; render(); save(); })));
+  c.appendChild(field("3 · One reader assumption", "Something the writer takes as already known.",
+    inp(function () { return state.pred.assumption; }, function (v) { state.pred.assumption = v; }, "", ro)));
+
+  if (!ro) {
+    const b = document.createElement("button");
+    b.className = "primary";
+    const ready = state.pred.transition && state.pred.pattern && state.pred.verdict && state.pred.assumption;
+    b.disabled = !ready;
+    b.textContent = ready ? "Lock prediction" : "fill all three claims to lock";
+    b.onclick = function () {
+      if (!confirm("Locking is final for this session. Later changes are recorded underneath, not over. Continue?")) return;
+      state.predLocked = true; render(); save();
+    };
+    c.appendChild(b);
+  } else {
+    c.appendChild(field("Revised during analysis",
+      "If your verdict changed, record it here. The original above is what gets scored.",
+      ta(function () { return state.predRevision; }, function (v) { state.predRevision = v; }, 2,
+        "e.g. verdict changed to defective, D5 — original stands as the score")));
+  }
+  host.appendChild(c);
+}
+
+/* ── stage 3: the sheet (A) ─────────────────────────────────────────── */
+function buildSheet(host) {
+  host.appendChild(stepBar("sheet", "The annotation sheet"));
+  if (stepSkipped("sheet")) {
+    const s2 = document.createElement("div");
+    s2.className = "ok";
+    s2.innerHTML = "<strong>Sheet skipped, and recorded as skipped.</strong> The reference " +
+      "sheet still arrives \u2014 R15 makes it mandatory whether or not you filled one. " +
+      "<code>Pattern agreement</code> is not scoreable this session.";
+    host.appendChild(s2);
+    return;
+  }
+  SENTS.forEach(function (s, si) {
+    const sh = state.sheet[si];
+    const box = document.createElement("div");
+    box.className = "sent";
+
+    const head = document.createElement("div");
+    head.className = "sent-head";
+    head.textContent = "SENTENCE " + (si + 1) + '  [subject: "' + s.subject + '" | precedes subject: ' +
+      (s.precedes && s.precedes !== "none" ? '"' + s.precedes + '"' : "none") +
+      " | " + s.clauses.length + (s.clauses.length === 1 ? " clause]" : " clauses]");
+    box.appendChild(head);
+
+    const cl = document.createElement("div");
+    cl.className = "clauses";
+    cl.textContent = s.clauses.map(function (c, i) {
+      return "   " + "abcdefgh"[i] + '. "' + c + '"';
+    }).join("\n");
+    box.appendChild(cl);
+
+    box.appendChild(field("Ties back by",
+      "Pick one of four. If the pick names a specific word, select that word in the item above.",
+      picks(TIES_OPTS, sh.tiesPick, function (v) {
+        sh.tiesPick = v;
+        if (QUOTE_PICKS.indexOf(v) < 0) { sh.tiesKeys = []; sh.anteMode = ""; sh.anteKeys = []; }
+        activePick = null; render(); save();
+      }),
+      QUOTE_PICKS.indexOf(sh.tiesPick) >= 0 ? wrapPick("ties", si, sh.tiesKeys) : null));
+
+    if (QUOTE_PICKS.indexOf(sh.tiesPick) >= 0) {
+      box.appendChild(field("Antecedent",
+        'Only when the line above is a pronoun or demonstrative. "cannot pick" is an answer, and it means D1.',
+        picks([["point", "point at it", "select the words"], ["cannot", "cannot pick", "this is D1"],
+               ["na", "not a pronoun or demonstrative", ""]], sh.anteMode,
+          function (v) { sh.anteMode = v; if (v !== "point") sh.anteKeys = []; activePick = null; render(); save(); }),
+        sh.anteMode === "point" ? wrapPick("ante", si, sh.anteKeys) : null));
+    }
+
+    box.appendChild(field("Pattern", "One per transition. Not per paragraph.",
+      picks(PATTERNS.map(function (p) { return [p, p, ""]; }), sh.pattern,
+        function (v) { sh.pattern = v; if (v !== "5 contrastive") sh.p5guard = ""; render(); save(); })));
+
+    if (sh.pattern === "5 contrastive") box.appendChild(p5Guard(sh));
+    host.appendChild(box);
+  });
+
+  const lens = document.createElement("div");
+  lens.className = "card";
+  const lh = document.createElement("div");
+  lh.className = "sent-head";
+  lh.textContent = "LENS " + LENS_NAMES[SESSION.lens];
+  lens.appendChild(lh);
+  buildLens(lens);
+  host.appendChild(lens);
+
+  const close = document.createElement("div");
+  close.className = "card";
+  close.appendChild(field("Alternative reading",
+    "Free response, one line, by design. Another way the structure could be read, and what would settle it.",
+    ta(function () { return state.alt; }, function (v) { state.alt = v; }, 2)));
+  close.appendChild(field("Uncertainty",
+    "Quote the term or assumption, then one clause on what you took the reader to already know. \"None\" is almost always wrong.",
+    ta(function () { return state.unc; }, function (v) { state.unc = v; }, 2)));
+  host.appendChild(close);
+}
+
+function wrapPick(type, ix, keys) {
+  const w = document.createElement("div");
+  w.appendChild(pickButton(type, ix));
+  w.appendChild(quoteView(quoteFromKeys(keys)));
+  return w;
+}
+
+function p5Guard(sh) {
+  const g = document.createElement("div");
+  g.className = "warn";
+  const p = document.createElement("div");
+  p.innerHTML = "<strong>Pattern 5 guard.</strong> Contrastive progression needs the contrast in the " +
+    "<em>departure point</em>, not merely somewhere in the sentence. Pattern 5 was over-reached twice " +
+    "in the first two sessions, both times on a transition that <em>felt</em> like a shift.<br>" +
+    "Is the contrast sitting in first position?";
+  g.appendChild(p);
+  g.appendChild(picks([["yes", "yes — it opens the sentence", ""], ["no", "no — it arrives later", ""]],
+    sh.p5guard, function (v) { sh.p5guard = v; render(); save(); }));
+  if (sh.p5guard === "no") {
+    const n = document.createElement("div");
+    n.className = "note";
+    n.style.marginTop = ".4rem";
+    n.textContent = "Then this is not pattern 5. Within-sentence contrast is not contrastive progression. " +
+      "Look at 3 derived topics or 6 question-answer — and if the transition genuinely will not resolve, " +
+      "check the lexical chain first: a broken chain shows up as an unlabelable transition.";
+    g.appendChild(n);
+  }
+  return g;
+}
+
+function buildLens(host) {
+  host.appendChild(stepBar("lens", "Lens " + SESSION.lens));
+  if (stepSkipped("lens")) {
+    const s2 = document.createElement("div");
+    s2.className = "ok";
+    s2.textContent = "Lens skipped and recorded. Nothing this session is evidence about "
+      + (LENS_NAMES[SESSION.lens] || SESSION.lens) + ".";
+    host.appendChild(s2);
+    return;
+  }
+  if (SESSION.lens === "R") {
+    const w = document.createElement("div");
+    w.className = "warn";
+    w.innerHTML = "<strong>Aim it deliberately.</strong> Lens R only fires where you point it. " +
+      "Point it at the transition carrying the paragraph's main move, not the first one you feel unsure about.";
+    host.appendChild(w);
+    host.appendChild(field("Transition", "", inp(lg("transition"), ls("transition"), "sentence __ → sentence __")));
+    host.appendChild(lensPick("relation", "Relation",
+      ["cause", "result", "contrast", "concession", "qualification", "addition", "sequence", "unclear"],
+      "'unclear' is a finding, not a failure — an unnameable relation is D3. A connective whose named relation does not match your pick is D7."));
+    host.appendChild(field("Signalled by", "", inp(lg("signalled by"), ls("signalled by"), 'quote the connective, or "none"')));
+    host.appendChild(lensPick("costs the reader", "Costs the reader", ["yes", "no", "uncertain"], ""));
+  } else if (SESSION.lens === "S") {
+    const n = document.createElement("div");
+    n.className = "note";
+    n.textContent = "Click the last few words of each sentence — the final constituent — and say "
+      + "whether it is the news. Old information in the stress position is D4. No typing: "
+      + "session 3 left this lens blank at 6 of 7 because it asked for text to be copied by hand.";
+    host.appendChild(n);
+    SENTS.forEach(function (s, i) {
+      if (!state.lensKeys[i]) state.lensKeys[i] = [];
+      const f = document.createElement("div");
+      f.className = "field";
+      const l = document.createElement("label");
+      l.textContent = "S" + (i + 1) + " final constituent";
+      f.appendChild(l);
+      const on = activePick && activePick.type === "lens" && activePick.si === i;
+      const b = document.createElement("button");
+      b.className = "pick" + (on ? " sel" : "");
+      b.textContent = on ? "done selecting" : "click the last few words";
+      b.onclick = function () { activePick = on ? null : { type: "lens", si: i }; render(); };
+      f.appendChild(b);
+      const q = document.createElement("div");
+      q.className = "quotebox";
+      q.textContent = quoteFromKeys(state.lensKeys[i]);
+      f.appendChild(q);
+      if (on) f.appendChild(inlinePicker());
+      host.appendChild(f);
+      host.appendChild(lensPick("S" + (i + 1) + " news", "S" + (i + 1) + " — is that the news?",
+        ["news", "already known", "uncertain"], ""));
+    });
+  } else {
+    const n = document.createElement("div");
+    n.className = "note";
+    n.textContent = "One job per sentence. Two sentences doing the same job, or a paragraph with no claim " +
+      "anywhere, is usually a structure problem rather than a flow one — see D8.";
+    host.appendChild(n);
+    SENTS.forEach(function (s, i) {
+      host.appendChild(lensPick("S" + (i + 1) + " job", "Sentence " + (i + 1),
+        ["claim", "context", "evidence", "qualification", "consequence", "contrast",
+         "definition", "instruction", "transition", "closing"], ""));
+    });
+  }
+}
+function lg(k) { return function () { return state.lens[k]; }; }
+function ls(k) { return function (v) { state.lens[k] = v; }; }
+function lensPick(k, label, opts, hint) {
+  return field(label, hint, picks(opts.map(function (o) { return [o, o, ""]; }), state.lens[k] || "",
+    function (v) { state.lens[k] = v; render(); save(); }));
+}
+
+/* ── stage 2: diagnose (C) ──────────────────────────────────────────── */
+function buildDiagnose(host) {
+  const c = document.createElement("div");
+  c.className = "card";
+  const w = document.createElement("div");
+  w.className = "warn";
+  w.innerHTML = "<strong>Some items have nothing wrong with them.</strong> Marking a clean item " +
+    "defective is a scored error, not a neutral outcome — it scores negative, and over-correction " +
+    "is the failure mode this project creates. Some items are a <strong>D8</strong>: the correct " +
+    "response is to say the content is broken and refuse to fix it with flow repair.";
+  c.appendChild(w);
+  c.appendChild(field("Verdict", "Commit before listing anything.",
+    picks([["defective", "defective", "list the codes below"],
+           ["clean", "clean", "nothing to repair"],
+           ["d8", "coherence failure (D8)", "refuse flow repair"]], state.verdict,
+      function (v) { state.verdict = v; if (v !== "defective") state.defects = []; render(); save(); })));
+
+  if (state.verdict === "defective") {
+    state.defects.forEach(function (d, di) {
+      const box = document.createElement("div");
+      box.className = "defect";
+      const hd = document.createElement("div");
+      hd.className = "sent-head";
+      hd.textContent = "DEFECT " + (di + 1);
+      box.appendChild(hd);
+      box.appendChild(field("Code", "",
+        picks(CODES.map(function (c2) { return [c2[0], c2[0], c2[1]]; }), d.code,
+          function (v) { d.code = v; render(); save(); })));
+      box.appendChild(field("Span", "Select the words carrying it.",
+        pickButton("defect", di), quoteView(quoteFromKeys(d.keys))));
+      box.appendChild(field("What the reader cannot do", "",
+        ta(function () { return d.note; }, function (v) { d.note = v; }, 2)));
+      const rm = document.createElement("button");
+      rm.className = "danger";
+      rm.textContent = "remove this defect";
+      rm.onclick = function () { state.defects.splice(di, 1); activePick = null; render(); save(); };
+      box.appendChild(rm);
+      c.appendChild(box);
+    });
+    const add = document.createElement("button");
+    add.className = "primary";
+    add.textContent = "+ add a defect";
+    add.onclick = function () { state.defects.push({ code: "", keys: [], note: "" }); render(); save(); };
+    c.appendChild(add);
+  }
+
+  if (state.verdict === "clean" || state.verdict === "d8") {
+    const n = document.createElement("div");
+    n.className = "ok";
+    n.textContent = state.verdict === "clean"
+      ? "Committed: clean. If the key says otherwise, that is a missed defect — worth more than a lucky hit."
+      : "Committed: D8. Say plainly in the next step why flow repair is the wrong tool, and do not smooth the reasoning over.";
+    c.appendChild(n);
+  }
+  host.appendChild(c);
+}
+
+/* ── stage 3: repair (C) ────────────────────────────────────────────── */
+function buildRepair(host) {
+  const c = document.createElement("div");
+  c.className = "card";
+  const w = document.createElement("div");
+  w.className = "warn";
+  w.innerHTML = "<strong>You write the repair. The AI does not (R1).</strong> Do not add or remove " +
+    "connectives reflexively — for each one added, name the relation it signals and what the reader " +
+    "would misread without it; for each cut, state that the relation is recoverable and how.";
+  c.appendChild(w);
+  if (state.verdict !== "clean") {
+    c.appendChild(field(state.verdict === "d8" ? "Why flow repair is the wrong tool" : "Your repair",
+      state.verdict === "d8" ? "Two sentences. Do not repair it." : "Preserve the meaning.",
+      ta(function () { return state.repair; }, function (v) { state.repair = v; }, 5)));
+  }
+  c.appendChild(field("What changed, and what the reader could not do before",
+    "One line per change.",
+    ta(function () { return state.repairWhy; }, function (v) { state.repairWhy = v; }, 4)));
+  host.appendChild(c);
+}
+
+/* ── stage 1: reorder (B) ───────────────────────────────────────────── */
+function buildReorder(host) {
+  const n = document.createElement("div");
+  n.className = "note";
+  n.textContent = "Reconstruct the paragraph, then write why each sentence sits where it does. " +
+    "Reasoning hits, not order match, is the score that matters — a right order for the wrong reason will not transfer.";
+  host.appendChild(n);
+
+  state.order.forEach(function (origIx, pos) {
+    const row = document.createElement("div");
+    row.className = "ord";
+    const num = document.createElement("div");
+    num.className = "n";
+    num.textContent = (pos + 1) + ".";
+    row.appendChild(num);
+
+    const body = document.createElement("div");
+    body.className = "body";
+    const txt = document.createElement("div");
+    txt.textContent = SESSION.scrambled[origIx];
+    body.appendChild(txt);
+    const r = ta(function () { return state.reasons[origIx]; },
+      function (v) { state.reasons[origIx] = v; }, 2, "why here?");
+    body.appendChild(r);
+    row.appendChild(body);
+
+    const btns = document.createElement("div");
+    btns.className = "btns";
+    const up = document.createElement("button");
+    up.textContent = "↑";
+    up.disabled = pos === 0;
+    up.onclick = function () { swap(pos, pos - 1); };
+    const dn = document.createElement("button");
+    dn.textContent = "↓";
+    dn.disabled = pos === state.order.length - 1;
+    dn.onclick = function () { swap(pos, pos + 1); };
+    btns.appendChild(up); btns.appendChild(dn);
+    row.appendChild(btns);
+
+    host.appendChild(row);
+  });
+
+  const cur = document.createElement("div");
+  cur.className = "note";
+  cur.textContent = "Current order, as originally presented: " +
+    state.order.map(function (i) { return i + 1; }).join(" → ");
+  host.appendChild(cur);
+}
+function swap(a, b) {
+  const t = state.order[a];
+  state.order[a] = state.order[b];
+  state.order[b] = t;
+  render(); save();
+}
+
+/* ── the key stage: AI sheet + key together; the lock was the gate ──── */
+
+/* ── key stage ──────────────────────────────────────────────────────── */
+function buildKey(host) {
+  const c = document.createElement("div");
+  c.className = "card";
+
+  const committed = sheetComplete() && (MODE !== "A" || state.predLocked);
+  if (!state.keyOpen && !committed) {
+    const g = document.createElement("div");
+    g.className = "warn";
+    g.innerHTML = "<strong>The key stays shut until your commitment is in.</strong> " +
+      "Read the reference sheet above as much as you like \u2014 that is what reference-first " +
+      "is for \u2014 but finish or skip your own sheet before opening the key." +
+      (MODE === "A" && !state.predLocked ? " The prediction is not locked yet." : "");
+    c.appendChild(g);
+    host.appendChild(c);
+    return;
+  }
+  if (!state.keyOpen) {
+    const n = document.createElement("div");
+    n.className = "note";
+    n.textContent = "The key is not a secret — it is in corpus/KEYS.md and you can open that any time. " +
+      "It is gated behind your commitment, not behind a debate: once the prediction is locked and the " +
+      "sheet is done or skipped, opening it costs nothing. Opening it before that just deletes the measurement.";
+    c.appendChild(n);
+    const b = document.createElement("button");
+    b.className = "primary";
+    b.textContent = "Open the key";
+    b.onclick = function () { state.keyOpen = true; render(); save(); };
+    c.appendChild(b);
+    host.appendChild(c);
+    return;
+  }
+
+  c.appendChild(field("The AI's filled sheet",
+    "Paste it. It arrives with the key — your answers are already locked, so nothing here can inflate them.",
+    ta(function () { return state.aiText || ""; }, function (v) { state.aiText = v; }, 6)));
+  c.appendChild(field("Anything you disagreed with, and whether it held",
+    "Optional, and not scored. Its absence is not deference — there is no contest step.",
+    ta(function () { return state.contest; }, function (v) { state.contest = v; }, 2)));
+
+  if (SESSION.key) {
+    const k = document.createElement("div");
+    k.className = "clauses";
+    k.textContent = SESSION.key;
+    c.appendChild(field("Key", "", k));
+  } else {
+    c.appendChild(field("Key", "Paste it from corpus/KEYS.md.",
+      ta(function () { return state.keyText; }, function (v) { state.keyText = v; }, 5)));
+  }
+
+  if (MODE === "B" && SESSION.scrambledKeyOrder) {
+    const mine = state.order.map(function (i) { return i + 1; }).join(",");
+    const ref = SESSION.scrambledKeyOrder.join(",");
+    const d = document.createElement("div");
+    d.className = mine === ref ? "ok" : "warn";
+    d.innerHTML = "<strong>Exact order match: " + (mine === ref ? "Y" : "N") + "</strong><br>" +
+      "yours: " + mine.replace(/,/g, " → ") + "<br>reference: " + ref.replace(/,/g, " → ") +
+      (mine === ref ? "" : "<br>A different order may still be valid. Decide whether yours survives scrutiny, and make the AI argue both sides rather than announce a winner (R4).");
+    c.appendChild(d);
+  }
+
+  c.appendChild(scoreBlock());
+  host.appendChild(c);
+}
+
+function scoreBlock() {
+  const d = document.createElement("div");
+  const h = document.createElement("div");
+  h.className = "sent-head";
+  h.textContent = "SCORE — mode-specific, per DRILLS.md";
+  d.appendChild(h);
+  const rows = {
+    A: [["patternAgreement", "Pattern agreement", "matching transitions ÷ total"],
+        ["predHit", "Prediction hit", "Y / partial / N"],
+        ["termsFlagged", "Terms flagged", "auto: " + state.terms.length]],
+    B: [["orderMatch", "Exact order match", "Y / N — coarse, not the main signal"],
+        ["reasoningHits", "Reasoning hits", "placements where your reason matches the structural reason ÷ total — THIS is the score"],
+        ["validAlt", "Valid alternative", "if you differed, did your order survive scrutiny?"]],
+    C: [["itemScore", "Item score", "from corpus/KEYS.md"],
+        ["falsePos", "False positives", "clean items marked defective — tracked separately, because a rising score with rising false positives is D9"],
+        ["termsFlagged", "Terms flagged", "auto: " + state.terms.length],
+        ["codesFound", "Codes found", ""],
+        ["codesMissed", "Codes missed", ""]]
+  }[MODE] || [];
+  rows.forEach(function (r) {
+    d.appendChild(field(r[1], r[2], inp(
+      function () { return state.score[r[0]]; },
+      function (v) { state.score[r[0]] = v; })));
+  });
+  d.appendChild(field("Prediction gap / rule update",
+    "What you expected vs what was there, and what you now believe that you didn't before. \"None\" means it was a fluency session.",
+    ta(function () { return state.score.notes; }, function (v) { state.score.notes = v; }, 4)));
+  return d;
+}
+
+/* ── checks ─────────────────────────────────────────────────────────── */
+$("run-checks").onclick = function () {
+  const out = [];
+  function add(cls, m) { out.push('<div class="' + cls + '">' + m + "</div>"); }
+
+  if (HAS_SHEET && stepSkipped("sheet"))
+    add("ok", "Annotation sheet skipped \u2014 recorded, not counted against you.");
+  if (HAS_SHEET && !stepSkipped("sheet")) {
+    if (!state.predLocked) add("warn", "Prediction is not locked.");
+    state.sheet.forEach(function (s, i) {
+      const n = "Sentence " + (i + 1);
+      if (!s.tiesPick) add("warn", n + ": <code>Ties back by</code> is empty.");
+      if (!s.pattern) add("warn", n + ": <code>Pattern</code> is empty.");
+      if (QUOTE_PICKS.indexOf(s.tiesPick) >= 0 && !s.tiesKeys.length)
+        add("warn", n + ": the pick names a specific word, but nothing is selected.");
+      if (s.tiesPick === "fails" && !s.anteMode)
+        add("warn", n + ": <code>there is a word but it fails</code> means D1 or D5, so <code>Antecedent</code> has to fire.");
+      if (s.anteMode === "point" && !s.anteKeys.length)
+        add("warn", n + ": <code>Antecedent</code> points at something, but nothing is selected.");
+      if (s.pattern === "5 contrastive" && !s.p5guard)
+        add("warn", n + ": pattern 5 chosen without answering the guard.");
+      if (s.pattern === "5 contrastive" && s.p5guard === "no")
+        add("warn", n + ": the contrast does <em>not</em> open the sentence, yet the pattern is still <code>5 contrastive</code>. One answer has to change.");
+      if (s.pattern === "will not resolve")
+        add("ok", n + ": an unlabelable transition is evidence, not a blank. Check the lexical chain — a broken chain shows up first as a transition you cannot label.");
+    });
+    if (state.sheet.filter(function (s) { return s.tiesPick === "opening"; }).length > 1)
+      add("warn", "More than one sentence is marked as the opening.");
+    if (!state.alt.trim()) add("warn", "<code>Alternative reading</code> is blank — one of only two places a judgment is expressed.");
+    const u = (state.unc || "").trim().toLowerCase();
+    if (!u || u === "none") add("warn", "<code>Uncertainty</code> is blank or 'none'. Almost always wrong — check whether you skipped the line rather than answered it.");
+  }
+  if (MODE !== "B") {
+    if (MODE === "C") {
+      if (!state.verdict) add("warn", "No verdict committed.");
+      state.defects.forEach(function (d, i) {
+        if (!d.code) add("warn", "Defect " + (i + 1) + " has no code.");
+        if (!d.keys.length) add("warn", "Defect " + (i + 1) + " has no span selected.");
+        if (d.code === "D8") add("ok", "Defect " + (i + 1) + " is D8 — flow repair is the wrong tool. Say so and stop; do not smooth over broken reasoning.");
+      });
+    }
+    if (state.terms.length === 0 && state.keyOpen)
+      add("ok", "Zero terms flagged. If a defect turned on a term you did not flag, check the term now — not flagging it shows you believed you understood it, not that you did.");
+  } else {
+    state.reasons.forEach(function (r, i) {
+      if (!r.trim()) add("warn", "Sentence " + (i + 1) + " (as presented) has no stated reason.");
+    });
+  }
+
+  if (!out.length) add("ok", "Complete and internally consistent. Nothing here says your answers are <em>right</em>.");
+  $("checks").innerHTML = out.join("");
+};
+
+/* ── export: the markdown stays the record ──────────────────────────── */
+function toMarkdown() {
+  const L = [];
+  L.push("# Session " + SESSION.number + " — Mode " + MODE + " (" + MODE_NAMES[MODE] + ") — " +
+    (MODE === "B" ? "scrambled" : SESSION.item.id), "");
+  L.push("- **Date:** " + SESSION.date);
+  L.push("- **Tier:** " + SESSION.tier);
+  if (MODE !== "B") {
+    L.push("- **Provenance:** " + ((SESSION.item && SESSION.item.provenance) || "unmarked"));
+    if (HAS_LENS) L.push("- **Lens this item:** " + SESSION.lens);
+    L.push("- **Step order:** sheet `" + state.steps.sheet + "`, lens `" + state.steps.lens + "`" +
+      (state.steps.sheet === "attempt" ? "" : " \u2014 reference-first or skipped, so `Pattern agreement` is NOT comparable with attempt-first sessions"));
+    L.push("- **Terms flagged:** " + state.terms.length +
+      (state.terms.length ? " — " + state.terms.slice().sort().map(tokenAt).join(", ") : ""));
+  }
+  L.push("", "---", "", "## The item", "");
+  if (MODE === "B") {
+    L.push("Presented in this order:", "");
+    SESSION.scrambled.forEach(function (s, i) { L.push("> **[" + (i + 1) + "]** " + s); });
+  } else {
+    SENTS.forEach(function (s, i) { L.push("> **[" + (i + 1) + "]** " + s.text); });
+  }
+
+  if (MODE === "A") {
+    L.push("", "---", "", "## Prediction, committed before analysis", "");
+    L.push("**Locked. Revisions are recorded underneath, never over.**", "");
+    L.push("1. **Main move:** " + (state.pred.transition || "—") + ", pattern **" + (state.pred.pattern || "—") + "**");
+    L.push("2. **Verdict:** **" + (state.pred.verdict || "—") + "**, " + (state.pred.confidence || "—") + " confidence");
+    L.push("3. **Reader assumption:** " + (state.pred.assumption || "—"));
+    if (state.predRevision.trim()) L.push("", "**Revised during analysis:** " + state.predRevision.trim());
+  }
+  if (state.glosses.trim()) L.push("", "**Glosses received:**", "", "```", state.glosses.trim(), "```");
+
+  if (HAS_SHEET) {
+    L.push("", "---", "", "## Annotation", "", "```");
+    SENTS.forEach(function (s, i) {
+      const sh = state.sheet[i];
+      L.push("SENTENCE " + (i + 1) + '  [subject: "' + s.subject + '" | precedes subject: ' +
+        (s.precedes && s.precedes !== "none" ? '"' + s.precedes + '"' : "none") +
+        " | " + s.clauses.length + (s.clauses.length === 1 ? " clause]" : " clauses]"));
+      s.clauses.forEach(function (c, j) { L.push("   " + "abcdefgh"[j] + '. "' + c + '"'); });
+      L.push("");
+      const opt = TIES_OPTS.filter(function (o) { return o[0] === sh.tiesPick; })[0];
+      let ties = opt ? opt[1] : "(not answered)";
+      const q = quoteFromKeys(sh.tiesKeys);
+      if (q) ties += ' — "' + q + '"';
+      L.push("Ties back by:  " + ties);
+      if (QUOTE_PICKS.indexOf(sh.tiesPick) >= 0) {
+        let a = "(not answered)";
+        if (sh.anteMode === "cannot") a = "cannot pick — D1";
+        else if (sh.anteMode === "na") a = "not a pronoun or demonstrative";
+        else if (sh.anteMode === "point") a = '"' + quoteFromKeys(sh.anteKeys) + '"';
+        L.push("Antecedent:    " + a);
+      }
+      L.push("Pattern:       " + (sh.pattern || "(not answered)"));
+      if (sh.pattern === "5 contrastive")
+        L.push("               contrast in the departure point? " + (sh.p5guard || "(not answered)"));
+      L.push("");
+    });
+    L.push("LENS " + SESSION.lens + " — " + LENS_NAMES[SESSION.lens]);
+    (state.lensKeys || []).forEach(function (ks, i) {
+      if (ks && ks.length) L.push('   S' + (i + 1) + ' final constituent: "' + quoteFromKeys(ks) + '"');
+    });
+    Object.keys(state.lens).forEach(function (k) {
+      if (state.lens[k]) L.push("   " + k + ": " + state.lens[k]);
+    });
+    L.push("", "Alternative reading:  " + (state.alt.trim() || "(blank)"));
+    L.push("Uncertainty:          " + (state.unc.trim() || "(blank)"), "```");
+  }
+
+  if (MODE === "C") {
+    L.push("", "---", "", "## Diagnosis", "");
+    L.push("**Verdict:** " + (state.verdict === "d8" ? "coherence failure (D8) — flow repair refused" : (state.verdict || "—")));
+    if (state.defects.length) {
+      L.push("", "| Code | Span | What the reader cannot do |", "|---|---|---|");
+      state.defects.forEach(function (d) {
+        L.push("| " + (d.code || "—") + ' | "' + quoteFromKeys(d.keys) + '" | ' + (d.note || "").replace(/\n/g, " ") + " |");
+      });
+    }
+    L.push("", "---", "", "## Repair — mine, not the AI's", "", "```", state.repair.trim(), "```");
+    L.push("", "**What changed, and what the reader could not do before:**", "", state.repairWhy.trim() || "—");
+  }
+
+  if (MODE === "B") {
+    L.push("", "---", "", "## Reconstruction", "");
+    L.push("**Order, in terms of the presented numbering:** " + state.order.map(function (i) { return i + 1; }).join(" → "));
+    if (SESSION.scrambledKeyOrder) L.push("**Reference order:** " + SESSION.scrambledKeyOrder.join(" → "));
+    L.push("", "| # | Sentence | Why here |", "|---|---|---|");
+    state.order.forEach(function (origIx, pos) {
+      L.push("| " + (pos + 1) + " | " + SESSION.scrambled[origIx] + " | " + (state.reasons[origIx] || "").replace(/\n/g, " ") + " |");
+    });
+  }
+
+  if (MODE !== "B") {
+    L.push("", "---", "", "## The AI's filled sheet", "");
+    L.push("```", (state.aiText || "").trim(), "```", "");
+    if (state.contest.trim()) L.push("", "**Disagreed with:** " + state.contest.trim());
+  }
+
+  L.push("", "---", "", "## The key", "");
+  L.push("```", (SESSION.key || state.keyText || "(not recorded)").trim(), "```");
+
+  L.push("", "---", "", "## Score", "");
+  L.push("| Measure | Result |", "|---|---|");
+  const labels = {
+    patternAgreement: "Pattern agreement",
+    predHit: "Prediction hit", termsFlagged: "Terms flagged",
+    orderMatch: "Exact order match", reasoningHits: "Reasoning hits", validAlt: "Valid alternative",
+    itemScore: "Item score", falsePos: "False positives",
+    codesFound: "Codes found", codesMissed: "Codes missed"
+  };
+  Object.keys(labels).forEach(function (k) {
+    if (state.score[k]) L.push("| " + labels[k] + " | " + state.score[k] + " |");
+  });
+  if (MODE !== "B" && !state.score.termsFlagged) L.push("| Terms flagged | " + state.terms.length + " |");
+  L.push("| Lens | " + (HAS_LENS ? SESSION.lens : "n/a — this mode has no lens") + " |");
+  L.push("", "**Prediction gap / rule update:**", "", state.score.notes ? state.score.notes.trim() : ">");
+  L.push("");
+  return L.join("\n");
+}
+
+let exported = false, saveT = null;
+$("export").onclick = function () {
+  const a = document.createElement("a");
+  const url = URL.createObjectURL(new Blob([toMarkdown()], { type: "text/markdown" }));
+  a.href = url;
+  a.download = SESSION.date + "-" + MODE + "-" + (MODE === "B" ? "scrambled" : SESSION.item.id) + ".md";
+  a.click();
+  URL.revokeObjectURL(url);
+  exported = true;
+  $("saved").textContent = "saved as " + a.download + " \u2014 move it into exercise/";
+};
+$("copy").onclick = function () {
+  navigator.clipboard.writeText(toMarkdown()).then(function () {
+    exported = true; $("saved").textContent = "whole sheet copied \u2014 paste it anywhere";
+  }, function () { $("saved").textContent = "clipboard blocked \u2014 use Save to file"; });
+};
+
+/* ── persistence ────────────────────────────────────────────────────── */
+function save() {
+  exported = false;
+  clearTimeout(saveT);
+  saveT = setTimeout(function () {
+    try {
+      localStorage.setItem(KEY, JSON.stringify(state));
+      $("saved").textContent = "kept in this browser \u2014 not yet saved to a file";
+    } catch (e) { $("saved").textContent = "NOT kept anywhere \u2014 save to a file now"; }
+  }, 400);
+}
+function load() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return;
+    const s = JSON.parse(raw);
+    Object.keys(state).forEach(function (k) { if (s[k] !== undefined) state[k] = s[k]; });
+    if (HAS_SHEET && state.sheet.length !== SENTS.length) {
+      state.sheet = SENTS.map(function () {
+        return { tiesPick: "", tiesKeys: [], anteMode: "", anteKeys: [], pattern: "", p5guard: "" };
+      });
+    }
+  } catch (e) { /* corrupt state: start clean rather than half-loaded */ }
+}
+addEventListener("beforeunload", function (e) {
+  if (state.predLocked || state.verdict || (state.reasons || []).some(function (r) { return r.trim(); })) {
+    if (!exported) { e.preventDefault(); e.returnValue = ""; }
+  }
+});
+
+load();
+render();
+</script>
+</body>
+</html>

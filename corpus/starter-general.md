@@ -28,18 +28,39 @@ stable.
 
 ## Items carrying off-page knowledge requirements
 
-**Always run the flag-unknowns step (`DRILLS.md` §1 step 2) on these.** Marked, not
-removed — they are sound items once the terms are glossed.
+An earlier version of this section said these become "sound items once the terms
+are glossed." That contradicts `AGENTS.md` R13 and is false for the high-severity
+ones: **standalone glosses do not establish coreference**, and a gloss that does
+establish it hands over the defect. There is no version of G3 that is both fairly
+glossed and still scoreable.
 
-| Item | Register assumed | Severity |
-|---|---|---|
-| **G3** | UK local government — `council` / `local authority` / `borough` can name one body | **High.** The defect is undetectable without it |
-| **G9** | UK charity and property law — legacy donations, sitting tenant, covenant restricting sale | **High** |
-| **G6** | Clinical-trial reporting — adherence, community settings, steering committee | Moderate |
-| **G12** | Whitehall procurement register — review, annex, former ministers | Moderate |
+So the two severities are handled differently.
 
-**G3 is burned** — worked in session 1 and reproduced as a worked example in
-`docs/04-annotation-format.md`. Do not reuse it as a fresh measurement.
+### High — not scored. Worked examples or unscored transfer material only
+
+| Item | Why it cannot be scored |
+|---|---|
+| **G3** | The D5 *is* the coreference of `council` / `local authority` / `borough`. Glossing them standalone leaves the defect invisible; glossing the relation reveals it. No fair scored run exists |
+| **G9** | UK charity and property law — legacy donations, sitting tenant, covenant restricting sale. Whether the item is clean turns on knowing what those obligations are |
+
+Use these to *demonstrate* a code, or as unscored reading once the codes are
+stable. Do not put them in a scored Mode A or C session, and do not log a result
+from one.
+
+**G3 is additionally burned** — worked in session 1 and reproduced as a worked
+example in `docs/04-annotation-format.md`.
+
+### Moderate — scored, with the flag-unknowns step mandatory
+
+| Item | Register assumed |
+|---|---|
+| **G6** | Clinical-trial reporting — adherence, community settings, steering committee |
+| **G12** | Whitehall procurement register — review, annex, former ministers |
+
+The defects in these are recoverable from structure once individual terms are
+glossed, so `DRILLS.md` §1 step 2 is enough. If a run of one of these produces the
+off-page confound outcome in `docs/vocabulary-interface.md`, reclassify it as high
+and move it up.
 
 ---
 

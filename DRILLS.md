@@ -76,9 +76,14 @@ with fresh briefs, and compare.
 
 ---
 
-## §1 — Mode A: Analyze known-good paragraphs
+## §1 — Mode A: Analyze supplied prose
 
 **Builds:** recognition. **Type:** fluency on re-used items, generality on fresh.
+
+Called "analyze known-good" in an earlier version. That was wrong and it leaked:
+the corpus contains defective items, the prediction step asks you for
+`clean / defective / uncertain`, and being told in advance that the paragraph is
+sound answers the question the drill is asking.
 
 1. Take a paragraph from the corpus or from real published prose (`corpus/sources.md`).
    **Tier 2 (`starter-technical.md`) is the starting tier** — see its header for
@@ -92,8 +97,10 @@ with fresh briefs, and compare.
    what separates the two. Carry `terms flagged` to `LOG.md`; see
    `docs/vocabulary-interface.md` for how the count is read.
 
-   Flagging nothing is a legitimate answer. Flagging nothing *and* missing a
-   defect that turned on a term is a link-1 miss, not a flow miss.
+   Flagging nothing is a legitimate answer. If you flag nothing and then miss a
+   defect that turned on a term, **check the term afterwards** — not flagging it
+   shows you believed you understood it, not that you did. Three outcomes, and
+   only one of them is a vocabulary miss; see `docs/vocabulary-interface.md`.
 3. **Predict.** Commit three specific claims in writing before analyzing:
    1. **One named transition** — which sentence pair you expect to carry the
       paragraph's main move, and which pattern it uses
@@ -108,33 +115,38 @@ with fresh briefs, and compare.
    Three claims, under a minute. This is the highest-value step in the drill.
 4. Annotate it yourself, **before** the AI sees it, using
    `docs/04-annotation-format.md`. The AI hands you a pre-parsed sheet — subjects
-   bracketed, clauses split, assertions numbered — and fills nothing else. You
-   fill `Ties back by` and `Pattern`, plus `Antecedent` where a pronoun points
-   back, plus the two closing lines. If you are composing prose to fill a field,
-   stop: the field is wrong, and it gets cut and logged.
+   quoted but **never resolved**, clause boundaries marked, every clause quoted
+   verbatim and lettered — and fills nothing else. You fill `Ties back by` and
+   `Pattern`, plus `Antecedent` where a pronoun points back, **one rotating lens
+   question**, and the two closing lines.
+
+   If the AI hands you a paraphrase rather than a quote, or writes `= referent` in
+   a subject bracket, reject the sheet — it has answered part of the drill.
+
+   Per-sentence fields are quotes or picks. If you are composing prose into one,
+   the field is wrong and it gets cut and logged. `Alternative reading` is free
+   response by design; `Uncertainty` is a quoted term plus one clause.
 
    **Predictions are locked once written.** If your verdict changes during
    analysis, that change *is* the finding — record it as a revision underneath
    the original, never over it. A prediction edited after the fact cannot be
    scored as a hit or a miss, and the prediction hit rate is the only measure in
    Mode A that familiarity with the corpus cannot inflate.
-5. Have the AI produce its own annotation — **and hand it over without the key.**
-   The AI must stop here and wait. If the annotation, the key and the score all
-   arrive in one message, disagreement is not merely unlikely, it is impossible:
-   the answer is already on the page.
-6. Contest it. The AI is not automatically right. **The move always available to
-   you, on session one and after, is to make it point at the span** — ask which
-   words carry the defect. A judgment that cannot be attached to specific words is
-   one you should not accept, and applying that test requires no expertise.
-7. *Then* open the key. Compare all three readings: yours, the AI's, and the
-   reference.
-8. Where two patterns are defensible, say what would distinguish them.
+5. **The AI hands over its own filled sheet and the key** (`AGENTS.md` R15). Your
+   prediction is locked and your sheet is done, so nothing arriving now can inflate
+   either. Compare all three readings: yours, the AI's, and the reference.
+6. Where two patterns are defensible, say what would distinguish them.
 
-**On the `Defended disagreements` score.** Do not expect it to be above zero in
-early sessions — with no independent model yet, a manufactured disagreement is
-noise. It becomes meaningful once you have a reading of your own to defend. What
-must exist from session one is the *opportunity*: step 6 is a stop, not a
-formality.
+**There is no contest step, and `Defended disagreements` is not scored.** An earlier
+version made contesting a mandatory stop between the AI's reading and the key. It ran
+three sessions and returned zero every time, twice while arguable points were named
+explicitly — and this file already conceded why: *with no independent model yet, a
+manufactured disagreement is noise.* A step whose honest output is silence is asking
+you to perform a disagreement you do not have.
+
+What protects you instead is an obligation on the AI: **every code it names is quoted
+to a span.** No judgment without the words that carry it. If you do disagree, that is
+worth more than the score was — record it in the session notes.
 
 **Do not** try to prove every paragraph follows one chain. Comparing *different*
 patterns is the point of this drill.
@@ -146,13 +158,19 @@ Record all three numbers. A single blended score hides which part is moving.
 | Measure | How |
 |---|---|
 | **Pattern agreement** | transitions where your label matches the reference ÷ total transitions |
-| **Defended disagreements** | count of differences where you argued your reading from the text and it held. These are *positive* — a high agreement rate with zero defended disagreements means you are deferring to the AI |
-| **Prediction hit** | did step 2 match what you found? Y / partial / N |
+| **Prediction hit** | did step 3 match what you found? Y / partial / N |
+| **Lens** | which lens ran this item — R / S / J. Not scored; tracked so the rotation can be audited |
 
 The prediction hit rate is the number to watch. Agreement can rise from
 familiarity with the corpus; prediction accuracy on *fresh* items cannot.
 
-Starting volume: two paragraphs, ~10 minutes.
+**Disagreements are noted, not scored.** If you argued a reading from the text and it
+held, write it in the session notes. It is not a column, and its absence is not
+deference — see the note above.
+
+Starting volume: **one paragraph**, ~10 minutes. README's arc says one Mode A item
+in sessions 1–2, and this line previously said two — the arc wins. Two paragraphs
+is a later volume, once the sheet is automatic.
 
 ---
 
@@ -225,9 +243,134 @@ Starting volume: one or two items, ~15 minutes.
 **Builds:** generality. **The drill that actually moves production, and the one you
 will be most tempted to skip.**
 
-1. Take a situation brief — purpose, reader, what the reader already knows, what
-   they need to be able to do afterward. Generate fresh briefs; never reuse.
-2. Write one paragraph. **Time it.** No AI during writing.
+### The sequence
+
+**Nine steps, in order, with nothing interrupting them.** An earlier version of this
+section put a four-step grading block in the middle of the numbered list, and then
+resumed at 3 — so the file had two overlapping sequences and never said who scored
+the first draft or when. That ambiguity cost a session.
+
+1. **Take a fresh brief** — purpose, reader, what the reader already knows, what they
+   need to be able to do afterwards. Never reuse a brief.
+2. **Write one paragraph, cold and timed.** No AI. Bracket what you cannot retrieve
+   (below) and keep going. **Then lock the draft**: it is the measured artifact, and
+   editing it later makes every score untraceable.
+3. **Annotate the locked draft** using `docs/04-annotation-format.md` — **or ask for the
+   reference sheet first and study it, then annotate. Or skip the sheet entirely.**
+   All three are legitimate; see the box below. Record what you caught yourself.
+4. **Resolve the brackets, without reorganizing anything.** This is the load-bearing
+   constraint in the whole drill. Fill the lexical gaps and change nothing else; if
+   you restructure here, the first draft and its annotation stop describing the same
+   paragraph.
+5. **Revise, from your own annotation.** Yours, not the AI's — this is a second
+   version, and the first one stays frozen.
+6. **The AI hands back a filled reference sheet and scores both frozen versions** —
+   pointing and naming only, never a rewrite (R1). The reference sheet is mandatory
+   (`AGENTS.md` R15): same sheet, same material, every field, plus a field-by-field
+   comparison. It scores the first draft on all seven rubric items and the self-revised
+   draft on the same seven, so the two are comparable.
+7. **Revise again if you want to.**
+8. **The AI presents two or three complete alternative versions, with the trade-off of
+   each** (`AGENTS.md` R1). This is the only point in the drill where it writes the
+   paragraph, and it comes *after* both your rubric scores are final, so it cannot
+   substitute for your production. **Never one version** — one reads as the answer,
+   several read as a space to choose inside. They are unvalidated AI prose and any of
+   them may be worse than yours.
+9. **Export and log.** Route each bracket to 2a / 2b / 3, and count the `2b-avoided`
+   cases that produced no bracket at all.
+
+> ### The self-check steps are skippable, and there are two legitimate orders
+>
+> **Reference first** — the AI fills the sheet, you study it, then you annotate.
+> **Attempt first** — you fill it, then the AI hands its version over.
+> **Skip** — no sheet this session; go straight to the reference sheet and the score.
+>
+> You choose, per session and per field. None of the three is the disciplined option
+> and none is the lazy one.
+>
+> **Why "attempt first" was the only order for three sessions, and why that was wrong.**
+> The rule came from `prediction hit` in Mode A, where committing before you look is
+> what makes the number scoreable. It got carried into the Mode E sheet, where nothing
+> is scored except `self-caught` — so the measurement argument does not apply, and what
+> remains is unguided problem-solving before any schema exists. That imposes search load
+> which crowds out the learning the step is for. The **worked-example effect** says the
+> efficient order for a novice is: study a correct example, then attempt with fading
+> support. Session 3 is the demonstration — `Ties back by` answered wrong five times in
+> one consistent direction, and the schema arrived from a prose explanation afterwards,
+> not from the attempting.
+>
+> **The counter-argument, which is not worthless.** Attempting before seeing the answer
+> improves retention even when the attempt fails — the generation effect, and productive
+> failure. But that finding requires enough prior knowledge to produce *meaningful*
+> attempts. Five identical wrong answers is not productive failure, it is floundering,
+> which is what the **expertise-reversal effect** predicts at this stage.
+>
+> **So the order is a function of expertise, not of virtue.** Reference-first while a
+> field is still being learned; attempt-first once you can fill it and agree with the
+> reference. Flip when you agree on that field across two consecutive sessions — the
+> same trigger shape as the scaffold fade in `AGENTS.md`.
+>
+> **What this costs, recorded honestly.** `Pattern agreement` and `self-caught` from a
+> reference-first session are **not comparable** to an attempt-first session — you cannot
+> be credited with catching what you were shown. Log which order ran, and never place
+> the two side by side as though they measured the same thing. A run of reference-first
+> sessions will make `self-caught` meaningless, and that is the price of building the
+> schema first; the number becomes real again when you switch back.
+
+**Who scores, and why the order is this way.** The AI scores, because `self-caught`
+is defined as the defects you found *before* the AI and that number needs a
+denominator that arrives afterwards. The brackets are resolved before scoring
+because rubric items 4 and 7 — unambiguous antecedents, accurate transitions —
+cannot be judged while the referring expression or the connective is still
+`[ENG: …]`. Lexical choice *is* part of reference and relation signalling.
+
+An earlier version scored items 1, 2, 3, 5, 6 first and marked 4 and 7 provisional,
+resolving brackets in between. That dance is no longer needed: the draft is frozen
+at step 2, so nothing about the scoring order can influence how you wrote it, and
+by step 6 all seven items are directly scorable. The concern it was built to answer
+— *if word choice is judged in the same breath as flow, you simplify to protect the
+score* — is now handled by the freeze rather than by the sequence.
+
+> ### No prediction step in Mode E
+>
+> Modes A, B and C each commit to something before the answer is available, and in
+> Mode A that commitment is a prediction and the highest-value step in the drill.
+> **Mode E commits to nothing, and asking it to is an error.**
+>
+> In Mode A the paragraph is fixed before you look at it, so `clean / defective` has
+> an answer you can be right or wrong about. In Mode E you are the author.
+> "Which defect will you produce?" asks you to forecast your own failure while
+> trying to avoid it, and the honest answer is always *none* — if you could name the
+> defect in advance you would not write it. An answer that can take only one value
+> is not a measure. *Which rubric item will fail* has the same problem.
+>
+> **The reason for excluding the planning variants is narrower, and it is worth
+> stating precisely.** Committing *the point in one line* or *the reader's active
+> question* does **not** hand you rubric marks 1 and 6 — an earlier version of this
+> file claimed that and overstated it. The brief already supplies the purpose and the
+> `needs to be able to` line, so restating them grants nothing; and item 1 asks
+> whether the *paragraph* makes the point identifiable, which a private note before
+> writing does not settle. Choosing which of the supplied facts is the point would be
+> a real planning act, and a defensible drill.
+>
+> It is excluded because **pre-writing planning changes the construct being
+> measured.** The number this project watches is delayed *cold* first-draft quality,
+> and §0 set that baseline cold. Add a planning step and you are measuring planned
+> first-draft quality — plausibly a more useful ability, but a different one, with no
+> baseline to compare against and no comparability with the session-20 re-run.
+>
+> **What replaces it: nothing.** The draft is written cold.
+>
+> **One cost, recorded honestly.** A pre-writing commitment would have separated *no
+> point* from *a point lost while writing* — different problems with different fixes,
+> and the annotation alone cannot tell them apart. The substitute is the **intent
+> gap** note after the annotation: what you meant the paragraph to do versus what the
+> sheet shows it does. Weaker, because it is reconstructed after the fact. If the log
+> shows drift recurring and the intent gap failing to catch it, a pre-commitment
+> earns its way back in — as a candidate, not a plan.
+>
+> `Pred. hit` is therefore blank on Mode E rows in `LOG.md`, the way
+> `First-draft rubric` is blank on Mode A rows.
 
 > ### Complexity floor — two Mode E variants
 >
@@ -300,39 +443,14 @@ Tally the three counts in `LOG.md`. The **ratio** is the point — see
 `docs/vocabulary-interface.md` for what each ratio implies. Ten sessions gives
 you a number that no amount of introspection will.
 
-### Grading order — four steps, not two passes
-
-An earlier version said "score flow, ignore brackets entirely." That is not
-possible. Rubric item 4 (references have unambiguous antecedents) and item 7
-(transitions accurate and necessary) cannot be scored while the referring
-expression or the connective is still `[ENG: …]`. Lexical choice *is* part of
-reference, chain, and relation signalling.
-
-But the reason for separating them still holds: if word choice is judged in the
-same breath as flow, you simplify to protect the score — the behaviour that
-produced four-sentence paragraphs in §0. So sequence rather than separate:
-
-1. **Score what brackets cannot touch.** Proposition order, sentence roles,
-   intended relations, whether the point is identifiable, whether the ordering
-   serves the reader's task. Rubric items 1, 2, 3, 5, 6
-2. **Mark items 4 and 7 provisional.** Do not guess them
-3. **Resolve the brackets** — and **do not reorganize the paragraph while doing
-   it.** This is the load-bearing constraint. If you restructure while filling
-   gaps, the step-1 score becomes untraceable and you have measured nothing
-4. **Finalize items 4 and 7** against the resolved text
-
-Then route the brackets by type as above. Bracket routing is a separate activity
-from grading and happens after all four steps.
-3. Annotate your own information flow before showing anyone, using
-   `docs/04-annotation-format.md`. Same stage as your Mode A work — do not run a
-   heavier format on your own prose than on the corpus.
-4. Revise, based on your own annotation.
-5. *Then* get AI feedback — pointing and naming only, no rewriting (R1).
-6. Revise again yourself.
-
-Step 3 is what converts this from "writing practice" into model construction.
+**Step 3 is what converts this from "writing practice" into model construction.**
 Skipping it turns the drill into unpaired production, which builds fluency in your
 current defects and nothing else.
+
+**Step 4 is the one that quietly destroys a measurement.** Resolving a bracket is
+filling a lexical gap. Reorganizing is a different act, it belongs in step 5, and
+doing it during step 4 means the first draft and its annotation no longer describe
+the same paragraph.
 
 ### Scoring — Mode E
 
@@ -341,11 +459,37 @@ every time.** Not a different rubric, not an impression. Using the same instrume
 for routine production and for the verification test is what makes the two
 comparable — otherwise the test measures against a baseline that does not exist.
 
+### Structure profile — read the score against it, never prescribe it
+
+Record the count of `simple / compound / complex / compound-complex` sentences in the
+draft. The instrument does this automatically from the sheet.
+
+**This is a coverage measure, not a target.** It says which defects were *available to
+be made*, and therefore which parts of the rubric a clean score is evidence about.
+
+| Profile | What a clean score does and does not tell you |
+|---|---|
+| Mostly **simple** | Items 4 and 7 were barely tested — D1 needs candidate antecedents and D7 needs connectives, and short simple sentences supply neither. Item 5 was tested *harder* than usual, because unjoined clauses leave every relation to juxtaposition |
+| Mostly **complex** | D4 was live throughout: every subordinate clause is somewhere the news can hide |
+| One sentence carrying 4+ propositions | Expect D3 there specifically. A sentence already holding four things has nowhere left to put a relation |
+
+Session 3 is the worked case: four of seven sentences simple, no D4 produced, and the
+one D3 sitting in the single 40-word compound-complex sentence. Reporting "no D4" from
+that draft would have been reporting that the defect was unavailable.
+
+**Do not turn this into a quota.** An earlier version of this file required "five
+sentences, two with subordinate clauses", and that was wrong for reasons that still
+hold: a syntax quota is satisfied by one bad convoluted sentence, and it teaches that
+longer syntax is better. The complexity floor stays a property of the **brief** —
+whether the structural opportunity exists. The profile is a property of the **draft**,
+and it is read, not required.
+
 Carry to the log:
 
 | Measure | Why |
 |---|---|
 | **First-draft rubric** | out of 7, scored on the draft *before* your own revision. **This is the primary measure** — the goal is producing good first drafts, not detecting bad ones |
+| **Structure profile** | counts by sentence type. Tells you which rubric items a clean score is evidence about, and which were untested |
 | **Self-revised rubric** | out of 7, after your own revision, before the AI sees it |
 | **Self-caught** | defects you found in your own annotation, before the AI |
 | **False positives** | things you "fixed" that were not defects |

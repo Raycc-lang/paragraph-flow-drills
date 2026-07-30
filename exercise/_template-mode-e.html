@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mode E sheet</title>
+<style>
+  :root {
+    --bg: #fbfaf8; --fg: #1c1a18; --muted: #6b6560; --line: #ddd8d2;
+    --card: #fff; --accent: #7a4f2c; --accent-bg: #f3ebe3;
+    --warn: #8a5a00; --warn-bg: #fdf3e0; --ok: #2f6b4a; --ok-bg: #eaf3ed;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0 auto; padding: 2rem 1.25rem 6rem; background: var(--bg); color: var(--fg);
+    font: 16px/1.55 ui-serif, Georgia, "Times New Roman", serif; max-width: 60rem;
+  }
+  h1 { font-size: 1.5rem; margin: 0 0 .25rem; }
+  h2 {
+    font-size: 1.05rem; letter-spacing: .04em; text-transform: uppercase;
+    color: var(--muted); margin: 2.5rem 0 .75rem;
+    border-bottom: 1px solid var(--line); padding-bottom: .35rem;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+  }
+  .sub { color: var(--muted); font-size: .9rem; margin: 0 0 1.5rem; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 1rem 1.15rem; margin: 1rem 0; }
+  .brief { background: var(--accent-bg); border-left: 3px solid var(--accent); }
+  .brief ol { margin: .5rem 0; padding-left: 1.4rem; }
+  .brief li { margin: .2rem 0; }
+  .note { color: var(--muted); font-size: .88rem; font-family: ui-sans-serif, system-ui, sans-serif; }
+  .warn { background: var(--warn-bg); border-left: 3px solid var(--warn); padding: .6rem .8rem; border-radius: 4px; margin: .6rem 0; font-size: .9rem; font-family: ui-sans-serif, system-ui, sans-serif; }
+  .ok { background: var(--ok-bg); border-left: 3px solid var(--ok); padding: .6rem .8rem; border-radius: 4px; margin: .6rem 0; font-size: .9rem; font-family: ui-sans-serif, system-ui, sans-serif; }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; margin: .5rem 0; }
+  th, td { border: 1px solid var(--line); padding: .4rem .55rem; text-align: left; vertical-align: top; }
+  th { background: #f4f1ed; font-family: ui-sans-serif, system-ui, sans-serif; font-weight: 600; }
+  textarea, input[type=text] {
+    width: 100%; font: 15px/1.6 ui-monospace, Menlo, Consolas, monospace;
+    padding: .6rem .7rem; border: 1px solid var(--line); border-radius: 4px;
+    background: #fff; color: var(--fg); resize: vertical;
+  }
+  button {
+    font: 500 .85rem ui-sans-serif, system-ui, sans-serif; cursor: pointer;
+    background: #fff; color: var(--fg); border: 1px solid var(--line);
+    border-radius: 4px; padding: .4rem .7rem; margin: .15rem .2rem .15rem 0;
+  }
+  button:hover { background: #f4f1ed; }
+  button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  button.pick.sel { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .row { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+  .field { margin: .7rem 0; }
+  .field > label { display: block; font: 600 .82rem ui-sans-serif, system-ui, sans-serif; letter-spacing: .03em; margin-bottom: .25rem; }
+  .field .hint { font: .8rem ui-sans-serif, system-ui, sans-serif; color: var(--muted); margin-bottom: .3rem; }
+  .quotebox {
+    min-height: 2.1rem; border: 1px dashed var(--line); border-radius: 4px;
+    padding: .35rem .5rem; font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: .88rem; background: #fdfcfb;
+  }
+  .quotebox:empty::before { content: "nothing quoted yet"; color: #b5aea6; }
+  .sent { border: 1px solid var(--line); border-radius: 6px; padding: .9rem 1rem; margin: 1rem 0; background: #fff; }
+  .sent-head { font: 600 .82rem ui-sans-serif, system-ui, sans-serif; color: var(--muted); letter-spacing: .04em; margin-bottom: .5rem; }
+  .tokens { line-height: 2.5; margin-bottom: .6rem; }
+  .tok { padding: .12rem .1rem; border-radius: 3px; cursor: pointer; }
+  .tok:hover { background: #f0ece7; }
+  .tok.sel { background: #ffe08a; }
+  .tok.eng { color: var(--accent); }
+  .gap { display: inline-block; width: .5rem; cursor: pointer; position: relative; }
+  .gap::after { content: ""; position: absolute; left: 50%; top: -.15em; bottom: -.15em; width: 1px; background: transparent; }
+  .gap:hover::after { background: #c0b8ae; }
+  .gap.brk::after { background: var(--accent); width: 2px; }
+  .gap.cut:hover::after { background: #a3563f; width: 3px; }
+  .skipbar { display: flex; gap: .4rem; align-items: center; flex-wrap: wrap;
+             margin: -.2rem 0 .6rem; }
+  .skipbar .lbl { font: .78rem ui-sans-serif, system-ui, sans-serif; color: var(--muted); }
+  .picker { border: 1px solid var(--accent); background: #fffdf8; border-radius: 5px;
+            padding: .5rem .6rem; margin: .4rem 0 .2rem; line-height: 2.1; font-size: .92rem; }
+  .picker .plabel { font: 600 .72rem ui-sans-serif, system-ui, sans-serif; color: var(--accent);
+                    letter-spacing: .05em; display: block; margin-bottom: .2rem; }
+  .picker .snum { font: 700 .78rem ui-monospace, Menlo, monospace; color: var(--muted); margin-right: .2rem; }
+  .clauses { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .85rem; background: #faf8f5; border-radius: 4px; padding: .5rem .6rem; margin: .5rem 0; white-space: pre-wrap; }
+  .timer { font: 600 1.1rem ui-monospace, Menlo, monospace; }
+  #checks:empty { display: none; }
+  .exportbar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--line); padding: .6rem 1rem; display: flex; gap: .5rem; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .saved { font: .78rem ui-sans-serif, system-ui, sans-serif; color: var(--muted); }
+  code { background: #f2efeb; padding: .1em .3em; border-radius: 3px; font-size: .9em; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     SESSION CONFIG — the only block that changes between sessions.
+     AGENTS.md R14: the AI copies this template, edits this block, nothing else.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<script>
+/* Ships with a THROWAWAY brief, deliberately. docs/04-annotation-format.md:
+   never practise the mechanics on real material — fresh briefs and corpus items
+   are non-renewable measurements. Learn the buttons here, then let the AI
+   generate a scoring sheet per AGENTS.md R14. Nothing done on this default
+   config goes in LOG.md. */
+const SESSION = {
+  number: 0,
+  date: "throwaway",
+  variant: "E-Expand",              // "E-Expand" | "E-Concise"
+  tier: "mechanics only — not scored",
+  slug: "mechanics-practice",
+  lens: "R",                        // "R" | "S" | "J" — rotate, and log which
+  purpose: "Practice the instrument, not the skill. Write anything; nothing here is scored.",
+  facts: [
+    "The office coffee machine has been out of order since Monday.",
+    "It is the third failure in six weeks; the grinder jams.",
+    "A replacement was approved but is four weeks out.",
+    "There is a working machine on the second floor.",
+    "Facilities will not repair this one again.",
+    "You cannot change the delivery date."
+  ],
+  reader: "A colleague who keeps finding the machine broken and does not know any of the above.",
+  needsToBeAbleTo: "Decide whether to keep waiting or start walking to the second floor.",
+  floor: [
+    ["≥ 5 propositions", "6 supplied"],
+    ["≥ 1 entity named 3+ times", "the machine, if you explain the failure and the replacement"],
+    ["≥ 1 non-additive relation", "concession (approved but four weeks out), cause (the grinder), contrast (the other floor)"]
+  ]
+};
+</script>
+
+<h1>Mode E &mdash; <span id="h-variant"></span></h1>
+<p class="sub">
+  Session <span id="h-num"></span> &middot; <span id="h-date"></span> &middot;
+  <span id="h-tier"></span> &middot; Lens <span id="h-lens"></span> &middot; generality-building
+</p>
+
+<h2>The brief</h2>
+<div class="card brief">
+  <p><strong>Purpose.</strong> <span id="b-purpose"></span></p>
+  <p><strong>The facts you have.</strong> All of them. Invent nothing; you need not use all of them.</p>
+  <ol id="b-facts"></ol>
+  <p><strong>Reader.</strong> <span id="b-reader"></span></p>
+  <p><strong>Needs to be able to:</strong> <span id="b-needs"></span></p>
+</div>
+<table>
+  <thead><tr><th style="width:34%">Complexity floor</th><th>Met by</th></tr></thead>
+  <tbody id="b-floor"></tbody>
+</table>
+
+<div class="warn">
+  <strong>This page cannot write to itself.</strong> A browser has no way to save back
+  into a local file, so there is no save button that edits this document. Your work is
+  held in this browser as you type, and <strong>Save to file</strong> at the bottom
+  writes it out as markdown &mdash; and that markdown is the record the project keeps.
+  Closing the tab loses nothing, but nothing reaches <code>exercise/</code> until you
+  save it out.
+</div>
+
+<h2>Draft 1 &mdash; cold, timed, no AI</h2>
+<div class="card">
+  <div class="row">
+    <button id="t-start" class="primary">Start</button>
+    <button id="t-stop">Stop</button>
+    <span class="timer" id="t-display">00:00</span>
+    <span class="note">Recorded automatically &mdash; &sect;0 and session 2 both lost this number.</span>
+  </div>
+  <p class="note" style="margin-top:.8rem">
+    Stall on a word &rarr; <button id="ins-bracket">insert [ENG: &hellip;]</button> and keep going.
+    Do not stop, do not open anything.
+  </p>
+  <textarea id="draft" rows="9" placeholder="Write the paragraph here."></textarea>
+  <div class="row" style="margin-top:.6rem">
+    <button id="lock" class="primary">Lock draft &amp; parse into sentences</button>
+    <span class="note" id="lock-note"></span>
+  </div>
+</div>
+
+<h2>Self-annotation</h2>
+<div class="card" id="gapmode"></div>
+<p class="note">
+  Sentence splitting is mechanical, so the page does it. <strong>Structure is yours</strong>
+  &mdash; pick each sentence's type and, when it is not simple, its number of independent
+  parts. Clause-boundary marking was removed: it existed only so <code>Antecedent</code>
+  could answer &ldquo;1a or 1b&rdquo;, and clicking the words themselves is more precise
+  than any letter. <code>Ties back by</code> and <code>Antecedent</code> are filled by
+  clicking, so every quote is exact by construction and nothing is retyped.
+</p>
+<div id="sentences"></div>
+
+<h2>Lens <span id="lens-label"></span></h2>
+<div class="card" id="lens-box"></div>
+
+<h2>Closing two lines</h2>
+<div class="card">
+  <div class="field">
+    <label>Alternative reading</label>
+    <div class="hint">Free response, one line, by design. Another way the structure could be read, and what would settle it.</div>
+    <textarea id="alt" rows="2"></textarea>
+  </div>
+  <div class="field">
+    <label>Uncertainty</label>
+    <div class="hint">Quote the term or assumption, then one clause on what you took the reader to already know. &ldquo;None&rdquo; is almost always wrong.</div>
+    <textarea id="unc" rows="2"></textarea>
+  </div>
+</div>
+
+<h2>What I caught myself</h2>
+<p class="note">Before the AI sees anything. Quote the span, name the code. One per line.</p>
+<textarea id="caught" rows="4"></textarea>
+
+<h2>Step 4 &mdash; brackets resolved, nothing else changed</h2>
+<p class="note">
+  Paste the draft with every <code>[ENG: &hellip;]</code> filled in and <strong>nothing
+  else touched</strong> &mdash; same sentences, same order, same words everywhere the
+  brackets were not. This is the load-bearing constraint in the drill: rubric items 4
+  and 7 cannot be scored while a referring expression or a connective is still a bracket,
+  and if you restructure here the first-draft score stops describing any paragraph that
+  exists. Restructure in the next box, not this one.
+  <br>No brackets? Leave it empty.
+</p>
+<textarea id="resolved" rows="8" placeholder="The draft with brackets filled and nothing else changed."></textarea>
+
+<h2>Step 5 &mdash; revision, mine not the AI's</h2>
+<p class="note">Restructure here. This is the version that gets the self-revised score.</p>
+<textarea id="revision" rows="8"></textarea>
+
+<h2>Bracket routing</h2>
+<div id="bracket-list" class="note"></div>
+<table>
+  <thead><tr><th>Bracket</th><th>What it was</th><th>Link</th><th>Action taken</th></tr></thead>
+  <tbody id="bracket-rows"></tbody>
+</table>
+<div class="field">
+  <label>2b-avoided</label>
+  <div class="hint">
+    Places you deliberately simplified &mdash; a phrase you were sure of, chosen over the
+    meaning you wanted. These generate no bracket, and they are the only thing keeping the
+    tally from reporting &ldquo;mostly 2a&rdquo; regardless of the truth.
+  </div>
+  <input type="text" id="avoided" placeholder="count, plus one line on each">
+</div>
+
+<h2>Consistency check</h2>
+<p class="note">
+  Completeness and internal consistency only. <strong>This page does not know whether your
+  answers are right</strong> &mdash; in Mode E the prose is fresh, so no key exists and none is
+  possible. Correctness comes from &sect;4 step 5.
+</p>
+<div class="row"><button id="run-checks" class="primary">Run checks</button></div>
+<div id="checks"></div>
+
+<h2>Step 7 &mdash; revision after feedback</h2>
+<p class="note">
+  The AI's feedback is pointing and naming only (R1) &mdash; the sentences here are
+  yours. <strong>Optional by protocol:</strong> both rubric scores are already final
+  before this box is touched, so nothing written here changes a measure. It is where
+  the lesson gets practised rather than read.
+</p>
+<div class="field">
+  <label>Paste the AI's feedback</label>
+  <div class="hint">Kept beside the revision so the two can be read together afterwards.</div>
+  <textarea id="feedback" rows="5"></textarea>
+</div>
+<div class="field">
+  <label>Revision after feedback</label>
+  <textarea id="step7" rows="8" placeholder="Yours, not the AI's."></textarea>
+</div>
+
+<h2>Step 8 &mdash; the AI's alternative versions</h2>
+<p class="note">
+  Two or three complete alternatives with their trade-offs, arriving only after both rubric
+  scores are final (R1). <strong>They are not standard answers</strong> &mdash; unvalidated
+  AI prose (R10), and any of them may be worse than yours. Paste them here so the exported
+  markdown carries them, because the markdown is the session record.
+</p>
+<textarea id="alts" rows="10" placeholder="Paste the alternatives and their trade-offs."></textarea>
+<div class="field">
+  <label>Which one you would steal from, and what for</label>
+  <div class="hint">One line. The point of a set is the choice it exposes, not any version in it.</div>
+  <textarea id="altsNote" rows="2"></textarea>
+</div>
+
+<div class="exportbar">
+  <button id="export" class="primary">Save to file (.md)</button>
+  <button id="copy">Copy all to clipboard</button>
+  <span class="saved" id="saved">not yet saved to a file</span>
+</div>
+
+<script>
+"use strict";
+
+const $ = function (id) { return document.getElementById(id); };
+const LENS_NAMES = {
+  R: "R — relation · catches D3, D7",
+  S: "S — stress · catches D4",
+  J: "J — job · catches structure and D8"
+};
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+  });
+}
+
+/* ── header and brief ───────────────────────────────────────────────── */
+$("h-variant").textContent = SESSION.variant;
+$("h-num").textContent = SESSION.number;
+$("h-date").textContent = SESSION.date;
+$("h-tier").textContent = SESSION.tier;
+$("h-lens").textContent = SESSION.lens;
+$("b-purpose").textContent = SESSION.purpose;
+$("b-reader").textContent = SESSION.reader;
+$("b-needs").textContent = SESSION.needsToBeAbleTo;
+$("b-facts").innerHTML = SESSION.facts.map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("");
+$("b-floor").innerHTML = SESSION.floor.map(function (r) {
+  return "<tr><td>" + esc(r[0]) + "</td><td>" + esc(r[1]) + "</td></tr>";
+}).join("");
+$("lens-label").textContent = LENS_NAMES[SESSION.lens] || SESSION.lens;
+
+/* ── state ──────────────────────────────────────────────────────────── */
+const KEY = "cohesion-mode-e-" + SESSION.date + "-" + SESSION.slug;
+
+/* Selections are stored as "sentence:token" KEYS in one flat index space, not as
+   strings and not per-sentence.
+   - Not strings, because a lexical chain repeats words by definition, so matching
+     by text would select and unselect every occurrence at once.
+   - Not per-sentence, because an antecedent normally lives in an EARLIER sentence.
+     `Antecedent` on sentence 2 has to be able to point into sentence 1 — that is
+     the ordinary case, not the exception. */
+let state = {
+  draft: "", parsedDraft: "", locked: false, elapsedSec: 0, repairMode: false,
+  steps: { sheet: "attempt", lens: "attempt", closing: "attempt" },
+  sentences: [],   // { tokens, stype, parts, lensKeys, tiesPick, tiesKeys, anteMode, anteKeys, pattern, p5guard }
+  lens: {}, alt: "", unc: "", caught: "", revision: "", avoided: "",
+  resolved: "", feedback: "", step7: "", alts: "", altsNote: "",
+  brackets: []
+};
+
+const TIES_OPTS = [
+  ["quote", "quote the linking word", "present and works"],
+  ["infer", "no explicit word, reader infers it", "legitimate, common"],
+  ["fails", "there is a word but it fails", "D1 ambiguous / D5 renamed"],
+  ["none", "nothing connects it", "D2 / D6"],
+  ["opening", "nothing — this is the opening", ""]
+];
+const PATTERNS = [
+  "opening", "1 constant topic", "2 linear", "3 derived topics",
+  "4 split", "5 contrastive", "6 question-answer", "will not resolve"
+];
+const QUOTE_PICKS = ["quote", "fails"];
+
+/* Sentence structure, kept because it predicts which defect is even available:
+   two independent parts give the NEXT sentence two candidate antecedents (the D1
+   condition), a coordinating join is where a non-additive relation gets flattened
+   into `and` (D3/D7), and a subordinating join is where the news hides in a
+   subordinate clause (D4).
+   This is grammar used as an instrument, not as a target. `docs/01-target.md`
+   excludes grammatical *accuracy*; component 3 of the target is "sentence topics
+   and grammatical subjects", and components 4 and 6 both depend on clause count. */
+const STYPES = [
+  ["simple", "simple", "one independent clause"],
+  ["compound", "compound", "two or more independent clauses — and / but / so"],
+  ["complex", "complex", "one independent plus a subordinate clause — because / which / if"],
+  ["compound-complex", "compound-complex", "both"]
+];
+const PARTS = [
+  ["1", "1", ""],
+  ["2", "2", "the next sentence has two things it could point at"],
+  ["3+", "3+", ""]
+];
+
+/* ── timer ──────────────────────────────────────────────────────────── */
+let timerId = null, t0 = null;
+function fmt(s) {
+  return String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
+}
+function tick() {
+  $("t-display").textContent = fmt(state.elapsedSec + Math.floor((Date.now() - t0) / 1000));
+}
+$("t-start").onclick = function () {
+  if (timerId) return;
+  t0 = Date.now(); timerId = setInterval(tick, 1000); tick();
+};
+$("t-stop").onclick = function () {
+  if (!timerId) return;
+  clearInterval(timerId); timerId = null;
+  state.elapsedSec += Math.floor((Date.now() - t0) / 1000);
+  $("t-display").textContent = fmt(state.elapsedSec);
+  save();
+};
+
+/* ── draft ──────────────────────────────────────────────────────────── */
+$("ins-bracket").onclick = function () {
+  const ta = $("draft"), at = ta.selectionStart, tpl = "[ENG: ]";
+  ta.value = ta.value.slice(0, at) + tpl + ta.value.slice(at);
+  ta.focus(); ta.setSelectionRange(at + 6, at + 6);
+  state.draft = ta.value; save();
+};
+$("draft").oninput = function (e) { state.draft = e.target.value; save(); };
+
+/* The draft is frozen once parsed. Editing it afterwards would leave the sheet
+   describing a paragraph that no longer exists, and the export would pair a
+   modified draft with annotations derived from an older one — a silently
+   untraceable record. Unlocking is possible and explicit, and it discards the
+   sheet, because a sheet built on different words is not evidence about these. */
+function applyDraftLockUI() {
+  const frozen = !!state.locked;
+  $("draft").readOnly = frozen;
+  $("ins-bracket").disabled = frozen;
+  $("lock").textContent = frozen ? "Unlock the draft (discards the sheet)"
+                                 : "Lock draft & parse into sentences";
+}
+
+/* Mechanical sentence split. Masks [ENG: …], `code`, decimals, initials and the
+   common abbreviations, so their full stops cannot split. Sentence structure is NOT
+   guessed — DRILLS.md §4: reading your own sentences is part of the drill.
+
+   The list holds only abbreviations that essentially NEVER end a sentence. `etc.`,
+   `al.`, `approx.` and similar are deliberately absent: masking those would create
+   a *missed* boundary, and a missed boundary is the worse error — the sheet would
+   silently treat two sentences as one.
+
+   No list is complete either way, so the sheet carries both a merge and a split
+   control. Repair a bad boundary there rather than enumerating cases here. */
+const ABBREV = ["e.g.", "i.e.", "vs.", "cf.", "Mr.", "Mrs.", "Ms.", "Dr.", "Prof."];
+function splitSentences(text) {
+  const MASK = "\u0000", DOT = "\u0001";
+  const masks = [];
+  let m = text.replace(/\[ENG:[^\]]*\]|`[^`]*`/g, function (hit) {
+    masks.push(hit);
+    return MASK + (masks.length - 1) + MASK;
+  });
+  m = m.replace(/(\d)\.(\d)/g, "$1" + DOT + "$2");
+  ABBREV.forEach(function (a) { m = m.split(a).join(a.split(".").join(DOT)); });
+  m = m.replace(/\b([A-Z])\.(\s)/g, "$1" + DOT + "$2");   // initials: "J. R. Smith"
+  return m.split(/(?<=[.!?])\s+/).map(function (p) {
+    return p.split(DOT).join(".")
+            .replace(new RegExp(MASK + "(\\d+)" + MASK, "g"), function (_, i) { return masks[Number(i)]; })
+            .trim();
+  }).filter(Boolean);
+}
+
+$("lock").onclick = function () {
+  if (state.locked) {
+    if (!confirm("Unlocking discards every clause boundary, pick and selection on the sheet, because they describe the current wording. Continue?")) return;
+    state.locked = false; state.parsedDraft = ""; state.sentences = []; state.brackets = [];
+    activeField = null;
+    applyDraftLockUI(); renderAll(); save();
+    $("lock-note").textContent = "Unlocked. The sheet was discarded.";
+    return;
+  }
+  const sents = splitSentences(state.draft);
+  if (!sents.length) { $("lock-note").textContent = "Nothing to parse yet."; return; }
+  state.locked = true;
+  state.parsedDraft = state.draft;
+  state.sentences = sents.map(function (s) {
+    return {
+      tokens: s.split(/\s+/).filter(Boolean),
+      stype: "", parts: "", lensKeys: [],
+      tiesPick: "", tiesKeys: [], anteMode: "", anteKeys: [], pattern: "", p5guard: ""
+    };
+  });
+  state.brackets = (state.draft.match(/\[ENG:[^\]]*\]/g) || []).map(function (t) {
+    return { text: t, was: "", link: "", action: "" };
+  });
+  if (timerId) $("t-stop").onclick();
+  activeField = null;
+  applyDraftLockUI();
+  renderAll(); save();
+  $("lock-note").textContent = sents.length + " sentences. The draft is now frozen.";
+};
+
+/* ── sentence sheet ─────────────────────────────────────────────────── */
+let activeField = null;   // { si, which: "tiesKeys" | "anteKeys" }
+
+/* Keys are "sentenceIndex:tokenIndex" in one flat space across the whole draft. */
+function tokenAt(k) {
+  const p = k.split(":");
+  const s = state.sentences[Number(p[0])];
+  return s ? s.tokens[Number(p[1])] : "";
+}
+function quoteFromKeys(keys) {
+  return (keys || []).slice().sort(function (a, b) {
+    const A = a.split(":").map(Number), B = b.split(":").map(Number);
+    return A[0] - B[0] || A[1] - B[1];
+  }).map(tokenAt).filter(Boolean).join(" ");
+}
+function keysOf(si, which) {
+  const s = state.sentences[si];
+  if (!s[which]) s[which] = [];
+  return s[which];
+}
+function activeCollection() {
+  return activeField ? keysOf(activeField.si, activeField.which) : [];
+}
+
+/* No abbreviation list is complete, so a bad boundary is repaired here rather than
+   predicted upstream. Merging clears the two sentences' picks: they were answers
+   about a different segmentation. */
+function mergeUp(si) {
+  if (si < 1) return;
+  const prev = state.sentences[si - 1], cur = state.sentences[si];
+  prev.tokens = prev.tokens.concat(cur.tokens);
+  Object.assign(prev, { stype: "", parts: "", lensKeys: [], tiesPick: "", tiesKeys: [],
+                        anteMode: "", anteKeys: [], pattern: "", p5guard: "" });
+  state.sentences.splice(si, 1);
+  clearAllSelections();   // keys point at indices that have all shifted
+  renderGapMode(); renderSentences(); renderLens(); save();
+}
+
+/* The mirror of mergeUp: for a boundary the splitter missed. Both clear the picks
+   on the affected sentences, because those answers described a different
+   segmentation and silently keeping them would misreport the sheet. */
+function splitSentenceAt(si, ti) {
+  const cur = state.sentences[si];
+  if (ti < 0 || ti >= cur.tokens.length - 1) return;
+  const tail = cur.tokens.slice(ti + 1);
+  cur.tokens = cur.tokens.slice(0, ti + 1);
+  const blank = function (tokens) {
+    return { tokens: tokens, stype: "", parts: "", lensKeys: [], tiesPick: "", tiesKeys: [],
+             anteMode: "", anteKeys: [], pattern: "", p5guard: "" };
+  };
+  const head = blank(cur.tokens);
+  state.sentences.splice(si, 1, head, blank(tail));
+  clearAllSelections();
+  renderGapMode(); renderSentences(); renderLens(); save();
+}
+
+function clearAllSelections() {
+  state.sentences.forEach(function (x) { x.tiesKeys = []; x.anteKeys = []; x.lensKeys = []; });
+  activeField = null;
+}
+
+
+/* Every self-check step can be skipped, and the choice is recorded rather than judged.
+   AGENTS.md R16 / DRILLS.md §4: asking a learner with no schema for a field to fill it
+   unaided, then supplying the answer afterwards, is unguided problem solving before
+   schema formation. Reference-first is the efficient order while a field is being
+   learned; attempt-first is the order once it is. The instrument must not make one of
+   them the only door. */
+const STEP_MODES = [
+  ["attempt", "attempt first", "then compare with the reference sheet"],
+  ["reference", "reference first", "ask for the filled sheet, study it, then fill this"],
+  ["skip", "skip this step", "straight to the reference sheet and the score"]
+];
+function stepBar(key, label) {
+  const wrap = document.createElement("div");
+  wrap.className = "skipbar";
+  const l = document.createElement("span");
+  l.className = "lbl";
+  l.textContent = label + " \u2014";
+  wrap.appendChild(l);
+  wrap.appendChild(picks(STEP_MODES, state.steps[key] || "attempt", function (v) {
+    state.steps[key] = v || "attempt";
+    renderAll(); save();
+  }));
+  if (state.steps[key] === "reference") {
+    const n2 = document.createElement("span");
+    n2.className = "lbl";
+    n2.textContent = "\u00b7 ask for the reference sheet, then come back and fill this in";
+    wrap.appendChild(n2);
+  }
+  return wrap;
+}
+function stepSkipped(key) { return state.steps[key] === "skip"; }
+
+function renderAll() {
+  renderGapMode(); renderSentences(); renderLens(); renderBrackets();
+}
+
+function renderGapMode() {
+  const host = $("gapmode");
+  host.innerHTML = "";
+  if (!state.sentences.length) return;
+  const l = document.createElement("div");
+  l.className = "note";
+  l.innerHTML = "Sentence boundaries are the splitter's, not yours. If it got one wrong, " +
+    "turn on boundary repair &mdash; gaps between words become clickable and a click splits " +
+    "the sentence there. Off by default, so nothing is clickable that is not being asked for.";
+  host.appendChild(l);
+  const b = document.createElement("button");
+  b.className = "pick" + (state.repairMode ? " sel" : "");
+  b.textContent = state.repairMode ? "boundary repair ON — click a gap to split" : "fix a wrong sentence boundary";
+  b.onclick = function () { state.repairMode = !state.repairMode; renderGapMode(); renderSentences(); save(); };
+  host.appendChild(b);
+}
+
+function renderSentences() {
+  const host = $("sentences");
+  host.innerHTML = "";
+  host.appendChild(stepBar("sheet", "The annotation sheet"));
+  if (stepSkipped("sheet")) {
+    const s2 = document.createElement("div");
+    s2.className = "ok";
+    s2.innerHTML = "<strong>Sheet skipped for this session</strong>, and recorded as skipped. " +
+      "The reference sheet still arrives at step 6 \u2014 R15 makes it mandatory whether or not you filled one.";
+    host.appendChild(s2);
+    return;
+  }
+  if (!state.sentences.length) {
+    host.innerHTML = '<p class="note">Lock the draft to build the sheet.</p>';
+    return;
+  }
+  state.sentences.forEach(function (s, si) {
+    const box = document.createElement("div");
+    box.className = "sent";
+
+    const head = document.createElement("div");
+    head.className = "sent-head";
+    head.textContent = "SENTENCE " + (si + 1) + "  ·  " + s.tokens.length + " words";
+    if (si > 0) {
+      const mg = document.createElement("button");
+      mg.style.marginLeft = ".6rem";
+      mg.textContent = "⤒ merge into sentence " + si;
+      mg.title = "The splitter got this boundary wrong — join this to the one above";
+      mg.onclick = function () { mergeUp(si); };
+      head.appendChild(mg);
+    }
+    box.appendChild(head);
+
+    const toks = document.createElement("div");
+    toks.className = "tokens";
+    s.tokens.forEach(function (w, ti) {
+      const span = document.createElement("span");
+      span.className = "tok";
+      if (activeCollection().indexOf(si + ":" + ti) >= 0) span.classList.add("sel");
+      if (/\[ENG:/.test(w) || /\]$/.test(w)) span.classList.add("eng");
+      span.textContent = w;
+      span.classList.add("nopick");
+      toks.appendChild(span);
+      if (state.repairMode && ti < s.tokens.length - 1) {
+        const gap = document.createElement("span");
+        gap.className = "gap cut";
+        gap.title = "split into two sentences here";
+        gap.onclick = function () { splitSentenceAt(si, ti); };
+        toks.appendChild(gap);
+      }
+    });
+    box.appendChild(toks);
+
+    box.appendChild(field("Sentence type",
+      "Not a grammar exercise — it decides which defect is even available. Two independent parts hand the next sentence two things to point at; a coordinating join is where a non-additive relation gets flattened into `and`; a subordinating join is where the news can hide.",
+      picks(STYPES, s.stype, function (v) {
+        s.stype = v;
+        if (v === "simple") s.parts = "1"; else if (!v) s.parts = "";
+        renderSentences(); save();
+      })));
+
+    if (s.stype && s.stype !== "simple") {
+      box.appendChild(field("Parts \u2014 independent clauses",
+        "How many separately assertable pieces. This is the count of candidate antecedents the next sentence inherits.",
+        picks(PARTS, s.parts, function (v) { s.parts = v; renderSentences(); save(); })));
+    }
+
+    box.appendChild(field("Ties back by",
+      "Pick one of four. If the pick names a specific word, click that word — in this sentence or any earlier one.",
+      picks(TIES_OPTS, s.tiesPick, function (v) {
+        s.tiesPick = v;
+        if (QUOTE_PICKS.indexOf(v) < 0) { s.tiesKeys = []; s.anteMode = ""; s.anteKeys = []; }
+        if (activeField && activeField.si === si) activeField = null;
+        renderSentences(); save();
+      }),
+      QUOTE_PICKS.indexOf(s.tiesPick) >= 0 ? quoteBox(si, "tiesKeys") : null));
+
+    if (QUOTE_PICKS.indexOf(s.tiesPick) >= 0) {
+      const prev = si > 0 ? state.sentences[si - 1] : null;
+      if (prev && (prev.parts === "2" || prev.parts === "3+")) {
+        const h = document.createElement("div");
+        h.className = "warn";
+        h.innerHTML = "Sentence " + si + " has <strong>" + prev.parts + " independent parts</strong>, so a " +
+          "pronoun here has that many things it could point at. If you cannot choose between them, " +
+          "<em>that is the answer</em> and it is <strong>D1</strong> \u2014 not a failure to answer.";
+        box.appendChild(h);
+      }
+      box.appendChild(field("Antecedent",
+        'Only when the line above is a pronoun or demonstrative. Point at what it refers to — normally in an EARLIER sentence. "cannot pick" is an answer, and it means D1.',
+        picks([
+          ["point", "point at it", "click the words above"],
+          ["cannot", "cannot pick", "this is D1"],
+          ["na", "not a pronoun or demonstrative", ""]
+        ], s.anteMode, function (v) {
+          s.anteMode = v;
+          if (v !== "point") s.anteKeys = [];
+          if (activeField && activeField.si === si && activeField.which === "anteKeys") activeField = null;
+          renderSentences(); save();
+        }),
+        s.anteMode === "point" ? quoteBox(si, "anteKeys") : null));
+    }
+
+    box.appendChild(field("Pattern", "One per transition. Not per paragraph.",
+      picks(PATTERNS.map(function (p) { return [p, p, ""]; }), s.pattern, function (v) {
+        s.pattern = v;
+        if (v !== "5 contrastive") s.p5guard = "";
+        renderSentences(); save();
+      })));
+
+    if (s.pattern === "5 contrastive") {
+      const g = document.createElement("div");
+      g.className = "warn";
+      const p = document.createElement("div");
+      p.innerHTML = "<strong>Pattern 5 guard.</strong> Contrastive progression needs the contrast in the " +
+        "<em>departure point</em>, not merely somewhere in the sentence. You reached for pattern 5 twice " +
+        "before &mdash; session 1 on G3, session 2 on your own sentence 6 &mdash; both times on a transition " +
+        "that <em>felt</em> like a shift.<br>Is the contrast sitting in first position?";
+      g.appendChild(p);
+      g.appendChild(picks([
+        ["yes", "yes — it opens the sentence", ""],
+        ["no", "no — it arrives later", ""]
+      ], s.p5guard, function (v) { s.p5guard = v; renderSentences(); save(); }));
+      if (s.p5guard === "no") {
+        const n = document.createElement("div");
+        n.className = "note";
+        n.style.marginTop = ".4rem";
+        n.textContent = "Then this is not pattern 5. Within-sentence contrast is not contrastive progression. " +
+          "Look at 3 derived topics or 6 question-answer — and if the transition genuinely will not " +
+          "resolve, check the lexical chain first: a broken chain shows up as an unlabelable transition.";
+        g.appendChild(n);
+      }
+      box.appendChild(g);
+    }
+
+    host.appendChild(box);
+  });
+}
+
+function field(label, hint) {
+  const d = document.createElement("div");
+  d.className = "field";
+  const l = document.createElement("label");
+  l.textContent = label;
+  d.appendChild(l);
+  if (hint) {
+    const h = document.createElement("div");
+    h.className = "hint";
+    h.textContent = hint;
+    d.appendChild(h);
+  }
+  for (let i = 2; i < arguments.length; i++) {
+    if (arguments[i]) d.appendChild(arguments[i]);
+  }
+  return d;
+}
+
+function picks(opts, current, onPick) {
+  const wrap = document.createElement("div");
+  opts.forEach(function (o) {
+    const val = o[0], text = o[1], tail = o[2];
+    const b = document.createElement("button");
+    b.className = "pick" + (current === val ? " sel" : "");
+    b.textContent = text + (tail ? "  ·  " + tail : "");
+    b.onclick = function () { onPick(current === val ? "" : val); };
+    wrap.appendChild(b);
+  });
+  return wrap;
+}
+
+function quoteBox(si, which) {
+  const wrap = document.createElement("div");
+  const on = activeField && activeField.si === si && activeField.which === which;
+  const b = document.createElement("button");
+  b.className = "pick" + (on ? " sel" : "");
+  b.textContent = on ? "done selecting" : "fill by clicking words";
+  b.onclick = function () {
+    activeField = on ? null : { si: si, which: which };
+    renderSentences();
+  };
+  wrap.appendChild(b);
+  const q = document.createElement("div");
+  q.className = "quotebox";
+  q.textContent = quoteFromKeys(keysOf(si, which));
+  wrap.appendChild(q);
+  if (on) wrap.appendChild(inlinePicker());
+  return wrap;
+}
+
+/* No sentence restriction. An antecedent normally sits in an EARLIER sentence, so
+   while a field is active every token in the draft is clickable. */
+/* The words to click are brought TO the field rather than the field sending you up
+   the page to find them. An antecedent usually lives in sentence 1 and the field
+   asking for it is often four sentences below, so a single always-clickable copy at
+   the top means scrolling away from the question to answer it. Nothing is clickable
+   until a field asks; then a copy appears under that field. */
+function pickerRange() {
+  if (!activeField) return null;
+  const si = activeField.si;
+  // Ties back by / Lens S: the words are IN this sentence.
+  // Antecedent: what it points at is in EARLIER text. D1 includes "too far back",
+  //   so every preceding sentence stays reachable, not only the previous one —
+  //   G3's sentence 3 renames a noun from sentence 1, two back.
+  if (activeField.which === "anteKeys") return [0, si - 1];
+  return [si, si];
+}
+
+function inlinePicker() {
+  const r = pickerRange();
+  const box = document.createElement("div");
+  box.className = "picker";
+  const l = document.createElement("span");
+  l.className = "plabel";
+  if (!r || r[1] < r[0]) {
+    l.textContent = "NOTHING TO POINT AT — this is the first sentence, so there is no earlier text";
+    box.appendChild(l);
+    return box;
+  }
+  l.textContent = activeField.which === "anteKeys"
+    ? (r[1] === r[0]
+        ? "CLICK THE WORDS — sentence " + (r[1] + 1) + ", the only earlier one"
+        : "CLICK THE WORDS — sentences " + (r[0] + 1) + "\u2013" + (r[1] + 1) + ", the earlier text")
+    : "CLICK THE WORDS — this sentence only";
+  box.appendChild(l);
+  state.sentences.slice(r[0], r[1] + 1).forEach(function (s, off) {
+    const si = r[0] + off;
+    const num = document.createElement("span");
+    num.className = "snum";
+    num.textContent = "[" + (si + 1) + "]";
+    box.appendChild(num);
+    s.tokens.forEach(function (w, ti) {
+      const sp = document.createElement("span");
+      sp.className = "tok" + (activeCollection().indexOf(si + ":" + ti) >= 0 ? " sel" : "");
+      sp.textContent = w;
+      sp.onclick = function () { toggleTok(si, ti); };
+      box.appendChild(sp);
+      box.appendChild(document.createTextNode(" "));
+    });
+  });
+  return box;
+}
+
+function toggleTok(si, ti) {
+  if (!activeField) return;
+  const r = pickerRange();
+  if (!r || si < r[0] || si > r[1]) return;
+  const arr = activeCollection(), k = si + ":" + ti, at = arr.indexOf(k);
+  if (at >= 0) arr.splice(at, 1); else arr.push(k);
+  renderSentences(); save();
+}
+
+/* ── lens ───────────────────────────────────────────────────────────── */
+function renderLens() {
+  const box = $("lens-box");
+  box.innerHTML = "";
+  box.appendChild(stepBar("lens", "Lens " + SESSION.lens));
+  if (stepSkipped("lens")) {
+    const s2 = document.createElement("div");
+    s2.className = "ok";
+    s2.textContent = "Lens skipped and recorded. Note what it would have covered: "
+      + (LENS_NAMES[SESSION.lens] || SESSION.lens) + ".";
+    box.appendChild(s2);
+    return;
+  }
+  if (SESSION.lens === "R") {
+    const n = document.createElement("div");
+    n.className = "warn";
+    n.innerHTML = "<strong>Aim it deliberately.</strong> Lens R only fires where you point it. " +
+      "Point it at the transition carrying the reader's decision &mdash; the one the brief's " +
+      "<em>needs to be able to</em> line depends on &mdash; not the first one you feel unsure about.";
+    box.appendChild(n);
+    box.appendChild(txt("transition", "Transition", "sentence __ → sentence __"));
+    box.appendChild(pickField("relation", "Relation",
+      ["cause", "result", "contrast", "concession", "qualification", "addition", "sequence", "unclear"],
+      "'unclear' is a finding, not a failure — an unnameable relation is D3. A connective whose named relation does not match your pick is D7."));
+    box.appendChild(txt("signalled by", "Signalled by", 'quote the connective, or "none"'));
+    box.appendChild(pickField("costs the reader", "Costs the reader", ["yes", "no", "uncertain"], ""));
+  } else if (SESSION.lens === "S") {
+    const n = document.createElement("div");
+    n.className = "note";
+    n.textContent = "For each sentence, quote the final constituent — the last few words before the " +
+      "full stop — and say whether it is the news. Old information in the stress position is D4.";
+    box.appendChild(n);
+    if (!state.sentences.length) { box.appendChild(lockFirst()); return; }
+    const w2 = document.createElement("div");
+    w2.className = "note";
+    w2.textContent = "Click the last few words of each sentence — no typing. Session 3 left this "
+      + "lens blank at 6 of 7 because it asked you to copy text out by hand.";
+    box.appendChild(w2);
+    state.sentences.forEach(function (s, i) {
+      const f = document.createElement("div");
+      f.className = "field";
+      const l = document.createElement("label");
+      l.textContent = "S" + (i + 1) + " final constituent";
+      f.appendChild(l);
+      const on = activeField && activeField.si === i && activeField.which === "lensKeys";
+      const b = document.createElement("button");
+      b.className = "pick" + (on ? " sel" : "");
+      b.textContent = on ? "done selecting" : "click the last few words";
+      b.onclick = function () {
+        activeField = on ? null : { si: i, which: "lensKeys" };
+        renderSentences(); renderLens();
+      };
+      f.appendChild(b);
+      const q = document.createElement("div");
+      q.className = "quotebox";
+      q.textContent = quoteFromKeys(keysOf(i, "lensKeys"));
+      f.appendChild(q);
+      if (on) f.appendChild(inlinePicker());
+      box.appendChild(f);
+      box.appendChild(pickField("S" + (i + 1) + " is that the news", "S" + (i + 1) + " — is that the news?",
+        ["news", "already known", "uncertain"], ""));
+    });
+  } else {
+    const n = document.createElement("div");
+    n.className = "note";
+    n.textContent = "One job per sentence. Two sentences doing the same job, or a paragraph with no " +
+      "claim anywhere, is usually a structure problem rather than a flow one — see D8.";
+    box.appendChild(n);
+    if (!state.sentences.length) { box.appendChild(lockFirst()); return; }
+    state.sentences.forEach(function (s, i) {
+      box.appendChild(pickField("S" + (i + 1) + " job", "Sentence " + (i + 1),
+        ["claim", "context", "evidence", "qualification", "consequence", "contrast",
+         "definition", "instruction", "transition", "closing"], ""));
+    });
+  }
+}
+
+function lockFirst() {
+  const w = document.createElement("div");
+  w.className = "warn";
+  w.textContent = "Lock the draft first — this lens runs per sentence.";
+  return w;
+}
+
+function txt(key, label, ph) {
+  const d = document.createElement("div");
+  d.className = "field";
+  const l = document.createElement("label");
+  l.textContent = label;
+  d.appendChild(l);
+  const i = document.createElement("input");
+  i.type = "text";
+  i.placeholder = ph || "";
+  i.value = state.lens[key] || "";
+  i.oninput = function (e) { state.lens[key] = e.target.value; save(); };
+  d.appendChild(i);
+  return d;
+}
+
+function pickField(key, label, opts, hint) {
+  const d = document.createElement("div");
+  d.className = "field";
+  const l = document.createElement("label");
+  l.textContent = label;
+  d.appendChild(l);
+  if (hint) {
+    const h = document.createElement("div");
+    h.className = "hint";
+    h.textContent = hint;
+    d.appendChild(h);
+  }
+  d.appendChild(picks(opts.map(function (o) { return [o, o, ""]; }), state.lens[key] || "",
+    function (v) { state.lens[key] = v; renderLens(); save(); }));
+  return d;
+}
+
+/* ── brackets ───────────────────────────────────────────────────────── */
+function renderBrackets() {
+  $("bracket-list").textContent = state.brackets.length
+    ? state.brackets.length + " bracket(s) found. Resolve each, then route it. Routing happens after grading, not during."
+    : "No brackets in the draft. If you shortened a sentence to stay inside words you were sure of, that is a 2b-avoided, not a zero.";
+  const tb = $("bracket-rows");
+  tb.innerHTML = "";
+  state.brackets.forEach(function (b, i) {
+    const tr = document.createElement("tr");
+    const c0 = document.createElement("td");
+    const code = document.createElement("code");
+    code.textContent = b.text;
+    c0.appendChild(code);
+    tr.appendChild(c0);
+    ["was", "link", "action"].forEach(function (k) {
+      const td = document.createElement("td");
+      if (k === "link") {
+        td.appendChild(picks([
+          ["2a", "2a", "knew it → cloze into a novel sentence"],
+          ["2b", "2b", "did not know it → acquisition stream"],
+          ["3", "3", "unsure it fit → check collocations"]
+        ], b.link, function (v) { b.link = v; renderBrackets(); save(); }));
+      } else {
+        const inp = document.createElement("input");
+        inp.type = "text";
+        inp.value = b[k] || "";
+        inp.oninput = function (e) { b[k] = e.target.value; save(); };
+        td.appendChild(inp);
+      }
+      tr.appendChild(td);
+    });
+    tb.appendChild(tr);
+  });
+}
+
+/* ── free-text fields ───────────────────────────────────────────────── */
+["alt", "unc", "caught", "resolved", "revision", "avoided", "feedback", "step7", "alts", "altsNote"].forEach(function (k) {
+  $(k).oninput = function (e) { state[k] = e.target.value; save(); };
+});
+
+/* ── consistency checks — completeness only, never correctness ───────── */
+/* Coverage, not a target. Says which defects were available to be made, so a clean
+   score can be read as "avoided" rather than "could not occur". */
+function structureProfile() {
+  const c = { simple: 0, compound: 0, complex: 0, "compound-complex": 0, unanswered: 0 };
+  state.sentences.forEach(function (s) { c[s.stype] !== undefined ? c[s.stype]++ : c.unanswered++; });
+  return c;
+}
+function profileLine() {
+  const c = structureProfile();
+  return Object.keys(c).filter(function (k) { return c[k]; })
+    .map(function (k) { return c[k] + " " + k; }).join(", ");
+}
+
+$("run-checks").onclick = function () {
+  const out = [];
+  function add(cls, msg) { out.push('<div class="' + cls + '">' + msg + "</div>"); }
+
+  if (!state.locked) add("warn", "Draft is not locked, so nothing has been parsed yet.");
+  if (state.locked && state.parsedDraft && state.draft !== state.parsedDraft)
+    add("warn", "<strong>The draft no longer matches what was parsed.</strong> The sheet below describes different words, so the export would pair the two and the score would be untraceable. Unlock and re-parse, or restore the parsed wording.");
+  if (!state.elapsedSec) add("warn", "<strong>Time to first draft not recorded.</strong> Proceduralization shows up only in this number — quality can be bought with time, fluency cannot.");
+
+  if (stepSkipped("sheet")) add("ok", "Annotation sheet skipped \u2014 recorded, not counted against you. <code>Pattern agreement</code> and <code>self-caught</code> are not scoreable this session.");
+  if (stepSkipped("lens")) add("ok", "Lens skipped \u2014 recorded. Nothing this session is evidence about " + (LENS_NAMES[SESSION.lens] || SESSION.lens) + ".");
+  if (!stepSkipped("sheet")) state.sentences.forEach(function (s, i) {
+    const n = "Sentence " + (i + 1);
+    if (!s.tiesPick) add("warn", n + ": <code>Ties back by</code> is empty.");
+    if (!s.pattern) add("warn", n + ": <code>Pattern</code> is empty.");
+    if (QUOTE_PICKS.indexOf(s.tiesPick) >= 0 && !quoteFromKeys(s.tiesKeys))
+      add("warn", n + ": the pick names a specific word, but no word is quoted. Click the word above.");
+    if (s.tiesPick === "fails" && !s.anteMode)
+      add("warn", n + ": <code>there is a word but it fails</code> means D1 or D5, so the <code>Antecedent</code> line has to fire — point at it, or say cannot pick.");
+    if (s.anteMode === "point" && !quoteFromKeys(s.anteKeys))
+      add("warn", n + ": <code>Antecedent</code> is set to point at something, but nothing is selected.");
+    if (s.pattern === "5 contrastive" && !s.p5guard)
+      add("warn", n + ": pattern 5 chosen without answering the guard question.");
+    if (s.pattern === "5 contrastive" && s.p5guard === "no")
+      add("warn", n + ": you said the contrast does <em>not</em> open the sentence, yet the pattern is still <code>5 contrastive</code>. One of those two answers needs to change.");
+    if (s.pattern === "will not resolve")
+      add("ok", n + ": an unlabelable transition is evidence, not a blank. Check the lexical chain — a broken chain (D5) shows up first as a transition you cannot label.");
+    if (!s.stype) add("warn", n + ": <code>Sentence type</code> is empty.");
+    if (s.stype && s.stype !== "simple" && !s.parts)
+      add("warn", n + ": type is <code>" + s.stype + "</code> but <code>Parts</code> is unanswered.");
+    if (s.stype === "simple" && s.tokens.length > 22)
+      add("warn", n + ": marked <code>simple</code> at " + s.tokens.length + " words. Worth a second look — a long simple sentence is unusual, and a missed second clause hides both a candidate antecedent and a buried relation.");
+    if (s.stype === "compound" && SESSION.lens !== "R")
+      add("ok", n + ": compound. Check what joins the parts — if it is <code>and</code> carrying a contrast, cause or concession, that is D3.");
+  });
+
+  if (state.sentences.filter(function (s) { return s.tiesPick === "opening"; }).length > 1)
+    add("warn", "More than one sentence is marked as the opening.");
+
+  if (!stepSkipped("closing") && !state.alt.trim())
+    add("warn", "<code>Alternative reading</code> is blank. It is free response by design, and one of only two places in the sheet where a judgment gets expressed.");
+  const u = state.unc.trim().toLowerCase();
+  if (!stepSkipped("closing") && (!u || u === "none"))
+    add("warn", "<code>Uncertainty</code> is blank or 'none'. The format file says this is almost always wrong — check whether you skipped the line rather than answered it.");
+  if (!state.caught.trim())
+    add("warn", "<code>What I caught myself</code> is empty. It is the supporting signal on your revision model, and the AI's count is not a substitute for it.");
+  if (state.brackets.length && !state.resolved.trim())
+    add("warn", "<strong>" + state.brackets.length + " bracket(s) and no resolved draft.</strong> Rubric items 4 and 7 cannot be scored while a referring expression or connective is still <code>[ENG: …]</code>. Fill step 4 before revising.");
+  if (!state.brackets.length && !state.avoided.trim())
+    add("warn", "Zero brackets and no <code>2b-avoided</code> entry. Both can be true at once, but the tally under-reports 2b by construction, so this one deserves an explicit answer rather than a blank.");
+  state.brackets.forEach(function (b, i) {
+    if (!b.link) add("warn", "Bracket " + (i + 1) + " is not routed to 2a / 2b / 3.");
+  });
+
+  if (state.sentences.length) {
+    const c = structureProfile(), total = state.sentences.length;
+    add("ok", "<strong>Structure profile:</strong> " + profileLine() +
+      ". This is coverage, not a score — it says which defects were available to be made.");
+    if (c.simple / total > 0.6)
+      add("warn", "<strong>Mostly simple sentences (" + c.simple + " of " + total + ").</strong> " +
+        "A clean result on rubric items 4 and 7 is weak evidence here: D1 needs candidate " +
+        "antecedents and D7 needs connectives, and short simple sentences supply neither. " +
+        "Item 5 was tested harder than usual — unjoined clauses leave every relation to juxtaposition, " +
+        "which is D3's home ground.");
+    if (c.complex + c["compound-complex"] > 0)
+      add("ok", (c.complex + c["compound-complex"]) + " sentence(s) with subordination — D4 was live in each. " +
+        "Check what sits in the stress position, not just what the sentence says.");
+    state.sentences.forEach(function (s, i) {
+      if (s.parts === "3+")
+        add("warn", "Sentence " + (i + 1) + " carries 3+ independent parts. Expect <strong>D3</strong> here " +
+          "specifically: a sentence already holding that much has nowhere left to put a relation, and " +
+          "adding a connective fights the structure instead of fixing it. Splitting or re-subordinating is the repair.");
+    });
+  }
+
+  if (!out.length)
+    add("ok", "Complete and internally consistent. Nothing here says your answers are <em>right</em> — that is step 5, and no key exists for fresh prose.");
+  $("checks").innerHTML = out.join("");
+};
+
+/* ── export: HTML is the instrument, markdown stays the record ───────── */
+function toMarkdown() {
+  const L = [];
+  L.push("# Session " + SESSION.number + " — Mode E (" + SESSION.variant + ") — " + SESSION.slug, "");
+  L.push("- **Date:** " + SESSION.date);
+  L.push("- **Mode:** E, " + SESSION.variant + ", " + SESSION.tier + " — fresh brief, generality-building");
+  L.push("- **Lens this item:** " + SESSION.lens);
+  if (state.sentences.length) L.push("- **Structure profile:** " + profileLine() + " — coverage, not a score");
+  L.push("- **Step order:** sheet `" + state.steps.sheet + "`, lens `" + state.steps.lens +
+    "`, closing lines `" + state.steps.closing + "`" +
+    (state.steps.sheet === "attempt" ? "" : " \u2014 reference-first or skipped, so `Pattern agreement` and `self-caught` are NOT comparable with attempt-first sessions"));
+  L.push("- **Time to first draft:** " + (state.elapsedSec
+    ? fmt(state.elapsedSec) + " (" + Math.round(state.elapsedSec / 60) + " min)"
+    : "not recorded"));
+  L.push("", "---", "", "## The brief", "");
+  L.push("> **Purpose.** " + SESSION.purpose, ">");
+  SESSION.facts.forEach(function (f, i) { L.push("> " + (i + 1) + ". " + f); });
+  L.push(">", "> **Reader.** " + SESSION.reader, ">", "> **Needs to be able to:** " + SESSION.needsToBeAbleTo);
+  L.push("", "---", "", "## Draft 1 — written cold, timed, no AI", "", "```", state.draft.trim(), "```");
+  L.push("", "---", "", "## Self-annotation", "", "```");
+  state.sentences.forEach(function (s, i) {
+    L.push("SENTENCE " + (i + 1) + "  [" + s.tokens.length + " words]");
+    L.push('   "' + s.tokens.join(" ") + '"');
+    L.push("");
+    L.push("Sentence type:  " + (s.stype || "(not answered)") +
+      (s.parts ? "  |  parts: " + s.parts : ""));
+    const opt = TIES_OPTS.filter(function (o) { return o[0] === s.tiesPick; })[0];
+    let ties = opt ? opt[1] : "(not answered)";
+    const q = quoteFromKeys(s.tiesKeys);
+    if (q) ties += ' — "' + q + '"';
+    L.push("Ties back by:  " + ties);
+    if (QUOTE_PICKS.indexOf(s.tiesPick) >= 0) {
+      let a = "(not answered)";
+      if (s.anteMode === "cannot") a = "cannot pick — D1";
+      else if (s.anteMode === "na") a = "not a pronoun or demonstrative";
+      else if (s.anteMode === "point") a = '"' + quoteFromKeys(s.anteKeys) + '"';
+      L.push("Antecedent:    " + a);
+    }
+    L.push("Pattern:       " + (s.pattern || "(not answered)"));
+    if (s.pattern === "5 contrastive")
+      L.push("               contrast in the departure point? " + (s.p5guard || "(not answered)"));
+    L.push("");
+  });
+  L.push("LENS " + SESSION.lens + " — " + LENS_NAMES[SESSION.lens]);
+  Object.keys(state.lens).forEach(function (k) {
+    if (state.lens[k]) L.push("   " + k + ": " + state.lens[k]);
+  });
+  L.push("", "Alternative reading:  " + (state.alt.trim() || "(blank)"));
+  L.push("Uncertainty:          " + (state.unc.trim() || "(blank)"), "```");
+  L.push("", "---", "", "## What I caught myself", "");
+  const caught = state.caught.trim() ? state.caught.trim().split("\n") : ["(none recorded)"];
+  caught.forEach(function (l) { L.push("- " + l.replace(/^[-*]\s*/, "")); });
+  L.push("", "---", "", "## Step 4 — brackets resolved, nothing else changed", "");
+  L.push(state.brackets.length
+    ? "Same sentences, same order. Restructuring happens in step 5, not here."
+    : "No brackets in the draft, so nothing to resolve.");
+  L.push("", "```", state.resolved.trim() || "(empty)", "```");
+  L.push("", "---", "", "## Step 5 — revision, mine not the AI's", "", "```", state.revision.trim(), "```");
+  L.push("", "---", "", "## Bracket routing", "");
+  L.push("| Bracket | What it was | Link | Action taken |", "|---|---|---|---|");
+  if (state.brackets.length) {
+    state.brackets.forEach(function (b) {
+      L.push("| `" + b.text + "` | " + (b.was || "") + " | " + (b.link || "") + " | " + (b.action || "") + " |");
+    });
+  } else {
+    L.push("| _none_ |  |  |  |");
+  }
+  L.push("", "- **Bracket count:** " + state.brackets.length);
+  L.push("- **2b-avoided:** " + (state.avoided.trim() || "(not answered)"));
+  if (state.feedback.trim() || state.step7.trim()) {
+    L.push("", "---", "", "## Step 7 — revision after feedback", "");
+    L.push("Optional by protocol. Both rubric scores were final before this was written.", "");
+    L.push("```", state.step7.trim() || "(not written)", "```");
+    if (state.feedback.trim())
+      L.push("", "<details><summary>The AI's feedback, as received</summary>", "", state.feedback.trim(), "", "</details>");
+  }
+
+  if (state.alts.trim()) {
+    L.push("", "---", "", "## Step 8 — the AI's alternative versions", "");
+    L.push("**Not standard answers.** Unvalidated AI prose (R10), supplied after both rubric",
+      "scores were final. Any of them may be worse than the draft above.", "");
+    L.push(state.alts.trim());
+    if (state.altsNote.trim()) L.push("", "**Worth stealing:** " + state.altsNote.trim());
+  }
+
+  L.push("", "---", "", "## Score — filled at §4 step 6", "");
+  L.push("| # | Criterion | Draft 1 | Self-revised |", "|---|---|---|---|");
+  [
+    "The intended point is identifiable — a reader could state it in one line",
+    "Every sentence has a clear role in the paragraph",
+    "Each departure point is accessible from context or prior text",
+    "Every reference has an unambiguous antecedent",
+    "The logical relations are recoverable",
+    "The ordering supports what the reader has to *do* next",
+    "Explicit transitions are accurate, and each is necessary"
+  ].forEach(function (c, i) { L.push("| " + (i + 1) + " | " + c + " |  |  |"); });
+  L.push("| | **Total** | `/7` | `/7` |");
+  L.push("", "---", "", "## Intent gap", "");
+  L.push("Mode E has no prediction step. Record the gap between what the paragraph was");
+  L.push("meant to do and what the annotation shows it does.", "", ">");
+  L.push("", "## Rule update", "");
+  L.push('"None" means this was a fluency session; label it and move on.', "", ">", "");
+  return L.join("\n");
+}
+
+let exported = false, saveT = null;
+
+$("export").onclick = function () {
+  const a = document.createElement("a");
+  const url = URL.createObjectURL(new Blob([toMarkdown()], { type: "text/markdown" }));
+  a.href = url;
+  a.download = SESSION.date + "-E-" + SESSION.slug + ".md";
+  a.click();
+  URL.revokeObjectURL(url);
+  exported = true;
+  $("saved").textContent = "saved as " + a.download + " \u2014 move it into exercise/";
+};
+
+$("copy").onclick = function () {
+  navigator.clipboard.writeText(toMarkdown()).then(function () {
+    exported = true;
+    $("saved").textContent = "whole sheet copied \u2014 paste it anywhere";
+  }, function () {
+    $("saved").textContent = "clipboard blocked \u2014 use Save to file";
+  });
+};
+
+/* ── persistence ────────────────────────────────────────────────────── */
+function save() {
+  exported = false;
+  clearTimeout(saveT);
+  saveT = setTimeout(function () {
+    try {
+      localStorage.setItem(KEY, JSON.stringify(state));
+      $("saved").textContent = "kept in this browser \u2014 not yet saved to a file";
+    } catch (e) {
+      $("saved").textContent = "NOT kept anywhere \u2014 save to a file now";
+    }
+  }, 400);
+}
+
+function load() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    Object.keys(state).forEach(function (k) {
+      if (saved[k] !== undefined) state[k] = saved[k];
+    });
+    $("draft").value = state.draft || "";
+    ["alt", "unc", "caught", "resolved", "revision", "avoided", "feedback", "step7", "alts", "altsNote"].forEach(function (k) {
+      if (state[k]) $(k).value = state[k];
+    });
+    $("t-display").textContent = fmt(state.elapsedSec || 0);
+    if (state.locked) {
+      $("lock-note").textContent = state.sentences.length + " sentences, restored from this browser.";
+    }
+    applyDraftLockUI();
+  } catch (e) {
+    /* corrupt state: start clean rather than half-loaded */
+  }
+}
+
+addEventListener("beforeunload", function (e) {
+  if (state.draft && !exported) { e.preventDefault(); e.returnValue = ""; }
+});
+
+load();
+renderAll();
+</script>
+</body>
+</html>

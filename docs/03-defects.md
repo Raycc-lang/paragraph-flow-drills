@@ -157,3 +157,47 @@ loosening, not more practice.
 | D7 | Inaccurate connective | Cohesion |
 | D8 | Missing premise / irrelevance / overreach | **Coherence** |
 | D9 | Damage caused by over-applying the rules | Meta |
+
+---
+
+## Structural preconditions — which defects a sentence can even have
+
+Most of these defects are not available in every sentence. Clause structure decides
+which ones are possible, which means **a clean score can mean "I avoided the defect"
+or "the defect could not occur here", and those are different results.**
+
+| Code | Needs | So it is scarce in |
+|---|---|---|
+| **D1** | two or more candidate antecedents, usually from 2+ independent clauses upstream | short simple sentences |
+| **D2** | enough development for a topic to exist and be departed from | very short paragraphs |
+| **D3** | two propositions placed adjacent without their relation marked — **most available when clauses are left unjoined**, or when a sentence is already carrying so much that the relation has nowhere to sit | almost nowhere; this is the one simple-sentence prose produces *more* of |
+| **D4** | more than one position of prominence — subordination, a long predicate, a trailing coordinate clause | short simple sentences, which have essentially one |
+| **D5** | three or more mentions of one referent | short paragraphs |
+| **D6** | an opening that assumes shared ground | any |
+| **D7** | an explicit connective, which needs joined clauses | prose with no connectives |
+
+### The consequence for reading a score
+
+A paragraph of six short simple sentences will tend to score clean on D1, D4 and D7
+**by construction**. That is not evidence of skill at emphasis or at connective
+accuracy; those abilities were not tested. It will simultaneously be *more* exposed to
+D3, because unjoined clauses leave every relation to bare juxtaposition — the parataxis
+habit `DRILLS.md` §4 warns the bracket protocol exists to prevent.
+
+This is the same finding the §0 verdict recorded: *short simple sentences cannot carry
+most flow defects, so drilling on them measures nothing.* Record the structure profile
+alongside the score, and read one against the other.
+
+### And the consequence for repair
+
+**D3's textbook repair is to add a connective. That is often the wrong move**, because
+a buried relation is frequently a symptom of a structural decision rather than a
+missing word. If a sentence is already carrying four propositions, the relation you
+want to signal has nowhere to sit, and adding a third connective makes a list of
+caveats out of what should be a structured offer. In that case the repair is to
+**split, or to re-subordinate so the relation occupies the main clause** — not to
+decorate the existing structure.
+
+Deciding when to join, when to split, and what to subordinate is not a separate
+grammar skill sitting underneath flow. It is the same decision seen from the other
+side. See the scope note in `01-target.md`.

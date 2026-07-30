@@ -4,7 +4,7 @@ The starter corpus is authored, which makes it controllable and makes it a weake
 standard than real prose. This is the counterweight: real writing, by people with
 readers.
 
-Use these for Mode A (analyze known-good). Two cautions that apply to all of them:
+Use these for Mode A (analyze supplied prose). Two cautions that apply to all of them:
 
 1. A published paragraph is an **observed output whose input is partly hidden**.
    You are seeing the ordering without seeing the purpose and reader the writer was

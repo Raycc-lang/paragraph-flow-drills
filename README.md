@@ -33,7 +33,7 @@ overrides them.
 ### Sessions 1–2 — learn the instrument
 
 Mode A on **one** item, then Mode E. The Mode A is not recognition training; it is
-there so the annotation table and the defect codes become familiar enough to use on
+there so the annotation sheet and the defect codes become familiar enough to use on
 your own draft. Drop it as soon as it is.
 
 Mode E from session one, under the minimum-complexity rule, with brackets.
@@ -116,7 +116,7 @@ schedule, and this project supplies targeting for that — not volume.
 | `docs/03-defects.md` | Nine defect codes, D1–D9 |
 | `docs/05-worked-session.md` | One Mode A and one Mode E item, worked end to end. Read before your first real session |
 | `docs/vocabulary-interface.md` | Where this project stops and vocabulary work starts. The five links, and how to measure which one is failing |
-| `docs/04-annotation-format.md` | How you record an analysis. Quote-or-pick fields, four at Stage 1. Read before your first Mode A |
+| `docs/04-annotation-format.md` | How you record an analysis. Quote-or-pick fields plus one rotating lens. Read before your first Mode A |
 | `DRILLS.md` | The diagnostic plus four drill protocols |
 | `corpus/starter-technical.md` | **Start here.** Support and infra writing — your own domain, so flow is the only unknown |
 | `corpus/starter-general.md` | General expository prose. Worked after codes stabilise; four items carry off-page knowledge requirements and are marked |
@@ -127,6 +127,9 @@ schedule, and this project supplies targeting for that — not volume.
 | `tests/verification-02.md` | Blind transfer test. Run a week after 01 |
 | `LOG.md` | The only evidence this project generates. Fill it in |
 | `baseline/` | Your untouched diagnostic paragraphs. Never edit these |
+| `exercise/_template-mode-e.html` | The Mode E instrument. Click-to-answer, no install, no server |
+| `exercise/_template-modes-abc.html` | Modes A, B, C. Same, plus locked predictions and a key gated behind your commitment |
+| `exercise/` | One file per session — the generated sheet and the exported markdown record |
 
 ---
 
@@ -134,13 +137,50 @@ schedule, and this project supplies targeting for that — not volume.
 
 Open a session with the AI and say:
 
-> Read `AGENTS.md` and the three files in `docs/`. We're running Mode A then Mode
-> E. Don't read `corpus/KEYS.md` until I've answered.
+> Read `AGENTS.md` and everything in `docs/`. We're running Mode A then Mode E.
+> Generate the exercise files first (R14). Hand me the pre-parsed sheet, not your
+> analysis. Hand back your own filled sheet for comparison, not prose about my labels.
 
-Two modes maximum per session. **Commit a prediction before each item** — which
-pattern you expect, whether you expect a defect. Thirty seconds, and it converts
-the drill from reading into retrieval. End with the log block and paste it into
-`LOG.md`.
+Two modes maximum per session.
+
+**Commit before the answer is available.** That is the principle; the commitment
+itself is different in every mode, and only Mode A's is a prediction:
+
+| Mode | What you commit, before anything is revealed |
+|---|---|
+| **A** | The three-claim **prediction** — one named transition and its pattern, a `clean / defective / uncertain` verdict with confidence, one reader assumption. Locked once written |
+| **B** | A stated **reason for every placement** — before the reference order opens |
+| **C** | A **verdict** (`defective` / `clean` / `D8`), plus a code and a quoted span for each defect — before the key opens |
+| **E** | **Nothing.** The draft is written cold |
+
+Mode E has no prediction step, and asking for one is an error — you are the author,
+so the honest forecast of your own defects is always "none." `DRILLS.md` §4 says why,
+and what it costs.
+
+The AI generates the exercise file before the drill starts (`AGENTS.md` R14). You
+should never be laying out a sheet by hand.
+
+**Every mode runs in the browser.** Two single-file instruments, no server and no
+install — double-click to open. Both ship with a throwaway item for learning the
+buttons; practise the mechanics there, never on a real one.
+
+- `exercise/_template-mode-e.html` — Mode E. Times the draft, inserts brackets,
+  splits sentences, and fills `Ties back by` and `Antecedent` by clicking words in
+  your own text.
+- `exercise/_template-modes-abc.html` — Modes A, B and C. Same click-to-quote
+  fields, plus **the protocol as gates**: each mode's commitment must be made before
+  the next step opens, Mode A's prediction locks and cannot be edited, and the key
+  will not open until your commitment is in — the lock is the gate, not a debate.
+
+The key is not a secret — it is sitting in `corpus/KEYS.md` and you can open that
+whenever you like. It is gated because the *sequence* is the drill. Opening it early
+cheats nobody; it just deletes the measurement.
+
+Checks cover completeness only — **the page does not know whether your answers are
+right.**
+
+Export to markdown when you finish. **The markdown is the record**; the page is just
+the instrument. End with the log block and paste it into `LOG.md`.
 
 ---
 
