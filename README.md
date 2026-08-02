@@ -215,13 +215,3 @@ creates, and it is worse than the defects it fixes.
   bottleneck is sentence-level production, this project is wrong for you and
   should be abandoned rather than pushed.
 
----
-
-## Cover letters
-
-Use them as the **test**, not the training set. They are low-volume, high-stakes,
-and formulaic — three properties that work against learning, plus one specific
-trap: because you want the letter to be good, you will let the AI fix it, and the
-correction never becomes yours.
-
-Train on low-stakes volume. Verify on the letter.
