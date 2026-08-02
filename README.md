@@ -137,9 +137,10 @@ schedule, and this project supplies targeting for that — not volume.
 
 Open a session with the AI and say:
 
-> Read `AGENTS.md` and everything in `docs/`. We're running Mode A then Mode E.
-> Generate the exercise files first (R14). Hand me the pre-parsed sheet, not your
-> analysis. Hand back your own filled sheet for comparison, not prose about my labels.
+> Read `AGENTS.md`, `DRILLS.md`, and the files under `docs/`. We're running Mode A
+> then Mode E. Generate each exercise file before its drill. In Mode A, pre-parse
+> only verbatim text; do not resolve references or fill learner fields. Whenever a
+> mode uses a sheet, return your completed version for comparison.
 
 Two modes maximum per session.
 
@@ -157,8 +158,8 @@ Mode E has no prediction step, and asking for one is an error — you are the au
 so the honest forecast of your own defects is always "none." `DRILLS.md` §4 says why,
 and what it costs.
 
-The AI generates the exercise file before the drill starts (`AGENTS.md` R14). You
-should never be laying out a sheet by hand.
+The AI generates the exercise file before the drill starts. You should never be
+laying out a sheet by hand.
 
 **Every mode runs in the browser.** Two single-file instruments, no server and no
 install — double-click to open. Both ship with a throwaway item for learning the
@@ -167,10 +168,10 @@ buttons; practise the mechanics there, never on a real one.
 - `exercise/_template-mode-e.html` — Mode E. Times the draft, inserts brackets,
   splits sentences, and fills `Ties back by` and `Antecedent` by clicking words in
   your own text.
-- `exercise/_template-modes-abc.html` — Modes A, B and C. Same click-to-quote
-  fields, plus **the protocol as gates**: each mode's commitment must be made before
-  the next step opens, Mode A's prediction locks and cannot be edited, and the key
-  will not open until your commitment is in — the lock is the gate, not a debate.
+- `exercise/_template-modes-abc.html` — Modes A, B and C. It applies each mode's
+  own commitment gate: Mode A locks a prediction and uses the annotation sheet;
+  Mode B locks an order and placement reasons; Mode C locks a verdict, codes, and
+  quoted spans. The key opens only after that commitment.
 
 The key is not a secret — it is sitting in `corpus/KEYS.md` and you can open that
 whenever you like. It is gated because the *sequence* is the drill. Opening it early

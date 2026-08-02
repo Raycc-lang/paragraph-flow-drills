@@ -88,13 +88,13 @@
 
 <!-- ═══════════════════════════════════════════════════════════════════════
      SESSION CONFIG — the only block that changes between sessions.
-     AGENTS.md R14: the AI copies this template, edits this block, nothing else.
+     AGENTS.md, Generate the exercise file: the AI copies this template, edits this block, nothing else.
      ═══════════════════════════════════════════════════════════════════════ -->
 <script>
 /* Ships with a THROWAWAY brief, deliberately. docs/04-annotation-format.md:
    never practise the mechanics on real material — fresh briefs and corpus items
    are non-renewable measurements. Learn the buttons here, then let the AI
-   generate a scoring sheet per AGENTS.md R14. Nothing done on this default
+   generate a scoring sheet per AGENTS.md, Generate the exercise file. Nothing done on this default
    config goes in LOG.md. */
 const SESSION = {
   number: 0,
@@ -264,7 +264,7 @@ const SESSION = {
 <p class="note">
   Two or three complete alternatives with their trade-offs, arriving only after both rubric
   scores are final (R1). <strong>They are not standard answers</strong> &mdash; unvalidated
-  AI prose (R10), and any of them may be worse than yours. Paste them here so the exported
+  AI prose (see the reliability rule), and any of them may be worse than yours. Paste them here so the exported
   markdown carries them, because the markdown is the session record.
 </p>
 <textarea id="alts" rows="10" placeholder="Paste the alternatives and their trade-offs."></textarea>
@@ -527,7 +527,7 @@ function clearAllSelections() {
 
 
 /* Every self-check step can be skipped, and the choice is recorded rather than judged.
-   AGENTS.md R16 / DRILLS.md §4: asking a learner with no schema for a field to fill it
+   AGENTS.md, Reference order / DRILLS.md §4: asking a learner with no schema for a field to fill it
    unaided, then supplying the answer afterwards, is unguided problem solving before
    schema formation. Reference-first is the efficient order while a field is being
    learned; attempt-first is the order once it is. The instrument must not make one of
@@ -587,7 +587,7 @@ function renderSentences() {
     const s2 = document.createElement("div");
     s2.className = "ok";
     s2.innerHTML = "<strong>Sheet skipped for this session</strong>, and recorded as skipped. " +
-      "The reference sheet still arrives at step 6 \u2014 R15 makes it mandatory whether or not you filled one.";
+      "The reference sheet still arrives at step 6 \u2014 the reference-sheet rule requires it whether or not you filled one.";
     host.appendChild(s2);
     return;
   }
@@ -1158,7 +1158,7 @@ function toMarkdown() {
 
   if (state.alts.trim()) {
     L.push("", "---", "", "## Step 8 — the AI's alternative versions", "");
-    L.push("**Not standard answers.** Unvalidated AI prose (R10), supplied after both rubric",
+    L.push("**Not standard answers.** Unvalidated AI prose (see the reliability rule), supplied after both rubric",
       "scores were final. Any of them may be worse than the draft above.", "");
     L.push(state.alts.trim());
     if (state.altsNote.trim()) L.push("", "**Worth stealing:** " + state.altsNote.trim());

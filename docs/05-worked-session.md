@@ -1,26 +1,12 @@
-# A Worked Session
+# Worked Session
 
-The project tells you to commit a prediction and annotate. It never shows one
-filled in. This is that — one Mode A item and one Mode E item, start to finish.
+Read `docs/04-annotation-format.md` first. This file shows one Mode A item and one
+Mode E item using the current protocol. Both examples use attempt-first; reference-
+first and skip remain valid choices under `AGENTS.md`.
 
-**The format is defined in `docs/04-annotation-format.md`. Read that first.** The
-AI hands you a pre-parsed sheet — subjects quoted but never resolved, clause
-boundaries marked, each clause quoted verbatim and lettered. You fill `Ties back
-by` and `Pattern`, plus `Antecedent` where a pronoun points back, one rotating
-lens question, and the two closing lines.
+## Mode A
 
-Per-sentence fields are quotes or picks. `Alternative reading` is free response;
-`Uncertainty` is a quoted term plus one clause.
-
-The Mode A paragraph below is a **throwaway**, deliberately not from the corpus.
-Practise the mechanics on scrap — corpus items are non-renewable as fresh
-measurements, and burning one on a demonstration costs you a score later.
-
----
-
-## Mode A, worked
-
-### Step 1 — read once, commit a prediction
+### 1. Read Once and Lock a Prediction
 
 > The village hall committee spent two years raising money for a new roof. When
 > the grant finally came through, it covered rather more than the roof needed, and
@@ -28,257 +14,198 @@ measurements, and burning one on a demonstration costs you a score later.
 > anyone expected. The hall had been losing its Saturday bookings to a newer venue
 > eight miles away, and the thing people cited was never the roof.
 
-**Prediction, written before analyzing:**
-
-> Mostly linear, with a pivot at sentence 3. Expect it to be clean. Watch `That` in
-> sentence 3 — possible D1.
-
-One line. Thirty seconds. Committed before anything else, because a prediction you
-form *while* analyzing is not a prediction.
-
-**It is then locked.** If the verdict changes while you work, write the revision
-underneath — never over the top. An edited prediction cannot be scored, and the
-prediction hit rate is the only Mode A measure that familiarity with the corpus
-cannot inflate.
-
-### Step 2 — annotate the sheet
-
-The AI supplies the bracketed lines. Everything after them is mine.
-
-```
-SENTENCE 1  [subject: "The village hall committee" | precedes subject: none | 1 clause]
-   a. "The village hall committee spent two years raising money for a new roof"
-
-Ties back by:  nothing - this is the opening
-Pattern:       opening
-
-
-SENTENCE 2  [subject: "it" | precedes subject: "When the grant finally came
-             through," | 3 clauses]
-   a. "When the grant finally came through"
-   b. "it covered rather more than the roof needed"
-   c. "and the surplus went on rewiring the kitchen"
-
-Ties back by:  "the grant" - points back to "raising money"
-               "the roof" - repeated verbatim
-Antecedent:    "it" -> 2a, the grant
-Pattern:       2 linear
-
-
-SENTENCE 3  [subject: "That" | precedes subject: none | 1 clause]
-   a. "That turned out to matter more than anyone expected"
-
-Ties back by:  "That" - demonstrative, present and resolving, but only just
-Antecedent:    2c, the rewiring - wins on recency over 2b
-Pattern:       2 linear
-
-
-SENTENCE 4  [subject: "The hall" | precedes subject: none | 2 clauses]
-   a. "The hall had been losing its Saturday bookings to a newer venue eight
-       miles away"
-   b. "and the thing people cited was never the roof"
-
-Ties back by:  "The hall" - superordinate covering the committee, the roof and
-               the kitchen, all already established
-Pattern:       3 derived topics
-
-
-LENS R (relation, this item)
-Relation:          cause - sentence 4 explains why sentence 3's claim holds
-Signalled by:      none
-Costs the reader:  no - the explanatory reading is the only one available
-
-
-Alternative reading:  sentence 3's "That" can point at 2c, the rewiring, or at
-                      the whole fact that the grant overshot. The rewiring wins
-                      on recency and salience, so it resolves - but it is a
-                      near-miss for D1, not a clean case. What would settle it:
-                      how forgiving this reader is.
-Uncertainty:          "its Saturday bookings" - I assumed a reader who accepts
-                      that a village hall competes for bookings at all. That is
-                      a reader model I am inferring, not reading.
+```text
+Main transition: sentence 2 → 3, pattern 2 linear
+Verdict: clean, medium confidence
+Reader assumption: the reader will take "That" to mean the rewiring
 ```
 
-**Note what the AI did not supply.** It wrote `subject: "it"` and stopped. It did
-**not** write `"it" (= the grant)` — resolving that pronoun is the `Antecedent`
-field, and handing it over would have answered the drill. Every lettered line is
-verbatim; nothing is paraphrased into an "assertion," because a paraphrase picks a
-reading.
+The prediction is now locked. A later change is written separately and scored as a
+prediction gap.
 
-**Notice sentence 2's bracket.** The temporal clause and the grammatical subject
-are recorded separately, because they are different things and the difference is
-frequently where a defect lives. Sentence 2 is fine here — but you cannot know
-that without the split, which is why the AI supplies it every time.
+### 2. Complete the Sheet
 
-**Notice the `Antecedent` lines.** They fire on sentences 2 and 3, because both
-subjects are pronouns. Nowhere else in this paragraph do they appear. It is not a
-field you fill four times; it is a field that switches on when something points
-back — and it is the field the AI must never pre-answer in the bracket.
+The Mode A instrument supplies the verbatim sentences, subjects, preceding
+material, and clause spans. The learner fills the fields below.
 
-### Step 3 — take the AI's reading and the key, and compare all three
+```text
+SENTENCE 1
+Starts from: "The village hall committee"
+Ties back by: opening
+Pattern: opening
 
-The AI now hands over its filled sheet **and** the key. Your prediction is locked and
-your sheet is done, so nothing arriving here can inflate either — the lock is the gate,
-not a waiting step.
+SENTENCE 2
+Starts from: "When the grant finally came through"; subject "it"
+Ties back by: "the grant" and "the roof"
+Antecedent: "it" → "the grant"
+Pattern: 2 linear
 
-**There is no contest step; it was deleted.** What replaces it is an obligation on the
-AI: every code it names is quoted to a span. The exchange below is worth reading anyway,
-because it shows what a real disagreement looks like when you happen to have one — but
-it is not a step you owe anybody.
+SENTENCE 3
+Starts from: "That"
+Ties back by: "That"
+Antecedent: the rewiring; recoverable by recency, but uncertain
+Pattern: 2 linear
 
-Suppose it marks sentence 4 as an unmotivated topic shift (D2), because the
-departure point moves from the rewiring to the hall's bookings.
+SENTENCE 4
+Starts from: "The hall"
+Ties back by: "The hall"
+Pattern: 3 derived topics
 
-Suppose you disagree. The response that works:
+LENS R
+Relation: cause
+Signalled by: none
+Costs the reader: no
 
-> `The hall` is a superordinate for everything already discussed — the committee,
-> the roof, the kitchen are all parts of it. Derived topics, not a shift. And
-> sentence 4 explains sentence 3's claim, which is the relation that licenses it.
-
-You do not need expertise for this. A judgment that cannot be attached to specific
-words on the page is one you should not accept — and under R12 the AI must attach every
-code to a span unprompted, so you should never have to ask.
-
-### Step 4 — score
-
-| Measure | Result |
-|---|---|
-| Pattern agreement | 3/3 transitions |
-| Prediction hit | **Partial** — right about linear-with-pivot, right to watch `That`, but I predicted "clean" and it is borderline |
-
-**Prediction gap:** I expected demonstratives to be either fine or broken. This one
-is neither — it is recoverable but costs the reader a beat.
-
-**Rule update:** D1 is not binary. There is a middle band where a reference
-resolves on second pass, and whether that counts as a defect depends on the reader
-and the stakes. Add "recoverable but expensive" as a thing to notice.
-
-That rule update is worth more than the 3/3.
-
----
-
-## Mode E, worked
-
-### The brief
-
-> A colleague asks why the staging environment was down all Tuesday afternoon.
-> The cause: someone ran a database restore against it to test a runbook, which is
-> a legitimate use, but nobody announced it. **Reader:** a peer, mildly annoyed,
-> not on your team. **Needs to be able to:** know whether to plan around this
-> happening again.
-
-### Draft, written cold, timed — 6 minutes
-
-> Staging was down on Tuesday afternoon because someone was running a database
-> restore against it. This was to test a runbook, which is a legitimate use of
-> staging. The problem was that it wasn't announced anywhere. We're going to add a
-> heads-up to the team channel for anything that takes staging down, so you should
-> get warning next time.
-
-### Self-annotation, before any AI sees it
-
-Same sheet. On your own draft you parse it yourself, because splitting your own
-sentences is part of seeing what you wrote.
-
-```
-SENTENCE 1  [subject: "Staging" | precedes subject: none | 2 clauses]
-   a. "Staging was down on Tuesday afternoon"
-   b. "because someone was running a database restore against it"
-
-Ties back by:  "Staging" - the thing they asked about. No explicit word links to
-               prior text because the prior text is their question
-Pattern:       opening
-
-
-SENTENCE 2  [subject: "This" | precedes subject: none | 2 clauses]
-   a. "This was to test a runbook"
-   b. "which is a legitimate use of staging"
-
-Ties back by:  "This" - demonstrative, present and resolving
-Antecedent:    1b, the restore
-Pattern:       2 linear
-
-
-SENTENCE 3  [subject: "The problem" | precedes subject: none | 2 clauses]
-   a. "The problem was"
-   b. "that it wasn't announced anywhere"
-
-Ties back by:  no explicit word, reader infers it - "the problem" reframes what
-               has just been described
-Pattern:       2 linear
-
-
-SENTENCE 4  [subject: "We" | precedes subject: none | 3 clauses]
-   a. "We're going to add a heads-up to the team channel for anything"
-   b. "that takes staging down"
-   c. "so you should get warning next time"
-
-Ties back by:  no explicit word, reader infers it - "we" are the team behind the
-               unannounced restore
-Pattern:       6 question-answer - it answers the reader's live question,
-               "do I have to plan around this again?"
-
-
-LENS S (stress, this item)
-   S1: "a database restore against it"     -> news
-   S2: "a legitimate use of staging"       -> news
-   S3: "wasn't announced anywhere"         -> news, but 3a is four words of
-                                              throat-clearing before it  -> D4
-   S4: "you should get warning next time"  -> news, but hedged by "should"
-
-
-Alternative reading:  sentence 4 could be read as 3 derived topics, with "we" as
-                      part of the staging-owners frame. Question-answer wins
-                      because the brief says the reader needs to know whether to
-                      plan around it, so that question is genuinely live.
-Uncertainty:          "We" - I am assuming this reader knows who that refers to.
-                      They are on another team.
+Alternative reading: "That" may refer to the whole grant surplus rather than only
+                     the rewiring; a more specific noun would settle it.
+Uncertainty: "The hall" — I assumed the reader keeps the building, committee,
+             roof, and kitchen in one active frame.
 ```
 
-**Sentence 4 shows a mistake worth naming.** An earlier version of this document
-put `Consequence` in the pattern field. That is a **relation**, not a pattern. A
-sentence can stand in a causal relation to the one before while departing from a
-completely different point — and only the pattern field records the second. If a
-relation word ends up in the pattern field, the two have been collapsed.
+The pre-parse must show `subject: "it"`, not `"it" = the grant`. Resolving the
+pronoun is the learner's task.
 
-**What I caught myself:**
+### 3. Compare the Reference Sheet and Key
 
-- Sentence 2 `This was to test a runbook` — weak. `This` again, and `was to test`
-  puts nothing in the stress position. **D4.**
-- Sentence 3 `The problem was that it wasn't announced` — six words of
-  throat-clearing before the content. The problem *is* the announcement gap; say
-  it. **D4.**
-- The reader `needs to know whether to plan around this happening again`. My last
-  clause gestures at it (`you should get warning next time`) but hedges with
-  `should`. Rubric item 6 fails.
+After the learner's sheet is complete, the drill partner returns the same filled
+sheet and the key opens. Every defect code is attached to a quoted span. A plausible
+reference judgment is that `That` is recoverable but costly rather than a clear D1.
 
-### Revision — mine, not the AI's
+```text
+Pattern agreement: 3/3
+Prediction hit: partial
+Lens: R
+```
 
-> Staging was down on Tuesday afternoon because someone ran a database restore
-> against it to test a runbook. That's a legitimate use of staging; the problem
-> was that nobody announced it. From now on anything that takes staging down gets
-> a heads-up in the team channel, so you'll have warning.
+**Prediction gap:** The learner expected `That` to be either clean or defective;
+it occupies a reader-dependent middle case.
 
-### Score
+**Rule update:** A reference can resolve and still cost enough to deserve attention.
 
-| Measure | Result |
-|---|---|
-| Rubric | 7/7 after revision, 5/7 on the draft |
-| **Self-caught** | 3 of 3 — the AI added nothing I hadn't found |
-| Time to first draft | 6 min |
+## Mode E
 
-Self-caught 3/3 is the result worth having. A 7/7 rubric score reached by
-following AI corrections would be a worse session with a better-looking number.
+### 1. Use a Fresh Brief
 
----
+```text
+Purpose: explain an outage and set the expectation for next time
+Reader: a mildly annoyed peer on another team
+Known facts: staging was down Tuesday afternoon; a database restore caused it; the
+             restore was a valid runbook test; nobody announced it
+Needs to be able to: decide whether to plan around another unannounced outage
+Variant: E-Expand
+```
 
-## The shape, stripped down
+### 2. Write Cold and Lock the Draft
 
-1. Predict, in writing, before you look. Then lock it
-2. Annotate the sheet yourself, completely, before the AI
-3. Take the AI's filled sheet and the key together, and compare all three readings
-4. Record the **gap** and the **rule update**, not just the score
-5. In Mode E: annotate your own draft before showing anyone, and count what you
-   caught yourself
+```text
+Staging was down on Tuesday afternoon because someone was running a database
+restore against it. This was to test a runbook, which is a legitimate use of
+staging. The problem was that it wasn't announced anywhere. We're going to add a
+heads-up to the team channel for anything that takes staging down, so you should
+get warning next time.
+```
 
-Steps 1 and 5 are what convert this from reading practice into model construction.
+The draft is timed and frozen before annotation.
+
+### 3. Complete the Mode E Sheet
+
+The instrument splits the draft into sentences. The learner corrects any bad split
+and fills `Sentence type` and `Parts`; no clause lettering is used.
+
+```text
+SENTENCE 1
+Starts from: "Staging"
+Ties back by: opening
+Pattern: opening
+Sentence type: complex
+Parts: 1
+
+SENTENCE 2
+Starts from: "This"
+Ties back by: "This"
+Antecedent: "a database restore"
+Pattern: 2 linear
+Sentence type: complex
+Parts: 1
+
+SENTENCE 3
+Starts from: "The problem"
+Ties back by: no explicit word, reader infers it
+Pattern: 2 linear
+Sentence type: complex
+Parts: 1
+
+SENTENCE 4
+Starts from: "We"
+Ties back by: no explicit word, reader infers it
+Pattern: 6 question-answer
+Sentence type: compound-complex
+Parts: 2
+
+LENS S
+S1 final constituent: "a database restore against it" → news
+S2 final constituent: "a legitimate use of staging" → news
+S3 final constituent: "wasn't announced anywhere" → news
+S4 final constituent: "you should get warning next time" → news
+
+Alternative reading: Sentence 4 can be read as derived topics if "We" is part of
+                     the established staging-owner frame; question-answer is more
+                     useful because the brief makes recurrence the active question.
+Uncertainty: "We" — I assumed the other team knows which group owns staging.
+
+Intent gap: I meant to guarantee advance notice; "should get warning" only predicts
+            it.
+```
+
+### 4. Resolve Brackets Without Reorganizing
+
+This draft has no brackets. If it did, lexical replacements would be made in a
+copy without changing sentence order or structure. Reorganization belongs in the
+next step.
+
+### 5. Make a Separate Self-Revision
+
+```text
+Staging was down on Tuesday afternoon because someone ran a database restore
+against it to test a runbook. That's a legitimate use of staging; the problem was
+that nobody announced it. From now on, anything that takes staging down gets a
+heads-up in the team channel, so you'll have warning.
+```
+
+The first draft remains unchanged.
+
+### 6. Receive the Reference and Scores
+
+The drill partner returns a filled sheet, compares it field by field, and scores
+both frozen versions with `tests/verification-01.md` Part 3.
+
+```text
+First-draft rubric: 5/7
+Self-revised rubric: 7/7
+Self-caught: 2/2
+Reference order: attempt first
+Voided measures: none
+Time to first draft: 6 minutes
+```
+
+The denominator for `Self-caught` comes from the later reference analysis, so it
+must not be treated as a validated ground truth.
+
+### 7. Compare Alternatives Only After Scoring
+
+The drill partner now gives two or three full alternatives with different
+progression or emphasis choices and states the trade-off of each. These are
+unvalidated comparisons, not a standard answer. They arrive only after both scores
+are final.
+
+## Minimal Sequence
+
+1. Generate the exercise file.
+2. In Mode A, flag terms and lock the three-part prediction. In Mode E, write and
+   lock the cold draft.
+3. Choose reference-first, attempt-first, or skip for the annotation sheet.
+4. Keep the key behind the mode-specific commitment gate.
+5. Preserve frozen drafts and revisions as separate artifacts.
+6. Return the completed reference sheet and evidence-based scores.
+7. In Mode E, show multiple full alternatives only after both scores are final.
+8. Export markdown and log the valid and void measures.

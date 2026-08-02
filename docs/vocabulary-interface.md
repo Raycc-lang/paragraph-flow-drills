@@ -1,196 +1,109 @@
-# The Vocabulary Interface
+# Vocabulary Interface
 
-Vocabulary is not this project's target. But it is the constraint that produced
-the truncated §0 paragraphs, and in session 1 it produced a missed defect. The two
-need a defined boundary rather than mutual avoidance.
+Vocabulary is not this project's target, but vocabulary failures can corrupt a
+flow score. Use the procedures below to separate the two.
 
-## Five links
+## Five Links
 
-| Link | What fails | Fix | Timescale | Instrumented here? |
-|---|---|---|---|---|
-| **1** | Word → concept. You meet a word and can't read it | Contextual recognition work | Long, accumulative | **Yes — term flags, below** |
-| **2a** | Concept → word, **word is in your lexicon**, retrieval fails under load | Production drills: cloze into novel sentences, timed retrieval | Can move fast | Yes — brackets |
-| **2b** | Concept → word, **word is not in your lexicon at all** | Acquisition. There is no shortcut | Long, accumulative | Partly — brackets, and they undercount |
-| **3** | Word → collocation. You have the word, can't tell if it fits here | Collocation checks; corpus or dictionary examples | Medium | Yes — brackets |
-| **4** | Situation → register. Word fits the meaning, not the channel | Genre reading with attention to register | Medium | **No instrument. Do not claim to measure it** |
+| Link | Failure | Training response | Measured here |
+|---|---|---|---|
+| 1 | Word → concept: the learner cannot read a word | Contextual recognition | Yes, with term flags |
+| 2a | Concept → known word: retrieval fails under load | Timed retrieval and novel cloze | Yes, with brackets |
+| 2b | Concept → unknown word | Separate acquisition stream | Partly; brackets undercount it |
+| 3 | Word → collocation: fit is uncertain | Check real corpus or dictionary examples | Yes, with brackets |
+| 4 | Situation → register: meaning fits but channel does not | Genre and register work | No; do not claim to measure it |
 
-**2a and 2b feel identical from the inside.** Both present as "I don't know what
-to write here." Only looking it up afterwards separates them, which is why the
-bracket protocol is a measurement instrument and not just a workaround.
+Links 2a and 2b feel the same during writing. Only a later lookup separates them.
 
----
+## Reception: Term Flags in Modes A and C
 
-## Two directions, two instruments
+Before the learner's commitment:
 
-An earlier version of this file routed everything one way — production only, Mode E
-only. Session 1 failed in the other direction and had nowhere to record it.
+1. The learner reads the item once and lists terms he is unsure of. `None` is a
+   valid answer.
+2. The drill partner glosses only those terms, one at a time.
+3. A gloss must not state or imply that two terms share a referent.
+4. If a term cannot be glossed without revealing the defect, do not score the item.
 
-| Direction | Where it bites | Instrument |
+Log `terms flagged` for each item.
+
+A flag alone does not classify a later miss. If a missed defect may depend on a
+term, check the term afterwards:
+
+| Evidence | Classification | Score handling |
 |---|---|---|
-| **Production** (links 2a, 2b, 3) | Mode E — you cannot reach a word | Brackets, `DRILLS.md` §4 |
-| **Reception** (link 1) | Modes A and C — you cannot read a word, so you cannot see what the text is doing with it | **Term flags**, below |
+| Term was flagged and glossed | Probable flow miss | Keep the flow score |
+| Term was not flagged; learner did not know its definition | Confirmed reception miss, link 1 | Remove from flow score; log vocabulary signal |
+| Learner knew each definition but did not know a relation between terms, such as shared reference | Off-page knowledge confound | Exclude the item from both scores |
 
-A link-1 failure inside an analysis drill is invisible without the second
-instrument. It does not look like a vocabulary problem. It looks like a missed
-defect.
+Not flagging a term proves only that the learner believed he understood it. It does
+not prove that he did.
 
----
+The third row is an item-selection failure. A scored flow defect must be recoverable
+from the paragraph and standalone glosses. See `AGENTS.md`.
 
-## Term flags — the reception instrument
+## Production: Brackets in Mode E
 
-**In Mode A and Mode C, before committing your prediction:** read the item once and
-list any term you are not sure of. The AI glosses those terms and only those.
+When a word does not come during the cold draft, the learner writes:
 
-Two things this produces:
-
-1. **An uncorrupted flow score.** A defect you could not see because you could not
-   read the words was never a flow measurement.
-2. **Link-1 data**, logged per item, on real material rather than a deck.
-
-**Scoring does not split on the flag alone.**
-
-An earlier version of this file said: not flagged and missed → link-1 miss. That
-inference is invalid. **Not flagging a term shows you believed you understood it.
-It does not show that you did not.** The two are different claims, and only the
-first is observable from the flag.
-
-So when a term-dependent defect is missed, **check the term afterwards** and sort
-into three outcomes:
-
-| Flag | Post-hoc check | Outcome |
-|---|---|---|
-| Flagged and glossed | — | **Probable flow miss.** You had the meaning and did not see the structure |
-| Not flagged | You did not in fact know the definition | **Confirmed reception miss.** Link 1. Counts toward the vocabulary signal |
-| Not flagged | You knew each definition, but not that the terms could be coreferential — or some other relation between them | **Off-page knowledge confound. Excluded from scoring entirely** |
-
-**The third row is not a vocabulary failure and not a flow failure.** It is an
-item defect. G3 is the case: `council`, `local authority` and `borough` are each
-individually readable, and the D5 turns on knowing they can name one body. That is
-relational and cultural knowledge, not word-to-concept knowledge. Scoring it as
-either miss would corrupt both measures.
-
-An item that produces row three should not have been offered — see `AGENTS.md`
-R13. When one does, discard the score and mark the item.
-
-Carry `terms flagged` to `LOG.md`. A count that stays high across sessions on
-Tier 2 material — your own domain — would be a strong signal that the target is
-wrong and reading is the bottleneck.
-
-### Session 1 example
-
-G3 renames one body three times: `The council`, `The local authority`, `the
-borough`. No term was flagged, the D5 was missed, and the sheet recorded "no
-explicit word."
-
-**This is row three, not row two.** Each of the three expressions is individually
-readable; what was missing was the fact that they can share a referent. That is
-off-page knowledge, so the miss is excluded from scoring rather than counted as a
-vocabulary failure. The score it would otherwise have produced — a link-1 miss —
-would have pointed the whole project at the wrong remedy.
-
----
-
-## Brackets — the production instrument, and its bias
-
-Every Mode E session produces brackets. After enough of them, count:
-
-```
-2a (knew it, couldn't retrieve)  : ___
-2b (didn't know it)              : ___
-3  (knew it, unsure it fit)      : ___
+```text
+[ENG: intended meaning in your L1, a paraphrase, or a guess]
 ```
 
-### The bias, stated plainly
+He then continues without searching. After the draft is locked, resolve each
+bracket without changing the paragraph's structure:
 
-**A bracket is only generated when you reach for a word and miss. You cannot stall
-on a word you do not know exists.** When the word is entirely absent from your
-lexicon, you route around it with a paraphrase and never notice you did — so no
-bracket appears.
+| Lookup result | Category | Follow-up |
+|---|---|---|
+| “I knew that word” | 2a retrieval | Use it in a novel cloze sentence |
+| “I did not know that word” | 2b acquisition | Add it to a separate acquisition stream |
+| “I knew it but was unsure it fit” | 3 collocation | Check two or three real examples and record the boundary |
 
-The consequence: **2b is systematically undercounted, and "mostly 2a" is the
-result this instrument tends to produce regardless of the truth.**
+Also count `2b-avoided`: places where the learner deliberately simplified because
+he did not know the expression he wanted.
 
-This is a validity problem, not a volume problem. Do not read a 2a-heavy ratio as
-evidence that your lexicon is adequate. Read it as *consistent with* an adequate
-lexicon and equally consistent with a large invisible acquisition gap.
+### Measurement Bias
 
-The partial correction: when resolving brackets, also note any place where you
-**deliberately simplified** — chose a phrase you were sure of over the meaning you
-wanted. Those are 2b events that produced no bracket. Count them separately as
-`2b-avoided`.
+A bracket appears only when the learner reaches for a word and notices the miss.
+An entirely unknown word often produces an unnoticed paraphrase instead. Therefore
+2b is systematically undercounted, and a 2a-heavy result does not prove that the
+productive lexicon is adequate.
 
-### Sample floor
+Read a high 2a count against `2b-avoided`:
 
-**Do not read the ratio below 30 total brackets.** Ten sessions producing eight
-brackets is noise. The floor is a bracket count, not a session count.
-
-### Reading the ratio
-
-| Result | Strategy |
+| Pattern | Working interpretation |
 |---|---|
-| **Mostly 2a**, low `2b-avoided` | Lexicon is adequate and inert. Activation drills, not acquisition |
-| **Mostly 2a**, high `2b-avoided` | The 2a reading is an artifact. Treat as 2b |
-| **Mostly 2b** | Genuine acquisition gap. Production-gap harvesting alone is far too slow — you would acquire words only at the rate you happen to need them |
-| **Mostly 3** | You have the words and don't trust them. Collocation work, and the confidence issue is doing more damage than the lexical one |
-| **Even spread** | Do not "weight each track by share" — that is not an instruction anyone can follow. Pick the largest category, work it alone until it stops being largest, re-measure |
+| Mostly 2a, low `2b-avoided` | Retrieval is the leading candidate |
+| Mostly 2a, high `2b-avoided` | The apparent retrieval result is probably an acquisition gap |
+| Mostly 2b | Acquisition is the leading candidate |
+| Mostly 3 | Collocation confidence is the leading candidate |
+| Even spread | Work on the largest category alone, then measure again |
 
----
+Do not interpret this ratio below 30 total brackets. This is a bracket-count floor,
+not a session-count floor.
 
-## The reverse-retrieval probe
+## Optional Reverse-Retrieval Probe
 
-The receptive-productive gap is robustly observed in language learners generally.
-The size of yours is not knowable without measuring it, and exact conversion rates
-in the literature are contested — take a number from your own probe or from
-nowhere.
+Use this probe before changing the project because vocabulary appears to be the
+bottleneck:
 
-**The probe:** take any list of words whose meanings you know, put the **gloss on
-the front and the word on the back**, and run it once. Recognition you already
-have; this gives production. The gap between them is your receptive-productive gap
-measured on your own vocabulary.
+1. Select at least 50 words whose meanings the learner can recognize.
+2. Separate long-known words from recently learned words.
+3. Put the gloss on the front and the word on the back.
+4. Test concept-to-word production once.
+5. Compare production with recognition, using the long-known group as the main
+   evidence.
 
-Two conditions for it to mean anything:
+If no suitable word list exists, the probe cannot run without first doing
+acquisition work.
 
-- Sample **words you have known for a long time** separately from words you learned
-  recently. The long-known group is the informative one; recently-learned words
-  fail production for a trivial reason.
-- At least ~50 items, or the number is noise.
+## Boundary of This Project
 
-This is a one-off, roughly twenty minutes, and it answers "is vocabulary my
-bottleneck" faster than any other measurement in this project. **Run it before
-deciding to switch tracks, not after.**
+This project can identify where vocabulary interferes with flow and which semantic
+areas recur. It does not provide enough input volume for vocabulary acquisition.
+A large acquisition gap needs its own materials and schedule.
 
-If no such word list exists yet, the probe cannot run — and building one is
-acquisition work, which is the next section's problem, not this one's.
-
----
-
-## Acquisition does not come from this project
-
-If the acquisition gap is large, it does **not** get sourced here. Production gaps
-are a trickle: you meet a word only when you happen to need it, and — per the bias
-above — often not even then.
-
-Acquisition needs its own input stream, running independently, at its own pace, on
-its own schedule. This project does not supply one and should not pretend to.
-
-What this project can supply is **targeting**: term flags and resolved brackets
-tell you which semantic areas you keep falling into holes in. That is better
-information than a frequency list. It is not a substitute for volume.
-
----
-
-## Why the cohesion drill still runs meanwhile
-
-The bracket protocol decouples flow measurement from lexical availability. You
-write `[ENG: ...]` and keep going, so the paragraph reaches full length with holes
-in it — and a paragraph with holes still has an information structure that can be
-annotated and scored.
-
-That is the actual answer to "can I do both at once." Not that vocabulary is
-secondary, but that brackets let the flow measurement survive the lexical gap
-instead of being destroyed by it, the way truncation destroyed it in §0.
-
-**The reception side has no such trick.** A gloss is not a workaround you can write
-around; you either know what the words refer to or the analysis is not measuring
-flow. That is why term flags are mandatory in Modes A and C rather than optional,
-and why corpus items are chosen from material whose vocabulary you already hold.
+Brackets let a Mode E paragraph reach full length despite lexical holes, preserving
+its information structure. Reception has no equivalent workaround: if the learner
+cannot identify what a term refers to after a standalone gloss, the item is not a
+valid flow measurement.

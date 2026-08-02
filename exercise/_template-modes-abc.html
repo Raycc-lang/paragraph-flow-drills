@@ -94,10 +94,10 @@
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
      SESSION CONFIG — the only block that changes between sessions.
-     AGENTS.md R14: the AI copies this template, edits this block, nothing else.
+     AGENTS.md, Generate the exercise file: the AI copies this template, edits this block, nothing else.
 
      mode "A" and "C" use `item`.  mode "B" uses `scrambled`.
-     `key` is optional — read the R7 note in AGENTS.md before embedding one.
+     `key` is optional — read the key-gating rule in AGENTS.md before embedding one.
      ═══════════════════════════════════════════════════════════════════════════ -->
 <script>
 const SESSION = {
@@ -310,8 +310,8 @@ const STAGES = {
   ]
 };
 
-/* F1: a skipped step must satisfy its own gate, or the skip R16 promises is
-   unreachable. F4: the gate must cover every field R14 calls learner-filled —
+/* F1: a skipped step must satisfy its own gate, or the documented skip is
+   unreachable. F4: the gate must cover every learner-filled field —
    checking only Ties back by and Pattern let the key open while the lens and both
    closing lines were still blank, and a warning after the fact cannot un-see a key. */
 function sheetComplete() {
@@ -347,7 +347,7 @@ function maxReachable() {
   let i = 0;
   while (i < list.length && list[i].done()) i++;
   let reach = Math.min(i + 1, list.length);
-  /* R16 reference-first: the AI's sheet has to be readable BEFORE his own is filled,
+  /* reference-first: the AI's sheet has to be readable BEFORE his own is filled,
      because studying it first is the whole point of that order. The KEY stays gated
      behind his commitment — see the guard on the reveal button in buildKey. */
   list.forEach(function (st) {
@@ -424,7 +424,7 @@ function itemPanel() {
                            preceding sentences stay reachable, not just the previous.
    Term flags / defects  : anywhere; an unknown word or a defect span is not tied
                            to one sentence. */
-/* AGENTS.md R16: reference-first is the efficient order while a field is being learned,
+/* AGENTS.md, Reference order: reference-first is the efficient order while a field is being learned,
    attempt-first once it is. Recorded, never judged. */
 const STEP_MODES = [
   ["attempt", "attempt first", "then compare with the reference sheet"],
@@ -698,7 +698,7 @@ function buildSheet(host) {
     const s2 = document.createElement("div");
     s2.className = "ok";
     s2.innerHTML = "<strong>Sheet skipped, and recorded as skipped.</strong> The reference " +
-      "sheet still arrives \u2014 R15 makes it mandatory whether or not you filled one. " +
+      "sheet still arrives \u2014 the reference-sheet rule requires it whether or not you filled one. " +
       "<code>Pattern agreement</code> is not scoreable this session.";
     host.appendChild(s2);
     return;

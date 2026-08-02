@@ -1,146 +1,106 @@
-# The Target
+# Target: Reader-Oriented Information Flow
 
-## Name
+Given a purpose, a reader's current context, and a set of propositions, order and
+express those propositions so the reader can:
 
-**Reader-oriented information flow in English paragraphs.**
+- identify the paragraph's point;
+- connect each sentence to the developing discourse;
+- recover the intended relation between ideas.
 
-Not "cohesion." Not "transitions." Not "linking words." The name matters because
-the wrong name selects the wrong drills — a learner who thinks the target is
-"cohesion" reaches for a connective list, and a connective list trains the most
-recognizable ESL-professional tell there is.
+Do not reduce this target to “cohesion,” “transitions,” or “linking words.” Those
+names encourage connective counting instead of reader-oriented decisions.
 
-## The mapping
+## Six Components
 
-> **Input:** a communicative purpose, a reader's current context, and a set of propositions.
->
-> **Output:** those propositions ordered and expressed so the reader can identify the topic, connect each sentence to the developing discourse, and follow the intended relation between ideas.
+| Component | Decision |
+|---|---|
+| Proposition order | Which idea comes first and why |
+| Paragraph structure | The role of each sentence: claim, evidence, qualification, consequence, and so on |
+| Sentence topic and grammatical subject | What each sentence starts from |
+| Reference | How pronouns, demonstratives, repetition, substitution, and lexical chains resolve |
+| Explicit relation signalling | Whether a connective is accurate and necessary |
+| Emphasis placement | What receives the final stress position |
 
-The output space has six components. All six are in scope; none of them is the whole target.
+All six are in scope. None is the whole target.
 
-| # | Component | What it decides |
-|---|---|---|
-| 1 | Proposition order | Which idea comes first, and why |
-| 2 | Paragraph structure | What role each sentence plays (claim, evidence, qualification, consequence…) |
-| 3 | Sentence topics and grammatical subjects | What each sentence is *about*, and what sits in the opening position |
-| 4 | Reference | Pronouns, `this X`, repetition, superordinate terms, substitution, ellipsis |
-| 5 | Explicit relation signaling | Connectives and discourse markers — accurate and economical, not absent and not sprayed |
-| 6 | Emphasis placement | What lands in the stress position at the end of a sentence |
+## Cohesion and Coherence
 
-## Cohesion is not coherence
+Keep the two layers separate:
 
-Keep these separate, because they fail separately and need different repairs.
+- **Cohesion:** surface links resolve, topics connect, and relations are recoverable.
+- **Coherence:** the content makes sense, premises are present, and each sentence is
+  relevant.
 
-- **Cohesion** — the surface links hold. Reference resolves, topics connect,
-  relations are signalled.
-- **Coherence** — the content makes sense. The argument is complete, the premises
-  are present, every sentence is relevant.
+A paragraph can have fluent links around a missing premise, or sound reasoning with
+poor surface links. Decide which layer failed before repairing. Use D8 for a
+coherence failure; do not disguise it with a connective.
 
-A paragraph can be perfectly cohesive and still incoherent: fluent links around a
-missing premise, an unexplained inference, or a sentence that does not belong.
-The reverse also happens — sound reasoning that reads as choppy because the
-surface links are absent.
+## Subskills and Practice
 
-Diagnostic consequence: when something reads badly, decide which layer failed
-before repairing. Adding a connective to a paragraph with a missing premise
-disguises the problem instead of fixing it. See `03-defects.md`, defect **D8**.
+| Subskill | Main practice implication |
+|---|---|
+| Identify reader knowledge and active topic | Use discrimination and worked examples |
+| Choose proposition order and sentence topics | Use explicit comparison first, then repeated production |
+| Recognize disruptive shifts | Recognition practice helps, but does not prove production ability |
+| Express reference and transitions | Practise recurring forms in context |
+| Produce flow in a first draft | Requires repeated new production with feedback |
 
-## Typing (渐构 step 3)
+Revision skill will usually appear before first-draft skill. Measure them
+separately.
 
-This target is not one explicit model. It is a bundle, and the parts have
-different types, which is why a single drill will not cover it.
+## Scope
 
-| Sub-task | Type | Consequence for practice |
-|---|---|---|
-| Identify what the reader already knows | Discrimination, partly explicit | Rule-guided at first; depends on modelling a specific reader |
-| Identify the paragraph's active topic | Discrimination, explicit at first | Trainable with worked examples |
-| Choose proposition order | Connection, explicit → proceduralized | Rules help early; fluency needs volume |
-| Select an appropriate sentence topic | Connection | Same |
-| Recognize a disruptive topic shift | Discrimination | Recognition drills; note that recognition ≠ production |
-| Express reference and transition naturally | Correspondences + connection | Some of this is idiom, learned as fixed links |
-| Produce good flow in a first draft | Proceduralized, partly implicit | Only repeated production plus feedback reaches this |
+The project does not train:
 
-**The practical reading of that table:** the explicit rules will let you *revise*
-long before they let you *draft*. Expect the gap. Revision competence arriving
-first is the normal shape of this, not a sign the method is failing.
+- vocabulary range or word choice;
+- grammatical accuracy;
+- idiom, register, or native-like style;
+- argument quality or evidence;
+- structure above the paragraph level.
 
-## What this target does not include
+### Clause Management Is in Scope
 
-Deliberately out of scope for this project. Do not let drills drift into them:
+Whether to join, split, coordinate, or subordinate propositions affects sentence
+topics, candidate antecedents, relation signalling, and emphasis. Those are flow
+decisions.
 
-- Vocabulary range and word choice
-- Grammatical **accuracy** — whether a sentence is correct
-- Naturalness, idiom, register, "sounding native"
-- Argument quality and evidence (that is coherence, and it is a separate target)
-- Document-level structure above the paragraph (a later target, once this holds)
+Do not turn clause management into a syntax quota. Record sentence structure as
+coverage evidence: it shows which defects could occur. Do not prescribe long or
+complex sentences.
 
-### But clause management is in scope, and the distinction is not a technicality
+## Valid Overrides
 
-Grammatical *accuracy* is excluded. **Clause management — when to join, when to split,
-what to subordinate — is not excluded, because it is one of this target's levers rather
-than a neighbouring subject.**
+Given-before-new is a tendency, not a rule. These may validly place new material
+first:
 
-Three of the six components above cannot be exercised without it:
+- contrastive focus;
+- a signalled topic shift;
+- definitions;
+- conclusion-first writing;
+- instructions and warnings;
+- chronological sequence;
+- genre conventions;
+- grammatical constraints;
+- deliberate emphasis;
+- the reader's active question.
 
-- **Component 3** is literally "sentence topics and grammatical subjects." Which
-  proposition gets the subject slot is a clause decision.
-- **Component 4**, reference, depends on how many candidate antecedents a sentence
-  leaves behind — which is its count of independent clauses.
-- **Component 6**, emphasis placement, needs more than one position of prominence to
-  place anything *in*. A short simple sentence has essentially one.
+Conclusion-first organization and given-before-new operate at different scales.
+A document can state its conclusion first while its sentence-to-sentence links
+remain locally accessible.
 
-And the override list below already names "grammatical constraints on what can occupy
-the subject slot" as something that legitimately overrides ordering guidance — so the
-file has always treated syntax as bearing on flow.
+## Success Test
 
-**The practical form of the distinction:** *"this sentence is ungrammatical"* is out of
-scope. *"these two propositions are in one sentence when they should be in two, and the
-relation between them has nowhere to sit"* is the target itself.
+Success does not mean that every sentence begins with old information. A paragraph
+passes when a competent target reader can:
 
-**What this must not become.** Not a syntax quota. `DRILLS.md` §4 records why an
-earlier "two subordinate clauses per paragraph" rule was wrong: it is satisfiable by
-one bad convoluted sentence and it teaches that longer is better. Clause structure is
-recorded as a **diagnostic** — it says which defects were available to be made — never
-prescribed as a target shape.
+1. state its point;
+2. identify what each sentence is doing;
+3. resolve each reference without rereading;
+4. recover every intended relation without guessing.
 
-## Boundaries: when the ordering guidance does not apply
+## Claims This Project Does Not Make
 
-Given-before-new is a **defeasible tendency**, not a law. Any of the following
-legitimately overrides it, and a drill that marks these as errors is miscalibrated:
-
-- Contrastive focus — the contrast is the point, so it goes first
-- Deliberate topic shift, signalled
-- Definitions
-- Conclusion-first writing (professional email, executive summary, BLUF)
-- Instructions and warnings, where the action or hazard leads
-- Chronological sequencing
-- Genre conventions
-- Grammatical constraints on what can occupy the subject slot
-- Deliberate emphasis
-- A reader's active question governing what comes next
-
-Note that conclusion-first and given-before-new operate at *different scales*.
-Front-loading your conclusion is a document-level choice; given-before-new
-governs sentence-to-sentence transitions inside the resulting paragraphs. They
-do not conflict.
-
-## What counts as success
-
-Success is **not** "every sentence begins with old information." A test that
-requires that is testing the wrong thing.
-
-Success is: a competent reader can state your point, can say what each sentence
-is doing, never has to re-read to resolve a reference, and never has to guess at
-a relation you meant to convey.
-
-## Standing uncertainty
-
-Two things this project does not claim, and should not be edited to claim:
-
-1. **No timeline.** How long any of this takes to construct is not something the
-   framework establishes and not something asserted here. Your log is the only
-   source of that estimate, and it will take several weeks to say anything.
-2. **No grader reliability claim.** AI annotation of information flow is
-   *unvalidated*. It is used here as a provisional annotator under a protocol
-   that forces it to show its work and offer alternatives — see `AGENTS.md` — and
-   its output is checked against reference keys and published prose wherever
-   possible. Treat every AI judgment as a hypothesis.
+- **No timeline:** estimate progress only from the learner's log over time.
+- **No reliable AI grader:** treat AI flow annotations as hypotheses. Require quoted
+  evidence, alternatives, and uncertainty, and compare with keys or published prose
+  where available.
